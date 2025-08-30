@@ -9,10 +9,8 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Provider>
-        <BrowserRouter>
-          <Layout />
-          <Component {...pageProps} />
-        </BrowserRouter>
+        <Layout />
+        <Component {...pageProps} />
       </Provider>
     </>
   );

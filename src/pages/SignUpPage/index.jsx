@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import  Link  from 'next/link';
 
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
@@ -96,7 +96,7 @@ const SignUpPage = () => {
                 </form>
                 <p className={styles.login}>
                   Already have an account?{' '}
-                  <Link to="/account/login" state={routerState}>
+                  <Link href="/account/login" state={routerState}>
                     Login
                   </Link>
                 </p>

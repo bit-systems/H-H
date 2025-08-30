@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
 import { Navigation } from 'swiper';
 
 import { useCart } from '@/hooks/useCart';

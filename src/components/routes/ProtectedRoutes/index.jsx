@@ -1,4 +1,5 @@
-import { Outlet, Navigate, useLocation } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
+import Link from 'next/link';
 
 import { useAuthContext } from '@/hooks/useAuthContext';
 import { useCartContext } from '@/hooks/useCartContext';
@@ -15,7 +16,7 @@ const ProtectedRoutes = ({ needAuth, needAdmin }) => {
     }
 
     if (!isAdmin) {
-      return <Navigate to="/" />;
+      return <Link href="/" />;
     }
   }
 
@@ -25,7 +26,7 @@ const ProtectedRoutes = ({ needAuth, needAdmin }) => {
     }
 
     if (!isVerified && cartIsReady) {
-      return <Navigate to="/account/login" state={pathname} />;
+      return <Link href="/account/login" state={pathname} />;
     }
   }
 
@@ -36,15 +37,15 @@ const ProtectedRoutes = ({ needAuth, needAdmin }) => {
 
     if (isVerified && cartIsReady) {
       if (state === '/checkout') {
-        return <Navigate to={state} />;
+        return <Link href={state} />;
       } else if (state === '/account') {
-        return <Navigate to={state} />;
+        return <Link href={state} />;
       }
-      return <Navigate to="/" />;
+      return <Link href="/" />;
     }
   }
 
-  return <Navigate to="/" />;
+  return <Link href="/" />;
 };
 
 export default ProtectedRoutes;

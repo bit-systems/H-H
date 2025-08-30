@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { NavLink, Link, useLocation } from 'react-router-dom';
+import  Link  from 'next/link';
 
 import { useAuthContext } from '@/hooks/useAuthContext';
 
@@ -68,82 +68,82 @@ const Navbar = ({ toggleSideNav, openCartModal }) => {
         </Button>
         <ul className={styles.info_list}>
           <li>
-            <Link className={styles.link} to="/">
+            <Link className={styles.link} href="/">
               Help Center
             </Link>
           </li>
           <li>
-            <Link className={styles.link} to="/">
+            <Link className={styles.link} href="/">
               Contact Us
             </Link>
           </li>
           <li>
-            <Link className={styles.link} to="/">
+            <Link className={styles.link} href="/">
               Shipping Info
             </Link>
           </li>
           <li>
-            <Link className={styles.link} to="/">
+            <Link className={styles.link} href="/">
               Track My Order
             </Link>
           </li>
           <li>
-            <Link className={styles.link} to="/">
+            <Link className={styles.link} href="/">
               Return & Exchanges
             </Link>
           </li>
           <li>
-            <Link className={styles.link} to="/">
+            <Link className={styles.link} href="/">
               About Us
             </Link>
           </li>
           <li>
-            <Link className={styles.link} to="/">
+            <Link className={styles.link} href="/">
               Carreers
             </Link>
           </li>
         </ul>
         {!isVerified && (
           <Link
-            to="/account/login"
+            href="/account/login"
             className={`${styles.link} ${styles.login_link}`}
           >
             Login
           </Link>
         )}
         {isVerified && (
-          <Link to="/account" className={`${styles.link} ${styles.login_link}`}>
+          <Link href="/account" className={`${styles.link} ${styles.login_link}`}>
             My Account
           </Link>
         )}
         {isAdmin && (
-          <Link to="/admin" className={`${styles.link} ${styles.login_link}`}>
+          <Link href="/admin" className={`${styles.link} ${styles.login_link}`}>
             Admin
           </Link>
         )}
       </div>
       <div className={styles.container_bottom}>
-        <Link to="/">
+        <Link href="/">
           <img className={styles.logo} src={'/assets/images/logo-nav.png'} alt="Logo Nav" />
         </Link>
         <ul className={styles.links}>
           <li>
-            <NavLink className={styles.link} to="/collections/t-shirts">
+            <Link className={styles.link} href="/collections/t-shirts">
               T-shirts
-            </NavLink>
+            </Link>
           </li>
           <li>
-            <NavLink
+            <Link
               className={styles.link}
-              to="/collections/hoodies-sweatshirts"
+              href="/collections/hoodies-sweatshirts"
             >
               Hoodies
-            </NavLink>
+            </Link>
           </li>
           <li>
-            <NavLink className={styles.link} to="/collections/accessories">
+            <Link className={styles.link} href="/collections/accessories">
               Accessories
-            </NavLink>
+            </Link>
           </li>
         </ul>
         <ul className={styles.icons_menu}>

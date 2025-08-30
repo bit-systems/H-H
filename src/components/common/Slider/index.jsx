@@ -1,4 +1,3 @@
-import { useLocation } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import 'swiper/css/pagination';

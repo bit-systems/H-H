@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+
 import { FaRedoAlt } from 'react-icons/fa';
 
 import { useCollection } from '@/hooks/useCollection';
@@ -9,6 +9,7 @@ import ProductFilter from './ProductFilter';
 import { ProductCard, Loader } from '@/components/common';
 
 import styles from './index.module.scss';
+import { useRouter } from 'next/router';
 
 const validSlugs = [
   'products',
@@ -18,8 +19,8 @@ const validSlugs = [
 ];
 
 const CollectionPage = () => {
-  const navigate = useNavigate();
-  const { id: slugId } = useParams();
+  const navigate = useRouter();
+  const { id: slugId } = navigate.query;
 
   const { getCollection, isLoading, hasMore, error } = useCollection();
 
@@ -48,7 +49,7 @@ const CollectionPage = () => {
     }
 
     if (!validSlugs.includes(slugId)) {
-      navigate('/');
+      navigate.push('/');
     }
 
     const fetchProductVariants = async () => {

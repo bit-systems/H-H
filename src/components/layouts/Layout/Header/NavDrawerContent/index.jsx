@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom';
+import  Link  from 'next/link';
+
 import { Autoplay, Pagination } from 'swiper';
 
 import {
@@ -36,7 +37,7 @@ const NavDrawerContent = ({ toggleSideNav }) => {
           <h2>Products</h2>
           <li>
             <Link
-              to="/collections/t-shirts"
+              href="/collections/t-shirts"
               onClick={toggleSideNav}
               className={styles.link}
             >
@@ -45,7 +46,7 @@ const NavDrawerContent = ({ toggleSideNav }) => {
           </li>
           <li>
             <Link
-              to="/collections/hoodies-sweatshirts"
+              href="/collections/hoodies-sweatshirts"
               onClick={toggleSideNav}
               className={styles.link}
             >
@@ -54,7 +55,7 @@ const NavDrawerContent = ({ toggleSideNav }) => {
           </li>
           <li>
             <Link
-              to="/collections/accessories"
+              href="/collections/accessories"
               onClick={toggleSideNav}
               className={styles.link}
             >
@@ -66,7 +67,7 @@ const NavDrawerContent = ({ toggleSideNav }) => {
           <h2>Drops</h2>
           <li>
             <Link
-              to="/collections/products"
+              href="/collections/products"
               onClick={toggleSideNav}
               className={styles.link}
             >
@@ -101,7 +102,7 @@ const NavDrawerContent = ({ toggleSideNav }) => {
         <ul className={styles.links_list}>
           {isAdmin && (
             <li>
-              <Link to="/admin" onClick={toggleSideNav} className={styles.link}>
+              <Link href="/admin" onClick={toggleSideNav} className={styles.link}>
                 <i>
                   <FaExclamationTriangle />
                 </i>
@@ -111,7 +112,7 @@ const NavDrawerContent = ({ toggleSideNav }) => {
           )}
           <li>
             <Link
-              to={isVerified ? '/account' : '/login'}
+              href={isVerified ? '/account' : '/login'}
               onClick={toggleSideNav}
               className={styles.link}
             >
@@ -122,7 +123,7 @@ const NavDrawerContent = ({ toggleSideNav }) => {
             </Link>
           </li>
           <li>
-            <Link to="/" onClick={toggleSideNav} className={styles.link}>
+            <Link href="/" onClick={toggleSideNav} className={styles.link}>
               <i>
                 <FaQuestionCircle />
               </i>
@@ -130,7 +131,7 @@ const NavDrawerContent = ({ toggleSideNav }) => {
             </Link>
           </li>
           <li>
-            <Link to="/" onClick={toggleSideNav} className={styles.link}>
+            <Link href="/" onClick={toggleSideNav} className={styles.link}>
               <i>
                 <FaShippingFast />
               </i>
@@ -138,7 +139,7 @@ const NavDrawerContent = ({ toggleSideNav }) => {
             </Link>
           </li>
           <li>
-            <Link to="/" onClick={toggleSideNav} className={styles.link}>
+            <Link href="/" onClick={toggleSideNav} className={styles.link}>
               <i>
                 <FaMapMarkerAlt />
               </i>
@@ -146,7 +147,7 @@ const NavDrawerContent = ({ toggleSideNav }) => {
             </Link>
           </li>
           <li>
-            <Link to="/" onClick={toggleSideNav} className={styles.link}>
+            <Link href="/" onClick={toggleSideNav} className={styles.link}>
               <i>
                 <FaTag />
               </i>
@@ -154,7 +155,7 @@ const NavDrawerContent = ({ toggleSideNav }) => {
             </Link>
           </li>
           <li>
-            <Link to="/" onClick={toggleSideNav} className={styles.link}>
+            <Link href="/" onClick={toggleSideNav} className={styles.link}>
               <i>
                 <FaBriefcase />
               </i>
@@ -162,7 +163,7 @@ const NavDrawerContent = ({ toggleSideNav }) => {
             </Link>
           </li>
           <li>
-            <Link to="/" onClick={toggleSideNav} className={styles.link}>
+            <Link href="/" onClick={toggleSideNav} className={styles.link}>
               <i>
                 <FaSyncAlt />
               </i>
@@ -170,7 +171,7 @@ const NavDrawerContent = ({ toggleSideNav }) => {
             </Link>
           </li>
           <li>
-            <Link to="/" onClick={toggleSideNav} className={styles.link}>
+            <Link href="/" onClick={toggleSideNav} className={styles.link}>
               <i>
                 <FaInfoCircle />
               </i>

@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 
-import { useNavigate } from 'react-router-dom';
 
 import { v4 as uuid } from 'uuid';
 
@@ -12,6 +11,7 @@ import Variants from './Variants';
 import { Button, Loader, CenterModal, ConfirmModal } from '@/components/common';
 
 import styles from './index.module.scss';
+import { useRouter } from 'next/router';
 
 const AdminProduct = ({
   isEditPage,
@@ -28,7 +28,7 @@ const AdminProduct = ({
   productVariants,
   productSizes,
 }) => {
-  const navigate = useNavigate();
+  const navigate = useRouter();
   const [navigation, setNavigation] = useState(false);
 
   const {
@@ -248,7 +248,7 @@ const AdminProduct = ({
 
   useEffect(() => {
     if (navigation && !error) {
-      navigate('/admin/products');
+      navigate.push('/admin/products');
     } else {
       setNavigation(false);
     }

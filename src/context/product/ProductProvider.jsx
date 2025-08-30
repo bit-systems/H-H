@@ -1,6 +1,5 @@
 import { useReducer, useEffect } from 'react';
 
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
 
 import { collection, getDocs, query, where, orderBy } from 'firebase/firestore';
 import { db } from '@/db/config';
@@ -68,9 +67,9 @@ const productReducer = (state, action) => {
 };
 
 const ProductProvider = ({ children }) => {
-  const { id: slugId } = useParams();
   const { pathname, state: slugState } = useRouter();
-  const navigate = useNavigate();
+  const navigate = useRouter();
+  const slugId = navigate.query?.paramsId;
 
   const [state, dispatch] = useReducer(productReducer, initialState);
 
@@ -168,7 +167,7 @@ const ProductProvider = ({ children }) => {
 
   useEffect(() => {
     if (slugState) {
-      navigate({ pathname, state: null });
+      navigate.push({ pathname, state: null });
     } else {
       if (state.productIsReady) {
         dispatch({ type: 'CLEAR_PRODUCT' });

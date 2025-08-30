@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import  Link  from 'next/link';
 
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
@@ -70,7 +70,7 @@ const LoginPage = () => {
                 </form>
                 <p className={styles.no_account}>
                   New to Flaakko?{' '}
-                  <Link to="/account/signup" state={routerState}>
+                  <Link href="/account/signup" state={routerState}>
                     Create account
                   </Link>
                 </p>

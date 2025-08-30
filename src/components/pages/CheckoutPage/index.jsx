@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import Link from 'next/link';
 
 import { useCheckoutContext } from '@/hooks/useCheckoutContext';
 import { useCartContext } from '@/hooks/useCartContext';
@@ -18,6 +18,7 @@ import { Loader } from '@/components/common';
 import logo from '/assets/images/checkout-logo-nav.png';
 
 import styles from './index.module.scss';
+import { useRouter } from 'next/router';
 
 const progressionSteps = [
   { id: 'cart', label: 'Cart', url: '/cart' },
@@ -27,7 +28,7 @@ const progressionSteps = [
 ];
 
 const CheckoutPage = () => {
-  const navigate = useNavigate();
+  const navigate = useRouter();
 
   const { items, cartNeedsCheck } = useCartContext();
   const { checkoutIsReady, currentStep } = useCheckoutContext();
@@ -61,7 +62,7 @@ const CheckoutPage = () => {
     if (items.length === 0) {
       setStopCheckout(true);
       const timer = setTimeout(() => {
-        navigate('/');
+        navigate.push('/');
       }, 3000);
 
       return () => clearTimeout(timer);
@@ -79,7 +80,7 @@ const CheckoutPage = () => {
       }
 
       const timer = setTimeout(() => {
-        navigate('/');
+        navigate.push('/');
       }, 3000);
 
       return () => clearTimeout(timer);
@@ -101,14 +102,14 @@ const CheckoutPage = () => {
             <>
               {stopCheckout && <div className={styles.stop_checkout} />}
               <div className={`${styles.header} main-container`}>
-                <Link to="/">
+                <Link href="/">
                   <img className={styles.logo} src={logo} alt="" />
                 </Link>
               </div>
               <div className={`${styles.content_wrapper} main-container`}>
                 <div className={styles.info_container}>
                   <div className={styles.info_header}>
-                    <Link to="/">
+                    <Link href="/">
                       <img className={styles.logo} src={logo} alt="" />
                     </Link>
                   </div>

@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 
-import { Link } from 'react-router-dom';
+import  Link  from 'next/link';
 
 import styles from './index.module.scss';
 
@@ -39,7 +39,7 @@ const MediaContainer = ({
   if (to) {
     return (
       <Link
-        to={to}
+        href={to}
         state={slugCheck ? true : null}
         className={`${styles.media_container} ${containerClassName}`}
       >

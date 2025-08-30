@@ -1,5 +1,4 @@
 import { useReducer, useEffect, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
 
 import { doc, getDoc, collection, setDoc, deleteDoc } from 'firebase/firestore';
 import { db } from '@/db/config';

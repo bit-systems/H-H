@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 
-import { useNavigate } from 'react-router-dom';
 
 import { BiChevronLeft } from 'react-icons/bi';
 
@@ -17,9 +16,10 @@ import { Button, Loader } from '@/components/common';
 import { formatCardNumber, formatExpiryDate, formatCvv } from '@/helpers/format';
 
 import styles from './index.module.scss';
+import { useRouter } from 'next/router';
 
 const Payment = () => {
-  const navigate = useNavigate();
+  const navigate = useRouter();
 
   const { addresses } = useAuthContext();
   const { shippingAddress } = useCheckoutContext();
@@ -177,7 +177,7 @@ const Payment = () => {
 
   useEffect(() => {
     if (navigation && !error) {
-      navigate('/account');
+      navigate.push('/account');
     } else {
       setNavigation(false);
     }

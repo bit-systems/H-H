@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import  Link  from 'next/link';
 import { useMediaQuery } from 'react-responsive';
 import {
   FaInstagram,
@@ -37,19 +37,19 @@ const Footer = () => {
             <h4 className={styles.nav_title}>Help</h4>
             <ul className={styles.nav}>
               <li>
-                <Link to="/">Help Center</Link>
+                <Link href="/">Help Center</Link>
               </li>
               <li>
-                <Link to="/">Contact Us</Link>
+                <Link href="/">Contact Us</Link>
               </li>
               <li>
-                <Link to="/">Shipping Info</Link>
+                <Link href="/">Shipping Info</Link>
               </li>
               <li>
-                <Link to="/">Track My Order</Link>
+                <Link href="/">Track My Order</Link>
               </li>
               <li>
-                <Link to="/">Returns & Exchanges</Link>
+                <Link href="/">Returns & Exchanges</Link>
               </li>
             </ul>
           </div>
@@ -57,10 +57,10 @@ const Footer = () => {
             <h4 className={styles.nav_title}>More</h4>
             <ul className={styles.nav}>
               <li>
-                <Link to="">About Us</Link>
+                <Link href="">About Us</Link>
               </li>
               <li>
-                <Link to="">Carreers</Link>
+                <Link href="">Carreers</Link>
               </li>
             </ul>
           </div>

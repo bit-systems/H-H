@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import  Link  from 'next/link';
 
 import { FaTrash, FaPlus, FaMinus } from 'react-icons/fa';
 
@@ -64,7 +64,7 @@ const CartItem = ({
   return (
     <div className={styles.card}>
       <Link
-        to={`/products/${slug}`}
+        href={`/products/${slug}`}
         state={slugCheck ? true : null}
         onClick={closeCartModal}
       >

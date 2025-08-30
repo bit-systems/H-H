@@ -1,5 +1,4 @@
-import { Link } from 'react-router-dom';
-
+import Link from 'next/link';
 import { FaChevronRight, FaCheck } from 'react-icons/fa';
 
 import { useCheckoutContext } from '@/hooks/useCheckoutContext';
@@ -21,7 +20,7 @@ const Step = ({ label, url, index }) => {
 
   if (url) {
     stepContent = (
-      <Link to={url}>
+      <Link href={url}>
         <div className={styles.step_wrapper}>
           <span className={styles.label_completed}>{label}</span>
           <div className={styles.item_completed}>

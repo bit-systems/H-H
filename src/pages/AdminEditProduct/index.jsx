@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 
 import { useAdmin } from '@/hooks/useAdmin';
 
 import { AdminProduct, Loader } from '@/components/common';
+import { useRouter } from 'next/router';
 
 const AdminEditProduct = () => {
   const { getProduct, isLoading } = useAdmin();
-  const { productId: paramsId } = useParams();
+  const { query:{paramsId} } = useRouter();
 
   const [product, setProduct] = useState(null);
 
