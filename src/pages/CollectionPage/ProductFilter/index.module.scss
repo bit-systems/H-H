@@ -1,3 +1,4 @@
+@use "@/styles/variables.scss" as *;
 .modal {
   background-color: hsla(0, 0%, 100%, 0.75) !important;
   backdrop-filter: blur(8px !important);

@@ -1,3 +1,4 @@
+'use client';
 import  Link  from 'next/link';
 import { useMediaQuery } from 'react-responsive';
 import {
@@ -12,15 +13,28 @@ import Newsletter from './Newsletter';
 
 import styles from './index.module.scss';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
 const Footer = () => {
+
+  const [isCollectionPage, setIsCollectionPage] = useState(false);
+
   const location = useRouter();
 
   const isBigScreen = useMediaQuery({
     query: '(min-width: 1024px)',
   });
 
-  const isCollectionPage = location.pathname.includes('collections');
+  useEffect(() => {
+
+    if(location.isReady) {
+      const pathname = location.pathname.split('/');
+      const isCollectionPage = pathname.includes('collections');
+      setIsCollectionPage(isCollectionPage);
+    }
+
+  }, [location.pathname]);
+
 
   return (
     <footer
@@ -29,9 +43,10 @@ const Footer = () => {
           ? styles.is_collection_page_b
           : styles.is_collection_page_s
       }`}
+      suppressHydrationWarning 
     >
       {!isBigScreen && <Newsletter />}
-      <div className={styles.container}>
+      <div className={styles.container} suppressHydrationWarning >
         <div className={styles.sitemap}>
           <div className={styles.nav_wrapper}>
             <h4 className={styles.nav_title}>Help</h4>
