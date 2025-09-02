@@ -15,9 +15,7 @@ import styles from './index.module.scss';
 const SlideshowSection = () => {
   const [showContent, setShowContent] = useState(true);
 
-  const isBigScreen = useMediaQuery({
-    query: '(min-width: 900px)',
-  });
+ 
 
   useEffect(() => {
     setShowContent(false);
@@ -27,7 +25,17 @@ const SlideshowSection = () => {
     }, 100);
 
     return () => clearTimeout(timer);
-  }, [isBigScreen]);
+  }, []);
+
+    const isBigScreen = useMediaQuery({
+    query: '(min-width: 900px)',
+  });
+
+   if(!showContent) {
+    console.log('Not showing content');
+    return null;
+  }
+
 
   return (
     <section className={styles.section}>

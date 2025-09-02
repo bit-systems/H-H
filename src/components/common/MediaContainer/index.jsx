@@ -20,6 +20,7 @@ const MediaContainer = ({
   placeholderClassName,
   mediaClassName,
 }) => {
+  console.log('MediaContainer Rendered', image, video);
   const placeholdersCleared = useRef(false);
 
   const [mediaIsLoading, setMediaIsLoading] = useState(true);

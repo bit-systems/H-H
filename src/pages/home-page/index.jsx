@@ -1,7 +1,7 @@
-import HeroSection from './HeroSection';
-import ProductSliderSection from './ProductSliderSection';
-import SlideshowSection from './SlideshowSection';
-import CollectionsSection from './CollectionsSection';
+import HeroSection from './hero-section';
+import ProductSliderSection from './product-slider-section';
+import SlideshowSection from './slideshow-section';
+import CollectionsSection from './collections-section';
 
 export const HomePage = () => {
   return (

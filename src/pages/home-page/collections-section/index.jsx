@@ -1,4 +1,4 @@
-import CollectionCard from './CollectionCard';
+import CollectionCard from './collection-card';
 
 import { COLLECTIONS as collections } from './data';
 

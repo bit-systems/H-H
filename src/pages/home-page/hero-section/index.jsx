@@ -1,7 +1,7 @@
 import { MediaContainer } from '@/components/common';
 
-import Video from 'assets/videos/hero.mp4';
-import LogoHero from '/assets/images/logo-hero.png';
+// import Video from 'assets/videos/hero.mp4';
+// import LogoHero from '/assets/images/logo-hero.png';
 
 import styles from './index.module.scss';
 
@@ -10,7 +10,7 @@ const HeroSection = () => {
     <section className={styles.section}>
       <div className={`${styles.container} main-container`}>
         <MediaContainer
-          video={Video}
+          video={'/assets/videos/hero.mp4'}
           autoPlay
           loop
           muted
@@ -20,7 +20,7 @@ const HeroSection = () => {
         />
         <div className={styles.content}>
           <div className={styles.logo_wrapper}>
-            <img src={LogoHero} alt="Hero Logo" className={styles.logo} />
+            <img src={'/assets/images/logo-hero.png'} alt="Hero Logo" className={styles.logo} />
           </div>
         </div>
       </div>

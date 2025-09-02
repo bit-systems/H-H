@@ -1,15 +1,15 @@
-// @import url('https://db.onlinewebfonts.com/c/55d433372d270829c51e2577a78ef12d?family=Monument+Extended');
-// @import url('https://db.onlinewebfonts.com/c/a4745f4b1d04fa025c6a05d891ed0126?family=Monument+Extended+Ultrabold');
+ @import url('https://db.onlinewebfonts.com/c/55d433372d270829c51e2577a78ef12d?family=Monument+Extended');
+ @import url('https://db.onlinewebfonts.com/c/a4745f4b1d04fa025c6a05d891ed0126?family=Monument+Extended+Ultrabold');
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
 @font-face {
   font-family: 'Monument Extended';
-  src: url('../../public/assets/fonts/monument-extended.ttf');
+  src: url('/assets/fonts/monument-extended.ttf');
 }
 
 @font-face {
   font-family: 'Monument Extended Ultrabold';
-  src: url('../../public/assets/fonts/monument-extended-ultrabold.ttf');
+  src: url('/assets/fonts/monument-extended-ultrabold.ttf');
 }
 
 $font-f-primary: 'Monument Extended', sans-serif;

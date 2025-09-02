@@ -1,9 +1,0 @@
-@use "@/styles/variables.scss" as *;
-.steps_container {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  align-items: center;
-  padding-top: 4rem;
-  padding-bottom: 4rem;
-  border-bottom: 1px solid #414246;
-}

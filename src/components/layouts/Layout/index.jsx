@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 
-import { Outlet } from 'react-router-dom';
 
 import Toast from './Toast';
 import Cart from './Cart';
@@ -10,7 +9,7 @@ import dynamic from 'next/dynamic'
 
 import { useRouter } from 'next/router';
 
-const Layout = () => {
+const Layout = ({ children }) => {
   const location = useRouter();
   const [isCartModalOpen, setIsCartModalOpen] = useState(false);
   const [isCheckout, setIsCheckout] = useState(false);
@@ -39,7 +38,7 @@ const Footer = dynamic(() => import('./Footer'), { ssr: false })
           <Header openCartModal={() => setIsCartModalOpen(true)} />
         )}
         <main>
-          <Outlet />
+         {children}
         </main>
         {!isCheckout && <Footer />}
       </div>
