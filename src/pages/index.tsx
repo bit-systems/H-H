@@ -1,8 +1,26 @@
-import Head from "next/head";
-import Image from "next/image";
-import { Geist, Geist_Mono } from "next/font/google";
-import styles from "@/styles/Home.module.css";
+import HeroSection from "./home-page/hero-section";
+import ProductSliderSection from "./home-page/product-slider-section";
+import SlideshowSection from "./home-page/slideshow-section";
+import CollectionsSection from "./home-page/collections-section";
 
-export default function Home() {
-  return <></>;
-}
+export const Home = () => {
+  return (
+    <>
+      <SlideshowSection />
+      <ProductSliderSection
+        titleBottom="New Arrivals"
+        sortBy={{ field: "price", direction: "desc" }}
+        titleTop=""
+      />
+      <CollectionsSection />
+      <ProductSliderSection
+        titleTop="Everyday"
+        titleBottom="Essentials"
+        sortBy={{ field: "createdAt", direction: "asc" }}
+      />
+      <HeroSection />
+    </>
+  );
+};
+
+export default Home;
