@@ -6,6 +6,10 @@ export default function Document() {
       <Head />
       <body>
         <Main />
+        <div id="backdrop"></div>
+        <div id="overlays"></div>
+        <div id="overlay"></div>
+        <div id="root"></div>
         <NextScript />
       </body>
     </Html>

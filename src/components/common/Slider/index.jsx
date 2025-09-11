@@ -40,7 +40,8 @@ const Slider = ({
   let slugCheck;
   if (toPage) {
     const { pathname } = useRouter();
-    slugCheck = slides[0].url === pathname.split('/')[2];
+    // slugCheck = slides[0].url === pathname.split('/')[2]; //TODO fix this
+    slugCheck = false;
   }
 
   return (

@@ -1,4 +1,3 @@
-import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import { useKeyDown } from '@/hooks/useKeyDown';
@@ -6,6 +5,7 @@ import { useKeyDown } from '@/hooks/useKeyDown';
 import { Backdrop, Button } from '@/components/common';
 
 import styles from './index.module.scss';
+import Portal from '../Portal';
 
 const ConfirmModal = ({
   show,
@@ -22,8 +22,6 @@ const ConfirmModal = ({
     close();
   }, ['Escape']);
 
-// const overlayElement = document.getElementById('overlay'); //TODO fix this for nextjs
-  const overlayElement = <p>Fix it</p>
   
   const variants = {
     initial: { y: '50vh', opacity: 0 },
@@ -35,7 +33,7 @@ const ConfirmModal = ({
       <AnimatePresence>
         {show && (
           <>
-            {createPortal(
+              <Portal containerId='overlay'>
               <>
                 <Backdrop
                   backdropClassName={`${styles.backdrop} ${backdropClassName}`}
@@ -78,9 +76,8 @@ const ConfirmModal = ({
                     </motion.div>
                   </div>
                 </div>
-              </>,
-              overlayElement
-            )}
+              </>
+              </Portal>
           </>
         )}
       </AnimatePresence>

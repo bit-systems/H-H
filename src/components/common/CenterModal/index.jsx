@@ -1,4 +1,3 @@
-import { createPortal } from 'react-dom';
 
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -7,6 +6,7 @@ import { useKeyDown } from '@/hooks/useKeyDown';
 import { Backdrop } from '@/components/common';
 
 import styles from './index.module.scss';
+import Portal from '../Portal';
 
 const CenterModal = ({
   children,
@@ -20,7 +20,6 @@ const CenterModal = ({
     close();
   }, ['Escape']);
 
-    // const overlayElement = document.getElementById('overlay'); //TODO fix this for nextjs
   const overlayElement = <p>Fix it</p>
 
   const variants = {
@@ -33,8 +32,9 @@ const CenterModal = ({
     <AnimatePresence>
       {children && (
         <>
-          {createPortal(
-            <>
+
+        <Portal containerId='overlay'>
+<>
               <Backdrop
                 backdropClassName={`${styles.backdrop} ${backdropClassName}`}
               />
@@ -58,8 +58,7 @@ const CenterModal = ({
                 </div>
               </div>
             </>,
-            overlayElement
-          )}
+          </Portal>
         </>
       )}
     </AnimatePresence>

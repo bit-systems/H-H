@@ -5,7 +5,7 @@ import { db } from '@/db/config';
 
 import moment from 'moment';
 
-// import products from '@/data/products.json';
+import products from '@/data/dummy-products.json';
 
 export const useSeed = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -19,7 +19,7 @@ export const useSeed = () => {
       const batch = writeBatch(db);
       const productsRef = collection(db, 'products');
 
-      for (const product of []) {
+      for (const product of products) {
         const newProductRef = doc(productsRef);
         batch.set(newProductRef, {
           collection: product.collection,

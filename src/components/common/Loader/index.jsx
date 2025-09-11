@@ -1,11 +1,11 @@
-import { createPortal } from 'react-dom';
+'use client';
 
 import Backdrop from '../Backdrop';
 import MediaContainer from '../MediaContainer';
 
 import styles from './index.module.scss';
+import Portal from '@/components/common/Portal';
 
-// import LoaderImage from '/assets/images/loader.png';
 
 const Loader = ({
   noPortal,
@@ -13,27 +13,27 @@ const Loader = ({
   containerClassName,
   loaderClassName,
 }) => {
-// const overlayElement = document.getElementById('overlay'); //TODO fix this for nextjs
-  const overlayElement = <p>Fix it</p>
   if (noPortal) {
     return (
       <>
         <div className={`${styles.loader_np_container} ${containerClassName}`}>
           <MediaContainer
-            image={LoaderImage}
+            image={'/assets/images/logo-hero.png'}
             alt=""
             containerClassName={styles.image_container}
             fillClassName={styles.image_fill}
             mediaClassName={`${styles.image} ${loaderClassName}`}
           />
         </div>
+
+
       </>
     );
   }
 
   return (
     <>
-      {createPortal(
+      <Portal containerId='overlay'>
         <>
           <Backdrop
             backdropClassName={`${styles.backdrop} ${backdropClassName}`}
@@ -47,9 +47,9 @@ const Loader = ({
               mediaClassName={`${styles.image} ${loaderClassName}`}
             />
           </div>
-        </>,
-        overlayElement
-      )}
+        </>
+      </Portal>
+
     </>
   );
 };

@@ -28,7 +28,8 @@ export const useCollection = () => {
     collectionName = 'products',
     isNewQuery = true,
     sortBy = { field: 'createdAt', direction: 'asc' },
-  }) => {
+  } = {}) => {
+
     setError(null);
 
     try {

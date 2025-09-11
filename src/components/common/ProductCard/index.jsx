@@ -136,7 +136,7 @@ const ProductCard = ({
               onCardPick={onCardPick}
               clearPlaceholders={() => setDetailsShowPlaceholder(false)}
               showPlaceholder={showDetailsPlaceholder}
-              slides={currentVariant.slides}
+              // slides={currentVariant.slides} //TODO fix this
               toPage={'/products/'}
               slidesPerView={1}
               spaceBetween={0}
@@ -157,6 +157,7 @@ const ProductCard = ({
               mediaContainerClassName={styles.image_container}
               imageFillClassName={styles.image_fill}
               imageClassName={styles.image}
+              slides={[]}
             />
             {!showDetailsPlaceholder && !isSmallContainer && (
               <QuickAdd
@@ -261,7 +262,7 @@ const ProductCard = ({
           </ul>
         </div>
 
-        {/* {isAdmin && (
+        {isAdmin && (
           <div className={styles.admin_buttons_wrapper}>
             <Button className={styles.edit} to={`/admin/products/${productId}`}>
               Edit
@@ -279,7 +280,7 @@ const ProductCard = ({
               Delete
             </Button>
           </div>
-        )} */}
+        )}
       </div>
     </>
   );

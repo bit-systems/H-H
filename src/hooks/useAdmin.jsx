@@ -79,14 +79,16 @@ export const useAdmin = () => {
     try {
       const productRef = doc(db, 'products', productId);
       const docSnap = await getDoc(productRef);
-
       const product = { id: docSnap.id, ...docSnap.data() };
 
       let images = [];
 
-      for (const variant of product.variants) {
+      if(product?.variants?.length > 0){
+ for (const variant of product.variants) {
         images = [...images, ...variant.images];
       }
+      }
+     
 
       let inventory = [];
 
@@ -101,7 +103,8 @@ export const useAdmin = () => {
 
       const currentInventoryLevels = [];
 
-      for (let i = 0; i < product.variants.length; i++) {
+      if(product?.variants?.length > 0){
+        for (let i = 0; i < product.variants.length; i++) {
         let variantInventory = {};
         for (const item of product.variants[i].inventoryLevels) {
           const skuInventoryLevel = inventory.find(
@@ -118,6 +121,7 @@ export const useAdmin = () => {
         product.variants[i].inventory = variantInventory;
         delete product.variants[i].inventoryLevels;
       }
+      }
 
       const sizesInput = {
         s: false,
@@ -127,22 +131,28 @@ export const useAdmin = () => {
         xxl: false,
       };
 
-      const selectedSizes = Object.keys(product.variants[0].inventory);
+      let selectedSizes = []
+
+      if(product?.variants?.length > 0){
+        selectedSizes = Object.keys(product.variants[0].inventory);
 
       for (const value of selectedSizes) {
         sizesInput[value] = true;
+      }
       }
 
       product.images = images;
       product.sizesInput = sizesInput;
       product.sizes = selectedSizes;
       product.currentInventoryLevels = currentInventoryLevels;
-      product.baseSku = currentInventoryLevels[0].id.split('-')[0];
+      // product.baseSku = currentInventoryLevels[0].id.split('-')[0]; //TODO fix bug when no inventory levels
+      product.baseSku = 'NA';
 
       setIsLoading(false);
-
+console.log(product, 'product in hook');
       return product;
     } catch (err) {
+      console.error(err);
       setError(err);
       setIsLoading(false);
     }

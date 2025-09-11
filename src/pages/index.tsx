@@ -1,10 +1,23 @@
-import HeroSection from "./home-page/hero-section";
-import ProductSliderSection from "./home-page/product-slider-section";
-import SlideshowSection from "./home-page/slideshow-section";
-import CollectionsSection from "./home-page/collections-section";
+import HeroSection from "./home/hero-section";
+import ProductSliderSection from "./home/product-slider-section";
+import SlideshowSection from "./home/slideshow-section";
+import CollectionsSection from "./home/collections-section";
+import { useAuthContext } from "@/hooks/useAuthContext";
+import { useCartContext } from "@/hooks/useCartContext";
+import { Loader } from "@/components/common";
 
 export const Home = () => {
-  return (
+  const { authIsReady } = useAuthContext();
+  const { cartIsReady } = useCartContext();
+
+  return !authIsReady || !cartIsReady ? (
+    <Loader
+      noPortal={false}
+      backdropClassName={""}
+      containerClassName={""}
+      loaderClassName={""}
+    />
+  ) : (
     <>
       <SlideshowSection />
       <ProductSliderSection

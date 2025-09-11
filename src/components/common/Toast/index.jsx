@@ -1,15 +1,13 @@
 import { useState, useRef, useEffect } from 'react';
-import { createPortal } from 'react-dom';
 
 import Backdrop from '../Backdrop';
 
 import { motion, AnimatePresence } from 'framer-motion';
 
 import styles from './index.module.scss';
+import Portal from '../Portal';
 
 const Toast = ({ children, content, stop }) => {
-// const overlayElement = document.getElementById('overlay'); //TODO fix this for nextjs
-  const overlayElement = <p>Fix it</p>
   const [bump, setBump] = useState(false);
   const firstLoad = useRef(true);
 
@@ -37,8 +35,9 @@ const Toast = ({ children, content, stop }) => {
     <AnimatePresence>
       {children && (
         <>
-          {createPortal(
-            <>
+         
+          <Portal containerId='overlay'>
+             <>
               {stop && <Backdrop backdropClassName={styles.backdrop} />}
               <motion.div
                 key="toast"
@@ -51,9 +50,8 @@ const Toast = ({ children, content, stop }) => {
               >
                 {children}
               </motion.div>
-            </>,
-            overlayElement
-          )}
+            </>
+            </Portal>
         </>
       )}
     </AnimatePresence>

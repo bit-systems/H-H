@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useMediaQuery } from 'react-responsive';
 
@@ -8,6 +7,7 @@ import { useKeyDown } from '@/hooks/useKeyDown';
 import { Backdrop, ProductSlider } from '@/components/common';
 
 import styles from './index.module.scss';
+import Portal from '@/components/common/Portal';
 
 const CartModal = ({
   children,
@@ -19,8 +19,6 @@ const CartModal = ({
   modalClassName,
   productSliderModalClassName,
 }) => {
-// const overlayElement = document.getElementById('overlay'); //TODO fix this for nextjs
-  const overlayElement = <p>Fix it</p>
   useKeyDown(() => {
     close();
   }, ['Escape']);
@@ -53,8 +51,10 @@ const CartModal = ({
     <AnimatePresence>
       {children && (
         <>
-          {createPortal(
-            <>
+         
+
+          <Portal containerId='overlay'>
+              <>
               <Backdrop
                 backdropClassName={`${styles.backdrop} ${backdropClassName}`}
               />
@@ -104,9 +104,8 @@ const CartModal = ({
                   </motion.aside>
                 </div>
               </div>
-            </>,
-            overlayElement
-          )}
+            </>
+          </Portal>
         </>
       )}
     </AnimatePresence>

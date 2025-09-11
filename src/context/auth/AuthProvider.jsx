@@ -107,7 +107,7 @@ const AuthProvider = ({ children }) => {
         }
       } else {
         console.log('no user');
-        // await signInAnonymously(auth);
+        await signInAnonymously(auth);
       }
     });
 

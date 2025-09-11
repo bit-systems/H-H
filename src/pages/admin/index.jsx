@@ -37,7 +37,7 @@ const AdminPage = () => {
             <div>Add Product</div>
           </Link>
             <div
-              // onClick={() => setNeedConfirm(true)}
+              onClick={() => setNeedConfirm(true)}
               className={`${styles.option} ${styles.seed}`}
             >
               <div>Seed Data</div>

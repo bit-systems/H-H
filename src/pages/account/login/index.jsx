@@ -8,6 +8,7 @@ import { Loader } from '@/components/common';
 
 import styles from './index.module.scss';
 import { useRouter } from 'next/router';
+import { APP_CONFIG } from '@/utils/constants';
 
 const LoginPage = () => {
   const { state: routerState } = useRouter();
@@ -69,7 +70,7 @@ const LoginPage = () => {
                   </button>
                 </form>
                 <p className={styles.no_account}>
-                  New to Flaakko?{' '}
+                  New to {APP_CONFIG.APP_FULL_NAME}?{' '}
                   <Link href="/account/signup" state={routerState}>
                     Create account
                   </Link>

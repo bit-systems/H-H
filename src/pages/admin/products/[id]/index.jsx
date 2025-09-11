@@ -7,26 +7,31 @@ import { useRouter } from 'next/router';
 
 const AdminEditProduct = () => {
   const { getProduct, isLoading } = useAdmin();
-  const { query:{paramsId} } = useRouter();
+  const { query:{id} , isReady} = useRouter();
 
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
+
+    if(!isReady) return;
+
+    console.log(id, 'id');
     const fetchProduct = async () => {
-      const product = await getProduct(paramsId);
+      const product = await getProduct(id);
+      console.log(product, 'product');
 
       setProduct(product);
     };
 
     fetchProduct();
-  }, []);
+  }, [isReady]);
 
   return (
     <>
       {isLoading && <Loader />}
       {product && (
         <AdminProduct
-          isEditPage={paramsId}
+          isEditPage={id}
           currentInventoryLevels={product.currentInventoryLevels}
           productId={product.id}
           productImages={product.images}

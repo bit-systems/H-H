@@ -3,9 +3,8 @@ import { useState, useEffect } from 'react';
 import { useCollection } from '@/hooks/useCollection';
 import { useAdmin } from '@/hooks/useAdmin';
 
-import { Loader, CenterModal, ConfirmModal } from '@/components/common';
+import { Loader, CenterModal, ConfirmModal , ProductCard} from '@/components/common';
 
-// import ProductCard from '@/components/pages/collection/ProductCard';
 
 import styles from './index.module.scss';
 
@@ -82,10 +81,11 @@ const AdminCollections = () => {
                   actualPrice={variant.actualPrice}
                   type={variant.type}
                   slug={variant.slug}
-                  imageTop={variant.images[0]}
-                  imageBottom={variant.images[1]}
+                  imageTop={''} //TODO fix this
+                  imageBottom={''} //TODO fix this
                   numberOfVariants={variant.numberOfVariants}
                   handleDeleteStart={handleDeleteStart}
+                  allVariants = {[]}
                 />
               ))}
             </div>

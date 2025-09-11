@@ -1,4 +1,3 @@
-import { createPortal } from 'react-dom';
 
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -7,6 +6,7 @@ import { useKeyDown } from '@/hooks/useKeyDown';
 import Backdrop from '../Backdrop';
 
 import styles from './index.module.scss';
+import Portal from '../Portal';
 
 // TODO: use this component
 const Modal = ({
@@ -24,14 +24,15 @@ const Modal = ({
     close();
   }, ['Escape']);
 
-// const overlayElement = document.getElementById('overlay'); //TODO fix this for nextjs
   const overlayElement = <p>Fix it</p>
   return (
     <AnimatePresence>
       {children && (
         <>
-          {createPortal(
-            <>
+        
+
+          <Portal containerId='overlay'>
+  <>
               <Backdrop backdropClassName={backdropClassName} />
               <div
                 onClick={close}
@@ -52,9 +53,9 @@ const Modal = ({
                   </motion.div>
                 </div>
               </div>
-            </>,
-            overlayElement
-          )}
+            </>
+
+          </Portal>
         </>
       )}
     </AnimatePresence>
