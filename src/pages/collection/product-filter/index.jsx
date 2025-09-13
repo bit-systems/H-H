@@ -1,15 +1,15 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from "react";
 
-import { useMediaQuery } from 'react-responsive';
-import { FaSlidersH, FaChevronUp } from 'react-icons/fa';
+import { useMediaQuery } from "react-responsive";
+import { FaSlidersH, FaChevronUp } from "react-icons/fa";
 
-import ReactSlider from 'react-slider';
+import ReactSlider from "react-slider";
 
-import ProductFilterValues from './ProductFilterValues';
-import { DrawerModal } from '@/components/common';
+import ProductFilterValues from "./product-filter-values";
+import { DrawerModal } from "@/components/common";
 
-import styles from './index.module.scss';
-import './sliderStyles.css';
+import styles from "./index.module.scss";
+import "./sliderStyles.css";
 
 const ProductFilter = ({
   allProducts,
@@ -28,7 +28,7 @@ const ProductFilter = ({
     type: [],
     discount: [],
     price: [],
-    sortBy: ['newest', 'price: low-high', 'price: high-low'],
+    sortBy: ["newest", "price: low-high", "price: high-low"],
   });
   const [showOption, setShowOption] = useState(null);
   const [conditionsCount, setConditionsCount] = useState(0);
@@ -45,23 +45,23 @@ const ProductFilter = ({
           return Object.entries(filterConditions).every(
             ([property, conditions]) => {
               if (
-                property === 'color' ||
-                property === 'fit' ||
-                property === 'type' ||
-                property === 'discount'
+                property === "color" ||
+                property === "fit" ||
+                property === "type" ||
+                property === "discount"
               )
                 return conditions.some((condition) => {
                   return condition === product[property];
                 });
 
-              if (property === 'price') {
+              if (property === "price") {
                 return (
                   product.price >= conditions[0] &&
                   product.price <= conditions[1]
                 );
               }
 
-              if (property === 'size') {
+              if (property === "size") {
                 return conditions.some(
                   (condition) => product.availableQuantity[condition] > 0
                 );
@@ -79,10 +79,10 @@ const ProductFilter = ({
     const availableOptions = allProducts.reduce(
       (result, obj) => {
         for (let key in result) {
-          if (key === 'sizes') {
+          if (key === "sizes") {
             const newArr = [...result.sizes, ...obj.sizes];
             result[key] = new Set(newArr);
-          } else if (key === 'price') {
+          } else if (key === "price") {
             result[key].push(obj[key]);
           } else {
             result[key].add(obj[key]);
@@ -174,7 +174,7 @@ const ProductFilter = ({
   const handleResetPriceRange = () => {
     let updatedFilterConditions = { ...filterConditions };
 
-    delete updatedFilterConditions['price'];
+    delete updatedFilterConditions["price"];
     handleUpdateFilterConditions(updatedFilterConditions);
   };
 
@@ -197,7 +197,7 @@ const ProductFilter = ({
   };
 
   const isBigScreen = useMediaQuery({
-    query: '(min-width: 1024px)',
+    query: "(min-width: 1024px)",
   });
 
   useEffect(() => {
@@ -255,11 +255,11 @@ const ProductFilter = ({
                   </div>
                   <div className={styles.option_buttons_wrapper}>
                     <>
-                      {(option === 'color' ||
-                        option === 'size' ||
-                        option === 'fit' ||
-                        option === 'type' ||
-                        option === 'discount') &&
+                      {(option === "color" ||
+                        option === "size" ||
+                        option === "fit" ||
+                        option === "type" ||
+                        option === "discount") &&
                         availableFilterOptions[option]?.map((value) => (
                           <div
                             key={value}
@@ -272,19 +272,19 @@ const ProductFilter = ({
                                 : undefined
                             }`}
                           >
-                            {option === 'color' && (
+                            {option === "color" && (
                               <div
                                 style={{
-                                  height: '15px',
-                                  width: '15px',
+                                  height: "15px",
+                                  width: "15px",
                                   backgroundColor: value,
                                 }}
                               />
                             )}
-                            {option === 'discount' ? `-${value}%` : value}
+                            {option === "discount" ? `-${value}%` : value}
                           </div>
                         ))}
-                      {option === 'sortBy' &&
+                      {option === "sortBy" &&
                         availableFilterOptions[option]?.map((value) => (
                           <div
                             key={value}
@@ -304,7 +304,7 @@ const ProductFilter = ({
                             {value}
                           </div>
                         ))}
-                      {option === 'price' && (
+                      {option === "price" && (
                         <ReactSlider
                           value={
                             filterConditions?.price || [
@@ -366,11 +366,11 @@ const ProductFilter = ({
             <div className={styles.expandable}>
               <div className={styles.option_buttons_wrapper}>
                 <>
-                  {(showOption === 'color' ||
-                    showOption === 'size' ||
-                    showOption === 'fit' ||
-                    showOption === 'type' ||
-                    showOption === 'discount') &&
+                  {(showOption === "color" ||
+                    showOption === "size" ||
+                    showOption === "fit" ||
+                    showOption === "type" ||
+                    showOption === "discount") &&
                     availableFilterOptions[showOption]?.map((value) => (
                       <div
                         key={value}
@@ -383,19 +383,19 @@ const ProductFilter = ({
                             : undefined
                         }`}
                       >
-                        {showOption === 'color' && (
+                        {showOption === "color" && (
                           <div
                             style={{
-                              height: '15px',
-                              width: '15px',
+                              height: "15px",
+                              width: "15px",
                               backgroundColor: value,
                             }}
                           />
                         )}
-                        {showOption === 'discount' ? `-${value}%` : value}
+                        {showOption === "discount" ? `-${value}%` : value}
                       </div>
                     ))}
-                  {showOption === 'sortBy' &&
+                  {showOption === "sortBy" &&
                     availableFilterOptions[showOption]?.map((value) => (
                       <div
                         key={value}
@@ -415,7 +415,7 @@ const ProductFilter = ({
                         {value}
                       </div>
                     ))}
-                  {showOption === 'price' && (
+                  {showOption === "price" && (
                     <ReactSlider
                       value={
                         filterConditions?.price || [
@@ -456,63 +456,63 @@ const ProductFilter = ({
             }`}
           >
             <li
-              onClick={() => handleSelectOption('color')}
+              onClick={() => handleSelectOption("color")}
               className={`${styles.option} ${
-                showOption === 'color' ? styles.is_selected : undefined
+                showOption === "color" ? styles.is_selected : undefined
               }`}
             >
               <span>Color</span>
               <FaChevronUp />
             </li>
             <li
-              onClick={() => handleSelectOption('size')}
+              onClick={() => handleSelectOption("size")}
               className={`${styles.option} ${
-                showOption === 'size' ? styles.is_selected : undefined
+                showOption === "size" ? styles.is_selected : undefined
               }`}
             >
               <span>Size</span>
               <FaChevronUp />
             </li>
             <li
-              onClick={() => handleSelectOption('fit')}
+              onClick={() => handleSelectOption("fit")}
               className={`${styles.option} ${
-                showOption === 'fit' ? styles.is_selected : undefined
+                showOption === "fit" ? styles.is_selected : undefined
               }`}
             >
               <span>Fit</span>
               <FaChevronUp />
             </li>
             <li
-              onClick={() => handleSelectOption('type')}
+              onClick={() => handleSelectOption("type")}
               className={`${styles.option} ${
-                showOption === 'type' ? styles.is_selected : undefined
+                showOption === "type" ? styles.is_selected : undefined
               }`}
             >
               <span>Type</span>
               <FaChevronUp />
             </li>
             <li
-              onClick={() => handleSelectOption('price')}
+              onClick={() => handleSelectOption("price")}
               className={`${styles.option} ${
-                showOption === 'price' ? styles.is_selected : undefined
+                showOption === "price" ? styles.is_selected : undefined
               }`}
             >
               <span>Price</span>
               <FaChevronUp />
             </li>
             <li
-              onClick={() => handleSelectOption('discount')}
+              onClick={() => handleSelectOption("discount")}
               className={`${styles.option} ${
-                showOption === 'discount' ? styles.is_selected : undefined
+                showOption === "discount" ? styles.is_selected : undefined
               }`}
             >
               <span>Discount</span>
               <FaChevronUp />
             </li>
             <li
-              onClick={() => handleSelectOption('sortBy')}
+              onClick={() => handleSelectOption("sortBy")}
               className={`${styles.option} ${
-                showOption === 'sort-by' ? styles.is_selected : undefined
+                showOption === "sort-by" ? styles.is_selected : undefined
               }`}
             >
               <span>Sort By: {sortByDescription}</span>

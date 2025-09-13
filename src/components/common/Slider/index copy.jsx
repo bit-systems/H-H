@@ -1,7 +1,9 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css/pagination";
-
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 
 import MediaContainer from "../MediaContainer";
@@ -9,7 +11,7 @@ import MediaContainer from "../MediaContainer";
 import "./slider.module.css";
 import { useRouter } from "next/router";
 
-const Slider = ({
+const SliderV2 = ({
   slides,
   clearPlaceholders,
   onVariantPick,
@@ -81,10 +83,9 @@ const Slider = ({
             </div>
           </>
         )}
-        {/* TODO: update */}
         {slides?.map((slide) => (
           <SwiperSlide
-            key={slide.id}
+            key={slide.key}
             className={slideClassName}
             onClick={
               onVariantPick
@@ -112,4 +113,4 @@ const Slider = ({
   );
 };
 
-export default Slider;
+export default SliderV2;

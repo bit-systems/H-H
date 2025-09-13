@@ -1,21 +1,21 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback } from "react";
 
-import { FaRedoAlt } from 'react-icons/fa';
+import { FaRedoAlt } from "react-icons/fa";
 
-import { useCollection } from '@/hooks/useCollection';
+import { useCollection } from "@/hooks/useCollection";
 
-import ProductFilter from './ProductFilter';
+import ProductFilter from "./product-filter";
 
-import { ProductCard, Loader } from '@/components/common';
+import { ProductCard, Loader } from "@/components/common";
 
-import styles from './index.module.scss';
-import { useRouter } from 'next/router';
+import styles from "./index.module.scss";
+import { useRouter } from "next/router";
 
 const validSlugs = [
-  'products',
-  't-shirts',
-  'hoodies-sweatshirts',
-  'accessories',
+  "products",
+  "t-shirts",
+  "hoodies-sweatshirts",
+  "accessories",
 ];
 
 const CollectionPage = () => {
@@ -29,9 +29,9 @@ const CollectionPage = () => {
   const [filteredProducts, setFilteredProducts] = useState(null);
   const [filterConditions, setFilterConditions] = useState({});
   const [sortBy, setSortBy] = useState({
-    field: 'createdAt',
-    direction: 'asc',
-    description: 'newest',
+    field: "createdAt",
+    direction: "asc",
+    description: "newest",
   });
   const [filtering, setIsFiltering] = useState(false);
 
@@ -42,14 +42,14 @@ const CollectionPage = () => {
     if (!newSlug.current) {
       newSlug.current = true;
       setSortBy({
-        field: 'createdAt',
-        direction: 'asc',
-        description: 'newest',
+        field: "createdAt",
+        direction: "asc",
+        description: "newest",
       });
     }
 
     if (!validSlugs.includes(slugId)) {
-      navigate.push('/');
+      navigate.push("/");
     }
 
     const fetchProductVariants = async () => {
@@ -126,22 +126,22 @@ const CollectionPage = () => {
   };
 
   const handleSortBy = (description) => {
-    if (description === 'newest') {
+    if (description === "newest") {
       setSortBy({
-        field: 'createdAt',
-        direction: 'asc',
+        field: "createdAt",
+        direction: "asc",
         description,
       });
-    } else if (description === 'price: low-high') {
+    } else if (description === "price: low-high") {
       setSortBy({
-        field: 'price',
-        direction: 'asc',
+        field: "price",
+        direction: "asc",
         description,
       });
-    } else if (description === 'price: high-low') {
+    } else if (description === "price: high-low") {
       setSortBy({
-        field: 'price',
-        direction: 'desc',
+        field: "price",
+        direction: "desc",
         description,
       });
     }

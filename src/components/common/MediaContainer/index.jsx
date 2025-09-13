@@ -1,8 +1,8 @@
-import { useState, useRef } from 'react';
+import { useState, useRef } from "react";
 
-import  Link  from 'next/link';
+import Link from "next/link";
 
-import styles from './index.module.scss';
+import styles from "./index.module.scss";
 
 const MediaContainer = ({
   image,
@@ -20,6 +20,7 @@ const MediaContainer = ({
   placeholderClassName,
   mediaClassName,
 }) => {
+  console.log(image, "oooo");
   const placeholdersCleared = useRef(false);
 
   const [mediaIsLoading, setMediaIsLoading] = useState(true);

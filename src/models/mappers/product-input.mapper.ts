@@ -6,12 +6,21 @@ export const mapInputToProduct = (input: Record<string, unknown>): Product => {
     id: (input.id || "") as string,
     title: (input.title || "") as string,
     subTitle: (input.subTitle || "") as string,
-    attributes: (input.attributes || []) as Product["attributes"],
+    attributes: ((input.attributes || []) as Product["attributes"]).map(
+      (attr) => ({
+        label: attr.label,
+        value: attr.value,
+      })
+    ),
     brand: (input.brand || "") as string,
     description: (input.description || "") as string,
     category: (input.category || "") as string,
     createdAt: (input.createdAt as string) ?? new Date().toISOString(),
-    images: (input.images || []) as Product["images"],
+    images: ((input.images || []) as Product["images"]).map((img) => ({
+      id: img.id,
+      key: img.key,
+      name: img.name,
+    })),
     productCategory: (input.productCategory || "") as string,
     productType: (input.productType || "") as string,
     status: (input.status || "draft") as "active" | "inactive" | "draft",

@@ -66,7 +66,8 @@ export async function POST(request: Request) {
     }
     const ext = path.extname(file.name); // ".png"
 
-    const key = `${file?.name}-${Date.now()}.${ext}`;
+    const fileNameWithoutExt = path.basename(file.name, ext);
+    const key = `${fileNameWithoutExt}-${Date.now()}${ext}`;
     await upload({
       key,
       file,

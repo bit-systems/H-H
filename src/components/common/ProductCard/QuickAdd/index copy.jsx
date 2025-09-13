@@ -4,7 +4,7 @@ import { FaPlus } from "react-icons/fa";
 
 import styles from "./index.module.scss";
 
-const QuickAdd = ({
+const QuickAddV2 = ({
   isSmallContainer,
   skus,
   handleAddItem,
@@ -17,7 +17,9 @@ const QuickAdd = ({
   topContainerClassName,
   bottomContainerClassName,
   sizesSliderClassName,
+  variant,
 }) => {
+  console.log(skus, "sssssss", isSmallContainer, variant);
   if (isSmallContainer) {
     return (
       <>
@@ -30,19 +32,18 @@ const QuickAdd = ({
           onTouchEnd={onTouchEnd}
           className={sizesSliderClassName}
         >
-          {skus?.length > 1 ? (
+          {variant.sizes?.length > 1 ? (
             <div
               className={`${styles.sizes_wrapper} ${
                 isLoading ? styles.center : undefined
               }`}
             >
-              {skus?.map((sku) => (
+              {variant.sizes?.map((sku) => (
                 <SwiperSlide
-                  key={sku.skuId}
+                  key={sku}
                   onClick={
                     !isLoading && sku.quantity > 0
-                      ? () =>
-                          handleAddItem({ skuId: sku.skuId, size: sku.size })
+                      ? () => handleAddItem({ skuId: variant.id, size: sku })
                       : undefined
                   }
                   className={`
@@ -50,13 +51,13 @@ const QuickAdd = ({
                       sku.quantity > 0 ? styles.size : styles.size_no_quantity
                     } ${isLoading && styles.no_show}`}
                 >
-                  {sku.size}
+                  {sku}
                 </SwiperSlide>
               ))}
             </div>
           ) : (
             <div className={styles.single_size_wrapper}>
-              {skus?.map((singleSku) => (
+              {variant.sizes?.map((singleSku) => (
                 <SwiperSlide
                   key={singleSku.skuId}
                   onClick={
@@ -102,42 +103,41 @@ const QuickAdd = ({
           </span>
         </div>
         <div className={bottomContainerClassName}>
-          {skus?.length > 1 ? (
+          {variant.sizes?.length > 1 ? (
             <div
               className={`${styles.sizes_wrapper} ${
                 isLoading ? styles.center : undefined
               }`}
             >
-              {skus?.map((sku) => (
+              {variant.sizes?.map((sku) => (
                 <div
-                  key={sku.skuId}
+                  key={sku}
                   onClick={
-                    !isLoading && sku.quantity > 0
-                      ? () =>
-                          handleAddItem({ skuId: sku.skuId, size: sku.size })
+                    !isLoading && variant.stock > 0
+                      ? () => handleAddItem({ skuId: variant.id, size: sku })
                       : undefined
                   }
                   className={`
                     ${
-                      sku.quantity > 0 ? styles.size : styles.size_no_quantity
+                      variant.stock > 0 ? styles.size : styles.size_no_quantity
                     } ${isLoading && styles.no_show}`}
                 >
-                  {sku.size}
+                  {sku}
                 </div>
               ))}
               {isLoading && <div className={styles.loader}></div>}
             </div>
           ) : (
             <div className={styles.single_size_wrapper}>
-              {skus?.map((singleSku) => (
+              {variant.sizes?.map((singleSku) => (
                 <div
-                  key={singleSku.skuId}
+                  key={size}
                   onClick={
                     !isLoading && singleSku.quantity > 0
                       ? () =>
                           handleAddItem({
-                            skuId: singleSku.skuId,
-                            size: singleSku.size,
+                            skuId: variant.id,
+                            size: singleSku,
                           })
                       : undefined
                   }
@@ -159,4 +159,4 @@ const QuickAdd = ({
   );
 };
 
-export default QuickAdd;
+export default QuickAddV2;

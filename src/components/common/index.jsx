@@ -15,6 +15,7 @@ export { default as ProductCard } from "./ProductCard";
 export { default as ProductCardV2 } from "./ProductCard/index copy";
 export { default as ProductSlider } from "./ProductSlider";
 export { default as Slider } from "./Slider";
+export { default as SliderV2 } from "./Slider/index copy";
 export { default as TagsInput } from "./TagsInput";
 export { default as Toast } from "./Toast";
 export { default as ToastMessage } from "./ToastMessage";

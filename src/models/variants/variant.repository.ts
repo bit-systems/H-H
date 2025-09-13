@@ -6,7 +6,12 @@ import {
   deleteDoc,
   doc,
   DocumentReference,
+  getDoc,
+  getDocs,
+  query,
+  setDoc,
   updateDoc,
+  where,
 } from "firebase/firestore";
 import { Variant } from "./variant.model";
 
@@ -17,17 +22,19 @@ const createVariant = async (variant: Variant) => {
 
   const variantWithId = { ...variant, id: newProductRef.id };
   console.log(variantWithId, "variantWithId");
-  await addDoc(variantRef, variantWithId);
+  await setDoc(newProductRef, variantWithId);
   return variantWithId;
 };
 
 const updateVariant = async (variant: Variant) => {
+  console.log(variant, "variant in repo");
   if (!variant.id) {
-    throw new Error("Variant ID is required for update.");
+    await createVariant(variant);
+    return;
   }
 
   const variantDoc = doc(variantRef, variant.id);
-  const variantWithoutId = { ...variant, id: undefined };
+  const { id, ...variantWithoutId } = variant;
   await updateDoc(variantDoc, variantWithoutId);
 };
 
@@ -37,6 +44,7 @@ const deleteVariant = async (id: string): Promise<void> => {
 };
 
 export const createVariants = async (variants: Variant[]) => {
+  console.log(variants, "variants in repo");
   const creationPromises = variants.map((variant) => createVariant(variant));
   return Promise.all(creationPromises);
 };
@@ -49,4 +57,20 @@ export const updateVariants = async (variants: Variant[]) => {
 export const deleteVariants = async (ids: string[]): Promise<void[]> => {
   const deletePromises = ids.map((id) => deleteVariant(id));
   return Promise.all(deletePromises);
+};
+
+export const getVariants = async (id: string): Promise<Variant | null> => {
+  console.log(id, "id in repo");
+  const snapshot = await getDoc(doc(variantRef, id));
+
+  return snapshot.exists() ? snapshot.data() : null;
+};
+
+export const getVariantsByProductId = async (productId: string) => {
+  const q = query(variantRef, where("productId", "==", productId));
+  const snapshot = await getDocs(q);
+
+  return snapshot.docs.map((doc) => ({
+    ...doc.data(),
+  }));
 };

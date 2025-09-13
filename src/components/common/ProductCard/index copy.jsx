@@ -3,8 +3,8 @@ import { Navigation } from "swiper";
 
 import { useCart } from "@/hooks/useCart";
 
-import QuickAdd from "./QuickAdd";
-import { Button, Slider } from "@/components/common";
+import QuickAddV2 from "./QuickAdd/index copy";
+import { Button, SliderV2 } from "@/components/common";
 
 import { formatPrice } from "@/helpers/format";
 
@@ -15,15 +15,10 @@ const ProductCardV2 = ({
   productId,
   variantId,
   model,
-  color,
-  currentPrice,
   actualPrice,
   type,
-  discount,
-  slides,
   numberOfVariants,
   handleDeleteStart,
-  skus,
   isSoldOut,
   allVariants,
   nested,
@@ -31,6 +26,7 @@ const ProductCardV2 = ({
   onTouchEnd,
   expandableClassName,
   onCardPick,
+  product,
 }) => {
   const location = useRouter();
   const isAdmin = location.pathname.split("/")[1] === "admin";
@@ -38,13 +34,14 @@ const ProductCardV2 = ({
   const { addItem, isLoading } = useCart();
 
   const [currentVariant, setCurrentVariant] = useState({
-    variantId,
-    color,
-    currentPrice,
-    discount,
-    slides,
-    skus,
+    variantId: product.variants[0].id,
+    color: product.variants[0].color,
+    currentPrice: product.variants[0].price,
+    discount: product.variants[0].salePrice,
+    slides: product.images,
+    skus: product.variants[0].sizes,
     isSoldOut,
+    ...product.variants[0],
   });
 
   const [showDetailsPlaceholder, setDetailsShowPlaceholder] = useState(true);
@@ -72,17 +69,18 @@ const ProductCardV2 = ({
 
   const handlePickVariant = ({ variantId }) => {
     const selectedVariant = allVariants.find(
-      (variant) => variant.variantId === variantId
+      (variant) => variant.id === variantId
     );
 
     setCurrentVariant({
       variantId,
       color: selectedVariant.color,
       currentPrice: selectedVariant.price,
-      discount: selectedVariant.discount,
+      discount: selectedVariant.salePrice,
       slides: selectedVariant.slides,
-      skus: selectedVariant.skus,
+      skus: selectedVariant.sizes,
       isSoldOut: selectedVariant.isSoldOut,
+      ...selectedVariant,
     });
   };
 
@@ -101,14 +99,7 @@ const ProductCardV2 = ({
     });
   };
 
-  // TODO: udpate
-  const allVariantSlides = allVariants.map((variant) => ({
-    ...variant.slides[0],
-    id: variant.variantId,
-    url: null,
-    // variantId: variant.variantId,
-  }));
-  // const allVariantSlides = [];
+  const allVariantSlides = product.slides;
 
   return (
     <>
@@ -132,11 +123,11 @@ const ProductCardV2 = ({
         )}
         <div className={styles.slider_container}>
           <>
-            <Slider
+            <SliderV2
               onCardPick={onCardPick}
               clearPlaceholders={() => setDetailsShowPlaceholder(false)}
               showPlaceholder={showDetailsPlaceholder}
-              // slides={currentVariant.slides} //TODO fix this
+              slides={currentVariant.slides} //TODO fix this
               toPage={"/products/"}
               slidesPerView={1}
               spaceBetween={0}
@@ -157,10 +148,10 @@ const ProductCardV2 = ({
               mediaContainerClassName={styles.image_container}
               imageFillClassName={styles.image_fill}
               imageClassName={styles.image}
-              slides={[]}
+              // slides={[]}
             />
             {!showDetailsPlaceholder && !isSmallContainer && (
-              <QuickAdd
+              <QuickAddV2
                 skus={currentVariant.skus}
                 handleAddItem={handleAddItem}
                 isLoading={isLoading}
@@ -168,6 +159,7 @@ const ProductCardV2 = ({
                 wrapperClassName={styles.quick_add_wrapper}
                 topContainerClassName={styles.quick_add_top}
                 bottomContainerClassName={styles.quick_add_bottom}
+                variant={currentVariant}
               />
             )}
           </>
@@ -180,11 +172,11 @@ const ProductCardV2 = ({
           >
             {!isSmallContainer ? (
               <div className={`${styles.expandable} ${expandableClassName}`}>
-                <Slider
+                <SliderV2
                   clearPlaceholders={() => setDetailsShowPlaceholder(false)}
                   onVariantPick={handlePickVariant}
                   showPlaceholder={showDetailsPlaceholder}
-                  slides={allVariantSlides}
+                  slides={currentVariant.slides}
                   nested={nested}
                   slidesPerView="auto"
                   spaceBetween={5}
@@ -202,7 +194,7 @@ const ProductCardV2 = ({
               </div>
             ) : (
               <div className={styles.small_expandable}>
-                <QuickAdd
+                <QuickAddV2
                   isSmallContainer={true}
                   skus={currentVariant.skus}
                   handleAddItem={handleAddItem}
@@ -247,14 +239,14 @@ const ProductCardV2 = ({
                   {currentVariant.currentPrice < actualPrice ? (
                     <>
                       <span className={styles.discounted_price}>
-                        ${formatPrice(currentVariant.currentPrice)}
+                        {formatPrice(currentVariant.currentPrice)}
                       </span>
                       <span className={styles.crossed_price}>
-                        ${formatPrice(actualPrice)}
+                        {formatPrice(actualPrice)}
                       </span>
                     </>
                   ) : (
-                    <span>${formatPrice(currentVariant.currentPrice)}</span>
+                    <span>{formatPrice(currentVariant.currentPrice)}</span>
                   )}
                 </li>
               </>

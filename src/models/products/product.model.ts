@@ -8,7 +8,7 @@ export interface ProductModel {
   description: string; // detailed description
   variantSlugs: string[]; // generated slugs for each variant
   category: string; // product category men, women, kids, etc. not needed
-  images: { id: string; name: string; url?: string }[];
+  images: { id: string; name: string; key: string; src?: string }[];
   status: "active" | "inactive" | "draft";
   createdAt: string;
   updatedAt: string;

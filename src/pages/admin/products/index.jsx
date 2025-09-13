@@ -17,22 +17,32 @@ const AdminCollections = () => {
   const { getCollection } = useCollection();
   const { deleteVariant, isLoading } = useAdmin();
 
-  const [variants, setVariants] = useState(null);
+  const [products, setProducts] = useState(null);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
   const [productToBeDeleted, setProductToBeDeleted] = useState(null);
 
   useEffect(() => {
-    if (!variants) {
+    if (!products) {
       const fetchVariants = async () => {
-        const fetchedVariants = await getAllProducts();
-        console.log(fetchedVariants, "fetchedVariants");
-        setVariants(fetchedVariants);
+        const fetchedProducts = await getAllProducts();
+        console.log(fetchedProducts, "fetchedVariants");
+
+        const mappedProducts = fetchedProducts.map((p) => ({
+          ...p,
+          slides: p.images,
+          variants: p.variants.map((v) => ({
+            ...v,
+            slides: v.images,
+          })),
+        }));
+
+        setProducts(() => [...mappedProducts]);
       };
 
       fetchVariants();
     }
-  }, [variants]);
+  }, [products]);
 
   const handleDeleteStart = ({ productId, variantId }) => {
     setProductToBeDeleted({ productId, variantId });
@@ -66,29 +76,30 @@ const AdminCollections = () => {
           />
         )}
       </CenterModal>
-      {(!variants || isLoading) && <Loader />}
-      {variants && (
+      {(!products || isLoading) && <Loader />}
+      {products && (
         <section>
           <div className={`${styles.container} main-container`}>
-            <h1>Admin Products/Variants</h1>
+            <h1>Admin Products</h1>
             <div className={styles.products_wrapper}>
-              {variants.map((variant) => (
+              {products.map((product) => (
                 <ProductCardV2
-                  key={variant.variantId}
-                  variantId={variant.variantId}
-                  productId={variant.id}
-                  model={variant.title}
-                  color={variant.color}
-                  colorDisplay={variant.colorDisplay}
-                  currentPrice={variant.currentPrice}
-                  actualPrice={variant.actualPrice}
-                  type={variant.type}
-                  slug={variant.slug}
-                  imageTop={""} //TODO fix this
-                  imageBottom={""} //TODO fix this
-                  numberOfVariants={variant.numberOfVariants}
+                  key={product.id}
+                  // variantId={product}
+                  productId={product.id}
+                  model={product.title}
+                  color={product.color}
+                  colorDisplay={product.colorDisplay}
+                  currentPrice={product.currentPrice}
+                  actualPrice={product.actualPrice}
+                  type={product.type}
+                  slug={product.slug}
+                  imageTop={product.images[0]} //TODO fix this
+                  imageBottom={product.images[1]} //TODO fix this
+                  numberOfVariants={product.variants.length}
                   handleDeleteStart={handleDeleteStart}
-                  allVariants={[]}
+                  product={product}
+                  allVariants={product.variants}
                 />
               ))}
             </div>

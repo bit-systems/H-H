@@ -28,19 +28,14 @@ const VariantFormV2 = ({
 
   const [isEditing, setIsEditing] = useState(false);
 
-  const [variantTitleInventory, setVariantTitleInventory] = useState("");
-
   const [selectedImages, setSelectedImages] = useState([]);
-  const [sizes, setSizes] = useState([]);
+  const [sizes, setSizes] = useState(variant?.sizes || []);
 
   useEffect(() => {
-    const availableImageNames = images.map((image) => image.name);
-    const updatedSelectedImages = selectedImages.filter((selectedImage) =>
-      availableImageNames.includes(selectedImage.name)
-    );
+    console.log(variant?.images, "uu");
 
-    setSelectedImages([]); // during edit fill them from input
-  }, [images]);
+    setSelectedImages(variant?.images ?? []); // during edit fill them from input
+  }, [variant?.images]);
 
   const handleEditStart = () => {
     setIsEditing(true);
@@ -86,20 +81,14 @@ const VariantFormV2 = ({
     setIsSelectorOpen(false);
   };
 
-  let variantTitleColor = variant.colorDisplay
-    ? variant.colorDisplay
-    : variant.color;
-
-  let variantTitle = `Variant ${variantIndex + 1}: ${productInput.type} ${
-    productInput.model
-  } ${variantTitleColor} ${variantTitleInventory}`;
+  let variantTitle = `Variant ${variantIndex + 1}`;
 
   let controlsContainerEditingStyles = isEditing
     ? styles.controls_container_editing
     : "";
 
   let tableWrapperEditingStyles = isEditing ? styles.table_wrapper_editing : "";
-
+  console.log(selectedImages, "selected images");
   return (
     <>
       <CenterModal close={closeConfirm} modalClassName={styles.confirm_modal}>

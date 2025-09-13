@@ -1,8 +1,8 @@
-import moment from 'moment';
+import moment from "moment";
 
 export const formatPrice = (number) => {
   // return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-  return number + '.00';
+  return "₹ " + number + ".00";
 };
 
 export const formatDiscount = ({ currentPrice, actualPrice }) => {
@@ -10,7 +10,7 @@ export const formatDiscount = ({ currentPrice, actualPrice }) => {
     (currentPrice / actualPrice - 1) * -100
   );
   const roundedDiscountPercentage = Math.round(discountPercentage / 5) * 5;
-  return '-' + roundedDiscountPercentage + '%';
+  return "-" + roundedDiscountPercentage + "%";
 
   // return '-' + Math.round((currentPrice / actualPrice - 1) * -100) + '%';
 };
@@ -35,22 +35,22 @@ export const formatCardNumber = (value) => {
   //     .trim();
   //   setCardNumberInput(input);
   // }
-  const v = value.replace(/[^0-9]/gi, '').substr(0, 16);
+  const v = value.replace(/[^0-9]/gi, "").substr(0, 16);
 
   const parts = [];
   for (let i = 0; i < v.length; i += 4) {
     parts.push(v.substr(i, 4));
   }
-  return parts.length > 1 ? parts.join(' ') : value;
+  return parts.length > 1 ? parts.join(" ") : value;
 };
 
 export const formatExpiryDate = (value) => {
   const expiryDate = value;
 
   const expiryDateFormatted =
-    expiryDate.replace(/[^\d]/g, '').substring(0, 2) +
-    (expiryDate.length > 2 ? '/' : '') +
-    expiryDate.replace(/[^\d]/g, '').substring(2, 4);
+    expiryDate.replace(/[^\d]/g, "").substring(0, 2) +
+    (expiryDate.length > 2 ? "/" : "") +
+    expiryDate.replace(/[^\d]/g, "").substring(2, 4);
 
   return expiryDateFormatted;
 };
@@ -58,7 +58,7 @@ export const formatExpiryDate = (value) => {
 export const formatCvv = (value) => {
   const cvv = value;
 
-  const cvvFormatted = cvv.replace(/[^\d]/g, '').substring(0, 3);
+  const cvvFormatted = cvv.replace(/[^\d]/g, "").substring(0, 3);
 
   return cvvFormatted;
 };
@@ -66,5 +66,5 @@ export const formatCvv = (value) => {
 export const formatDate = (value) => {
   const timestamp = `${value.seconds}.${value.nanoseconds}`;
 
-  return moment.unix(parseFloat(timestamp)).format('MM/DD/YY');
+  return moment.unix(parseFloat(timestamp)).format("MM/DD/YY");
 };

@@ -1,11 +1,14 @@
 import { DragDropFileInput, TagsInput } from "@/components/common";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import styles from "./index.module.scss";
 import AttributesForm from "../attributes-form/indxe";
 import Variants from "../Variants/index copy";
-import { createProduct } from "@/models/products/product.repository";
+import {
+  createProduct,
+  updateProduct,
+} from "@/models/products/product.repository";
 import { mapInputToProduct } from "@/models/mappers/product-input.mapper";
 const ProductForm = ({
   isEditPage,
@@ -13,9 +16,10 @@ const ProductForm = ({
   productInput,
   handleImagesInput,
   handleDeleteImage,
-  handleProductSubmit,
+  productId,
 }) => {
   // s
+  const { register, handleSubmit, control, setValue } = useForm();
 
   const [tags, setTags] = useState([]);
   const [tagValue, setTagValue] = useState();
@@ -44,8 +48,33 @@ const ProductForm = ({
     setTags(() => [...updatedTags]);
   };
 
-  const { register, handleSubmit, control, setValue } = useForm();
-  const onSubmit = (data) => createProduct(mapInputToProduct(data));
+  useEffect(() => {
+    if (productId) {
+      console.log(productId, "pp");
+      setValue("title", productInput.title);
+      setValue("subTitle", productInput.subTitle);
+      setValue("brand", productInput.brand);
+      setValue("description", productInput.description);
+      setValue("category", productInput.category);
+      setValue("status", productInput.status);
+      setValue("productCategory", productInput.productCategory);
+      setValue("productType", productInput.productType);
+      setValue("attributes", productInput.attributes || []);
+      setValue("variants", productInput.variants || []);
+      setTags(() => [...productInput.tags]);
+    }
+  }, []);
+
+  const onSubmit = (data) => {
+    data.images = images;
+    data.tags = tags;
+    console.log(data, "data in product form");
+    if (isEditPage) {
+      updateProduct(productId, mapInputToProduct(data));
+    } else {
+      createProduct(mapInputToProduct(data));
+    }
+  };
   return (
     <>
       <div className={styles.form_wrapper}>
@@ -143,23 +172,6 @@ const ProductForm = ({
               })}
             />
           </label>
-          {/* <fieldset>
-            <legend>Sizes:</legend>
-            <div className={styles.checkbox_wrapper}>
-              {Object.keys(productInput.sizes).map((key) => (
-                <label key={key}>
-                  <input
-                    type="checkbox"
-                    value={key}
-                    checked={productInput.sizes[key]}
-                    onChange={handleSizesInput}
-                  />
-                  <span>{key.toUpperCase()}</span>
-                </label>
-              ))}
-            </div>
-          </fieldset> */}
-
           <AttributesForm control={control} register={register} />
 
           <Variants
