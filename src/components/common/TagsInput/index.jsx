@@ -13,11 +13,11 @@ const TagsInput = ({
   return (
     <div className={`${styles.tags_input} ${className}`}>
       <ul>
-        {tags.map((tag) => (
-          <li key={tag.content} className={styles.tag}>
-            <span>{tag.content}</span>
+        {tags.map((tag, i) => (
+          <li key={tag} className={styles.tag}>
+            <span>{tag}</span>
             <i
-              onClick={() => handleDeleteTags(tag.content)}
+              onClick={() => handleDeleteTags(tag, i)}
               className={styles.delete}
             >
               <FaTimesCircle />

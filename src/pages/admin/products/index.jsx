@@ -1,12 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
-import { useCollection } from '@/hooks/useCollection';
-import { useAdmin } from '@/hooks/useAdmin';
+import { useCollection } from "@/hooks/useCollection";
+import { useAdmin } from "@/hooks/useAdmin";
+import { getAllProducts } from "@/models/products/product.repository";
 
-import { Loader, CenterModal, ConfirmModal , ProductCard} from '@/components/common';
+import {
+  Loader,
+  CenterModal,
+  ConfirmModal,
+  ProductCardV2,
+} from "@/components/common";
 
-
-import styles from './index.module.scss';
+import styles from "./index.module.scss";
 
 const AdminCollections = () => {
   const { getCollection } = useCollection();
@@ -20,7 +25,8 @@ const AdminCollections = () => {
   useEffect(() => {
     if (!variants) {
       const fetchVariants = async () => {
-        const fetchedVariants = await getCollection();
+        const fetchedVariants = await getAllProducts();
+        console.log(fetchedVariants, "fetchedVariants");
         setVariants(fetchedVariants);
       };
 
@@ -45,9 +51,6 @@ const AdminCollections = () => {
     setProductToBeDeleted(null);
   };
 
-  // Agregar filter de categorias para admin
-  useEffect(() => {}, []);
-
   return (
     <>
       <CenterModal
@@ -70,22 +73,22 @@ const AdminCollections = () => {
             <h1>Admin Products/Variants</h1>
             <div className={styles.products_wrapper}>
               {variants.map((variant) => (
-                <ProductCard
+                <ProductCardV2
                   key={variant.variantId}
                   variantId={variant.variantId}
-                  productId={variant.productId}
-                  model={variant.model}
+                  productId={variant.id}
+                  model={variant.title}
                   color={variant.color}
                   colorDisplay={variant.colorDisplay}
                   currentPrice={variant.currentPrice}
                   actualPrice={variant.actualPrice}
                   type={variant.type}
                   slug={variant.slug}
-                  imageTop={''} //TODO fix this
-                  imageBottom={''} //TODO fix this
+                  imageTop={""} //TODO fix this
+                  imageBottom={""} //TODO fix this
                   numberOfVariants={variant.numberOfVariants}
                   handleDeleteStart={handleDeleteStart}
-                  allVariants = {[]}
+                  allVariants={[]}
                 />
               ))}
             </div>

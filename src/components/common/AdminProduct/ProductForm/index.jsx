@@ -1,30 +1,57 @@
-import { DragDropFileInput, TagsInput } from '@/components/common';
+import { DragDropFileInput, TagsInput } from "@/components/common";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
 
-import styles from './index.module.scss';
-
+import styles from "./index.module.scss";
+import AttributesForm from "../attributes-form/indxe";
+import Variants from "../Variants/index copy";
+import { createProduct } from "@/models/products/product.repository";
+import { mapInputToProduct } from "@/models/mappers/product-input.mapper";
 const ProductForm = ({
   isEditPage,
   images,
   productInput,
-  tags,
   handleImagesInput,
   handleDeleteImage,
-  handleModelInput,
-  handleTypeInput,
-  handleCollectionInput,
-  handleDescriptionInput,
-  handleTagsInput,
-  handleDeleteTags,
-  handleSkuInput,
-  handleSizesInput,
   handleProductSubmit,
 }) => {
+  // s
+
+  const [tags, setTags] = useState([]);
+  const [tagValue, setTagValue] = useState();
+
+  const handleTagsInput = (e) => {
+    if (e.key === ",") {
+      const val = e.target.value.split(",")[0].toLowerCase();
+      const checkForExistingTag = tags.find((tag) => tag === val);
+
+      if (checkForExistingTag) {
+        setTagValue("");
+        return;
+      }
+
+      const updatedTags = tags;
+      updatedTags.push(val);
+      setTags(() => [...updatedTags]);
+      setTagValue("");
+      return;
+    }
+    setTagValue(e.target.value);
+  };
+
+  const handleDeleteTags = (tag, i) => {
+    const updatedTags = tags.filter((t) => t !== tag);
+    setTags(() => [...updatedTags]);
+  };
+
+  const { register, handleSubmit, control, setValue } = useForm();
+  const onSubmit = (data) => createProduct(mapInputToProduct(data));
   return (
     <>
       <div className={styles.form_wrapper}>
         <form
           id="productForm"
-          onSubmit={handleProductSubmit}
+          onSubmit={handleSubmit(onSubmit)}
           className={styles.form}
         >
           <div className={styles.images_wrapper}>
@@ -42,76 +69,81 @@ const ProductForm = ({
               needsConfirmOnDelete={true}
               additionalConfirmText={
                 isEditPage
-                  ? 'These changes will only be saved if you click on update button at the end of form!'
-                  : 'File will be deleted once you press confirm!'
+                  ? "These changes will only be saved if you click on update button at the end of form!"
+                  : "File will be deleted once you press confirm!"
               }
               previewImages={true}
             />
           </div>
           <label className={styles.label}>
-            <span>Model:</span>
-            <input
-              type="text"
-              onChange={handleModelInput}
-              value={productInput.model}
-              required
-            />
+            <span>Title:</span>
+
+            <input type="text" {...register("title", { required: true })} />
           </label>
           <label className={styles.label}>
-            <span>Type:</span>
-            <input
-              type="text"
-              onChange={handleTypeInput}
-              value={productInput.type}
-              required
-            />
+            <span>Sub Title:</span>
+            <input type="text" {...register("subTitle", { required: true })} />
           </label>
+
           <label className={styles.label}>
-            <span>Collection:</span>
-            <select
-              onChange={handleCollectionInput}
-              value={productInput.collection}
-              required
-            >
-              <option value="" disabled>
-                Select your option
-              </option>
-              <option value="remeras">remeras</option>
-              <option value="buzos">buzos</option>
-              <option value="accesorios">accesorios</option>
-            </select>
+            <span>Brand:</span>
+            <input type="text" {...register("brand", { required: true })} />
           </label>
+
           <label className={styles.label}>
             <span>Description:</span>
             <textarea
-              type="text"
-              onChange={handleDescriptionInput}
-              value={productInput.description}
-              required
+              id="description"
+              {...register("description", {
+                required: "Description is required.",
+              })}
             />
           </label>
+          <label className={styles.label}>
+            <span>Category:</span>
+            <select {...register("category", { required: true })}>
+              <option value="men">female</option>
+              <option value="women">male</option>
+            </select>
+          </label>
+          <label className={styles.label}>
+            <span>Status:</span>
+            <select {...register("status", { required: true })}>
+              <option value="active">Active</option>
+              <option value="inactive">In Active</option>
+            </select>
+          </label>
+
           <label htmlFor="tags" className={styles.label}>
             <span>Tags:</span>
           </label>
           <TagsInput
             id="tags"
             tags={tags}
-            tagsInput={productInput.tags}
+            tagsInput={tagValue}
             handleTagsInput={handleTagsInput}
             handleDeleteTags={handleDeleteTags}
             className={styles.tags_input}
           />
           <label className={styles.label}>
-            <span>SKU:</span>
+            <span>Product Category:</span>
             <input
               type="text"
-              onChange={handleSkuInput}
-              value={productInput.sku}
-              maxLength="6"
-              required
+              {...register("productCategory", {
+                required: "Description is required.",
+              })}
             />
           </label>
-          <fieldset>
+          <label className={styles.label}>
+            <span>Product Type:</span>
+            <input
+              type="text"
+              {...register("productType", {
+                required: "Product type is required.",
+              })}
+            />
+          </label>
+          {/* <fieldset>
             <legend>Sizes:</legend>
             <div className={styles.checkbox_wrapper}>
               {Object.keys(productInput.sizes).map((key) => (
@@ -126,7 +158,22 @@ const ProductForm = ({
                 </label>
               ))}
             </div>
-          </fieldset>
+          </fieldset> */}
+
+          <AttributesForm control={control} register={register} />
+
+          <Variants
+            productInput={productInput}
+            variants={[]}
+            images={images}
+            control={control}
+            register={register}
+            setValue={setValue}
+            // handleAddVariant={handleAddVariant}
+            // handleEditVariantCount={handleEditVariantCount}
+            // handleDeleteVariant={handleDeleteVariant}
+            // handleVariantEditSubmit={handleVariantEditSubmit}
+          />
         </form>
       </div>
     </>

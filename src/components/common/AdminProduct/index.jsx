@@ -1,17 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
+import { v4 as uuid } from "uuid";
 
-import { v4 as uuid } from 'uuid';
+import { useAdmin } from "@/hooks/useAdmin";
+import { postApi } from "@/fetch-api/fetch-api";
 
-import { useAdmin } from '@/hooks/useAdmin';
+import ProductForm from "./ProductForm";
 
-import ProductForm from './ProductForm';
-import Variants from './Variants';
+import { Button, Loader, CenterModal, ConfirmModal } from "@/components/common";
 
-import { Button, Loader, CenterModal, ConfirmModal } from '@/components/common';
-
-import styles from './index.module.scss';
-import { useRouter } from 'next/router';
+import styles from "./index.module.scss";
+import { useRouter } from "next/router";
 
 const AdminProduct = ({
   isEditPage,
@@ -24,9 +23,7 @@ const AdminProduct = ({
   productDescription,
   productBaseSku,
   productSizesInput,
-  productTags,
   productVariants,
-  productSizes,
 }) => {
   const navigate = useRouter();
   const [navigation, setNavigation] = useState(false);
@@ -44,12 +41,12 @@ const AdminProduct = ({
   const [images, setImages] = useState(productImages || []);
 
   const [productInput, setProductInput] = useState({
-    model: productModel || '',
-    type: productType || '',
-    collection: productCollection || '',
-    description: productDescription || '',
-    tags: '',
-    sku: productBaseSku || '',
+    model: productModel || "",
+    type: productType || "",
+    collection: productCollection || "",
+    description: productDescription || "",
+    tags: "",
+    sku: productBaseSku || "",
     sizes: productSizesInput || {
       s: false,
       m: false,
@@ -59,11 +56,7 @@ const AdminProduct = ({
     },
   });
 
-  const [tags, setTags] = useState(productTags || []);
-
   const [variants, setVariants] = useState(productVariants || []);
-
-  const [sizes, setSizes] = useState(productSizes || []);
 
   const [isEditingVariants, setIsEditingVariants] = useState(false);
   const [editCount, setEditCount] = useState(0);
@@ -86,12 +79,27 @@ const AdminProduct = ({
       : (inputFiles = e.target.files);
 
     if (inputFiles.length > 0) {
-      const updatedImages = await uploadFiles('product-images', {
-        currentFiles: [...images],
-        newFiles: [...inputFiles],
-      });
+      //TODO upload files to cloudinary
+      // const updatedImages = await uploadFiles("product-images", {
+      //   currentFiles: [...images],
+      //   newFiles: [...inputFiles],
+      // });
 
-      setImages(updatedImages);
+      const formData = new FormData();
+      formData.append("file", inputFiles[0]);
+
+      const resp = await postApi("/api/media", formData, {});
+      console.log(inputFiles[0], "inputFiles");
+      console.log(resp, "resp");
+      const updatedImages = [...inputFiles].map((file) => ({
+        id: uuid(),
+        name: file.name,
+        key: resp.key,
+        src: URL.createObjectURL(file),
+        file,
+      }));
+
+      setImages((prevState) => [...prevState, ...updatedImages]);
     }
   };
 
@@ -102,7 +110,7 @@ const AdminProduct = ({
     );
 
     if (!isEditPage) {
-      deleteFile('product-images', imageMarkedForRemoval);
+      deleteFile("product-images", imageMarkedForRemoval);
     } else {
       const updatedImagesMarkedForRemoval = [...imagesMarkedForRemoval];
       updatedImagesMarkedForRemoval.push(imageMarkedForRemoval);
@@ -119,82 +127,13 @@ const AdminProduct = ({
     setVariants(updatedVariants);
   };
 
-  const handleModelInput = (e) => {
-    setProductInput((prevState) => ({ ...prevState, model: e.target.value }));
-  };
-
-  const handleTypeInput = (e) => {
-    setProductInput((prevState) => ({ ...prevState, type: e.target.value }));
-  };
-
-  const handleCollectionInput = (e) => {
-    setProductInput((prevState) => ({
-      ...prevState,
-      collection: e.target.value,
-    }));
-  };
-
-  const handleDescriptionInput = (e) => {
-    setProductInput((prevState) => ({
-      ...prevState,
-      description: e.target.value,
-    }));
-  };
-
-  const handleTagsInput = (e) => {
-    setProductInput((prevState) => ({ ...prevState, tags: e.target.value }));
-
-    if (e.key === ',') {
-      const checkForExistingTag = tags.find(
-        (tag) => tag.content === e.target.value
-      );
-
-      if (checkForExistingTag) {
-        return;
-      }
-
-      const updatedTags = tags;
-      updatedTags.push({ content: e.target.value.split(',')[0].toLowerCase() });
-      setTags(updatedTags);
-      setProductInput((prevState) => ({ ...prevState, tags: '' }));
-    }
-  };
-
-  const handleDeleteTags = (tagContent) => {
-    const updatedTags = tags.filter((tag) => tag.content !== tagContent);
-    setTags(updatedTags);
-  };
-
-  const handleSkuInput = (e) => {
-    setProductInput((prevState) => ({
-      ...prevState,
-      sku: e.target.value,
-    }));
-  };
-
-  const handleSizesInput = (e) => {
-    const updatedSizesInput = { ...productInput.sizes };
-
-    updatedSizesInput[e.target.value] = e.target.checked;
-
-    const updatedSizes = Object.keys(updatedSizesInput).filter(
-      (key) => updatedSizesInput[key]
-    );
-
-    setSizes(updatedSizes);
-    setProductInput((prevState) => ({
-      ...prevState,
-      sizes: updatedSizesInput,
-    }));
-  };
-
   const handleAddVariant = () => {
     const updatedVariants = [...variants];
 
     updatedVariants.push({
       id: uuid(),
-      color: '',
-      colorDisplay: '',
+      color: "",
+      colorDisplay: "",
       currentPrice: 0,
       actualPrice: 0,
       images: [],
@@ -248,7 +187,7 @@ const AdminProduct = ({
 
   useEffect(() => {
     if (navigation && !error) {
-      navigate.push('/admin/products');
+      navigate.push("/admin/products");
     } else {
       setNavigation(false);
     }
@@ -266,24 +205,23 @@ const AdminProduct = ({
     setIsConfirmOpen(false);
   };
 
-  const createButtonIsDisabled =
-    isEditingVariants || sizes.length === 0 || variants.length === 0;
+  const createButtonIsDisabled = false;
 
   let createButtonContent;
 
-  if (isEditingVariants) {
-    createButtonContent = `Editing...`;
-  } else if (sizes.length === 0) {
-    createButtonContent = `No sizes selected`;
-  } else if (variants.length === 0) {
-    createButtonContent = `No variants selected`;
+  // if (isEditingVariants) {
+  //   createButtonContent = `Editing...`;
+  // } else if (sizes.length === 0) {
+  //   createButtonContent = `No sizes selected`;
+  // } else if (variants.length === 0) {
+  //   createButtonContent = `No variants selected`;
+  // } else {
+  if (isEditPage) {
+    createButtonContent = `Update`;
   } else {
-    if (isEditPage) {
-      createButtonContent = `Update`;
-    } else {
-      createButtonContent = `Create`;
-    }
+    createButtonContent = `Create`;
   }
+  // }
 
   return (
     <>
@@ -301,34 +239,24 @@ const AdminProduct = ({
       {isLoading && <Loader />}
       <section>
         <div className={`${styles.container} main-container`}>
-          <h1>{isEditPage ? 'Edit' : 'Add'} Product</h1>
+          <h1>{isEditPage ? "Edit" : "Add"} Product</h1>
           <ProductForm
             isEditPage={isEditPage}
             productInput={productInput}
             images={images}
-            tags={tags}
             handleImagesInput={handleImagesInput}
             handleDeleteImage={handleDeleteImage}
-            handleModelInput={handleModelInput}
-            handleTypeInput={handleTypeInput}
-            handleCollectionInput={handleCollectionInput}
-            handleDescriptionInput={handleDescriptionInput}
-            handleTagsInput={handleTagsInput}
-            handleDeleteTags={handleDeleteTags}
-            handleSkuInput={handleSkuInput}
-            handleSizesInput={handleSizesInput}
             handleProductSubmit={handleProductSubmit}
           />
-          <Variants
+          {/* <Variants
             productInput={productInput}
             variants={variants}
-            sizes={sizes}
             images={images}
             handleAddVariant={handleAddVariant}
             handleEditVariantCount={handleEditVariantCount}
             handleDeleteVariant={handleDeleteVariant}
             handleVariantEditSubmit={handleVariantEditSubmit}
-          />
+          /> */}
           <div className={styles.buttons_wrapper}>
             <Button
               type="submit"

@@ -12,32 +12,26 @@ import {
 } from "@/components/common";
 
 import styles from "./index.module.scss";
+import { useForm } from "react-hook-form";
 
-const VariantForm = ({
+const VariantFormV2 = ({
   productInput,
   variant,
   variantIndex,
   images,
-  handleEditVariantCount,
   handleDeleteVariant,
-  handleVariantEditSubmit,
+  register,
+  setValue,
 }) => {
   const [isSelectorOpen, setIsSelectorOpen] = useState(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
   const [isEditing, setIsEditing] = useState(false);
 
-  const [detailsInput, setDetailsInput] = useState({
-    color: variant.color,
-    colorDisplay: variant.colorDisplay,
-    currentPrice: variant.currentPrice,
-    actualPrice: variant.actualPrice,
-  });
-
-  const [inventoryInput, setInventoryInput] = useState(variant.inventory);
   const [variantTitleInventory, setVariantTitleInventory] = useState("");
 
-  const [selectedImages, setSelectedImages] = useState(variant.images);
+  const [selectedImages, setSelectedImages] = useState([]);
+  const [sizes, setSizes] = useState([]);
 
   useEffect(() => {
     const availableImageNames = images.map((image) => image.name);
@@ -45,41 +39,21 @@ const VariantForm = ({
       availableImageNames.includes(selectedImage.name)
     );
 
-    setSelectedImages(updatedSelectedImages);
+    setSelectedImages([]); // during edit fill them from input
   }, [images]);
 
   const handleEditStart = () => {
     setIsEditing(true);
-    handleEditVariantCount(1);
+    // handleEditVariantCount(1);
   };
 
   const handleEditCancel = () => {
-    const { inventory, images, ...details } = variant;
-    setSelectedImages(images);
-    setDetailsInput(details);
-    setInventoryInput(inventory);
+    // const { inventory, images, ...details } = variant;
+    // setSelectedImages([]);
+    // setDetailsInput(details);
+    // setInventoryInput(inventory);
     setIsEditing(false);
-    handleEditVariantCount(-1);
-  };
-
-  const handleEditSubmit = (e) => {
-    e.preventDefault();
-    if (detailsInput.currentPrice > detailsInput.actualPrice) {
-      // TODO: Add error
-      return;
-    }
-    handleVariantEditSubmit({
-      variantIndex,
-      id: variant.id,
-      color: detailsInput.color.toLowerCase(),
-      colorDisplay: detailsInput.colorDisplay.toLowerCase(),
-      currentPrice: +detailsInput.currentPrice,
-      actualPrice: +detailsInput.actualPrice,
-      inventory: inventoryInput,
-      images: [...selectedImages],
-    });
-    setIsEditing(false);
-    handleEditVariantCount(-1);
+    // handleEditVariantCount(-1);
   };
 
   const handleDeleteOnConfirm = () => {
@@ -90,16 +64,22 @@ const VariantForm = ({
     setIsConfirmOpen(false);
   };
 
+  const updateItem = () => {
+    console.log(sizes, "ss");
+    console.log({ ...variant, images: selectedImages, sizes });
+    setValue(`variants.${variantIndex}.sizes`, sizes);
+    setValue(`variants.${variantIndex}.images`, selectedImages);
+    setIsEditing(false);
+  };
+
   const handleImageConfirm = (currentImagesName) => {
-    const selectedImages = [];
+    const newImages = [...selectedImages];
 
     for (const currentImageName of currentImagesName) {
-      selectedImages.push(
-        images.find((image) => image.name === currentImageName)
-      );
+      newImages.push(images.find((image) => image.name === currentImageName));
     }
 
-    setSelectedImages(selectedImages);
+    setSelectedImages(newImages);
   };
 
   const closeImageSelector = () => {
@@ -147,7 +127,7 @@ const VariantForm = ({
           />
         )}
       </CenterModal>
-      <form onSubmit={handleEditSubmit} className={styles.form_container}>
+      <div className={styles.form_container}>
         <div
           className={`${styles.controls_container} ${controlsContainerEditingStyles}`}
         >
@@ -164,7 +144,11 @@ const VariantForm = ({
           <div className={styles.buttons_wrapper}>
             {isEditing && (
               <>
-                <Button className={styles.submit} type="submit">
+                <Button
+                  onClick={updateItem}
+                  className={styles.submit}
+                  type="button"
+                >
                   Submit
                 </Button>
                 <Button
@@ -200,9 +184,6 @@ const VariantForm = ({
           <div
             className={`${styles.table_wrapper} ${tableWrapperEditingStyles}`}
           >
-            {/* {sizes.length === 0 && (
-              <p className={styles.no_sizes}>Please choose sizes.</p>
-            )} */}
             {
               <table>
                 <thead>
@@ -217,8 +198,8 @@ const VariantForm = ({
                       <span className={styles.color_header}>
                         Color
                         <ToolTip className={styles.tooltip}>
-                          Escribir color masculino. Ejemplo: blanco sí, blanca
-                          no.
+                          Color of the product. Example: #FFFFFF, #000000,
+                          #FF5733.
                         </ToolTip>
                         <i>
                           <FaQuestionCircle />
@@ -229,9 +210,8 @@ const VariantForm = ({
                       <span className={styles.color_header}>
                         Color Display
                         <ToolTip className={styles.tooltip}>
-                          Escribir color con género gramatical correcto según el
-                          tipo de producto. Ejemplo: remera y blanco, escribir
-                          blanca.
+                          Color to be displayed. Example: White, Off-White,
+                          Light Blue.
                         </ToolTip>
                         <i>
                           <FaQuestionCircle />
@@ -245,9 +225,8 @@ const VariantForm = ({
                       <span className={styles.actual_price_header}>
                         Actual Price{" "}
                         <ToolTip className={styles.tooltip}>
-                          Un "current price" menor al "actual" muestra al
-                          product "ON SALE". Se calcula automaticamente el
-                          porcentaje de descuento.
+                          Actual sale price. If no sale, put the same as current
+                          price.
                         </ToolTip>
                         <i>
                           <FaQuestionCircle />
@@ -268,8 +247,16 @@ const VariantForm = ({
                             <input
                               type="checkbox"
                               value={key}
-                              // checked={productInput.sizes[key]}
-                              // onChange={handleSizesInput}
+                              checked={sizes.includes(key)}
+                              onChange={(e) => {
+                                if (e.target.checked) {
+                                  setSizes((s) => [...s, key]);
+                                } else {
+                                  setSizes((s) =>
+                                    s.filter((size) => size !== key)
+                                  );
+                                }
+                              }}
                             />
                             <span>{key.toUpperCase()}</span>
                           </label>
@@ -323,15 +310,9 @@ const VariantForm = ({
                         <>
                           <input
                             type="text"
-                            value={detailsInput.color}
-                            onChange={(e) =>
-                              setDetailsInput((prevState) => ({
-                                ...prevState,
-                                color: e.target.value,
-                              }))
-                            }
-                            disabled={!isEditing}
-                            required
+                            {...register(`variants.${variantIndex}.color`, {
+                              required: false,
+                            })}
                           />
                         </>
                       }
@@ -340,14 +321,12 @@ const VariantForm = ({
                       {
                         <input
                           type="text"
-                          value={detailsInput.colorDisplay}
-                          onChange={(e) =>
-                            setDetailsInput((prevState) => ({
-                              ...prevState,
-                              colorDisplay: e.target.value,
-                            }))
-                          }
-                          disabled={!isEditing}
+                          {...register(
+                            `variants.${variantIndex}.displayColor`,
+                            {
+                              required: false,
+                            }
+                          )}
                         />
                       }
                     </td>
@@ -355,15 +334,9 @@ const VariantForm = ({
                       {
                         <input
                           type="number"
-                          value={detailsInput.currentPrice.toString()}
-                          onChange={(e) =>
-                            setDetailsInput((prevState) => ({
-                              ...prevState,
-                              currentPrice: +e.target.value,
-                            }))
-                          }
-                          disabled={!isEditing}
-                          required
+                          {...register(`variants.${variantIndex}.price`, {
+                            required: false,
+                          })}
                         />
                       }
                     </td>
@@ -371,31 +344,18 @@ const VariantForm = ({
                       {
                         <input
                           type="number"
-                          value={detailsInput.actualPrice.toString()}
-                          onChange={(e) =>
-                            setDetailsInput((prevState) => ({
-                              ...prevState,
-                              actualPrice: +e.target.value,
-                            }))
-                          }
-                          disabled={!isEditing}
-                          required
+                          {...register(`variants.${variantIndex}.salePrice`, {
+                            required: false,
+                          })}
                         />
                       }
                     </td>
                     <td className={styles.inventory_td}>
                       <input
                         type="number"
-                        min="0"
-                        step="1"
-                        value={"0"}
-                        onChange={(e) =>
-                          setInventoryInput((prevState) => ({
-                            ...prevState,
-                          }))
-                        }
-                        disabled={!isEditing}
-                        required
+                        {...register(`variants.${variantIndex}.stock`, {
+                          required: false,
+                        })}
                       />
                     </td>
                   </tr>
@@ -404,9 +364,9 @@ const VariantForm = ({
             }
           </div>
         )}
-      </form>
+      </div>
     </>
   );
 };
 
-export default VariantForm;
+export default VariantFormV2;

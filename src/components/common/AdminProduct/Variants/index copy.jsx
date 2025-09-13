@@ -1,38 +1,37 @@
-import VariantForm from "./VariantForm";
+import VariantForm from "./VariantForm/index2";
 
 import { FaPlusCircle } from "react-icons/fa";
 
 import { Button } from "@/components/common";
 
 import styles from "./index.module.scss";
+import { Controller, useFieldArray } from "react-hook-form";
 
-const Variants = ({
-  productInput,
-  variants,
-  sizes,
-  images,
-  handleAddVariant,
-  handleEditVariantCount,
-  handleDeleteVariant,
-  handleVariantEditSubmit,
-}) => {
+const VariantsV2 = ({ productInput, images, control, register, setValue }) => {
+  const { fields, append, remove, update } = useFieldArray({
+    control,
+    name: "variants",
+  });
+
+  console.log(fields, "ss");
   return (
     <>
-      <div className={styles.section}>
+      <div className={styles.section} style={{ margin: "0" }}>
         <p className={styles.label}>Variants:</p>
-        {variants.length > 0 && (
+        {fields.length > 0 && (
           <div className={styles.variants_container}>
-            {variants.map((variant, variantIndex) => (
+            {fields.map((variant, variantIndex) => (
               <VariantForm
                 key={variant.id}
                 productInput={productInput}
                 variant={variant}
                 variantIndex={variantIndex}
                 images={images}
-                sizes={sizes}
-                handleEditVariantCount={handleEditVariantCount}
-                handleDeleteVariant={handleDeleteVariant}
-                handleVariantEditSubmit={handleVariantEditSubmit}
+                handleDeleteVariant={remove}
+                register={register}
+                control={control}
+                updateVariant={update}
+                setValue={setValue}
               />
             ))}
           </div>
@@ -40,7 +39,7 @@ const Variants = ({
         <Button
           className={styles.add_variant_button}
           type="button"
-          onClick={handleAddVariant}
+          onClick={() => append()}
         >
           Add Variant{" "}
           <i>
@@ -52,4 +51,4 @@ const Variants = ({
   );
 };
 
-export default Variants;
+export default VariantsV2;

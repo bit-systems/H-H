@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef } from "react";
 
 import {
   FaFileUpload,
@@ -6,11 +6,11 @@ import {
   FaTimesCircle,
   FaTimes,
   FaEllipsisH,
-} from 'react-icons/fa';
+} from "react-icons/fa";
 
-import { CenterModal, ConfirmModal } from '@/components/common';
+import { CenterModal, ConfirmModal } from "@/components/common";
 
-import styles from './index.module.scss';
+import styles from "./index.module.scss";
 
 const DragDropFileInput = ({
   name,
@@ -77,11 +77,12 @@ const DragDropFileInput = ({
         >
           {isConfirmOpen && (
             <ConfirmModal
+              show={isConfirmOpen}
               isConfirmOpen={isConfirmOpen}
               handleConfirm={handleDeleteOnConfirm}
-              handleCancel={closeConfirm}
+              close={closeConfirm}
               text={`Are you sure you want to delete this ${
-                title.split('s')[0] || 'file'
+                title.split("s")[0] || "file"
               }? This image will also be removed from any variant currently using it. ${additionalConfirmText}`}
             />
           )}
@@ -90,7 +91,7 @@ const DragDropFileInput = ({
       <div className={className}>
         <div
           className={`${styles.dropzone} ${dropzoneClassName} ${
-            isDragging ? styles.dragging : ''
+            isDragging ? styles.dragging : ""
           }`}
           onClick={handleClick}
           onDragEnter={() => setIsDragging(true)}
@@ -114,7 +115,7 @@ const DragDropFileInput = ({
                 </i>
                 {files.length === 0 && (
                   <>
-                    <p className={styles.legend}>Choose {title || 'Files'}</p>
+                    <p className={styles.legend}>Choose {title || "Files"}</p>
                   </>
                 )}
                 {files.length > 0 && (
