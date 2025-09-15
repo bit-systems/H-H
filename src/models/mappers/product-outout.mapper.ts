@@ -1,4 +1,3 @@
-import { color } from "framer-motion";
 import { Product } from "../products/product.model";
 import { Variant } from "../variants/variant.model";
 import { getCloudfrontUrl } from "@/utils/utils";
@@ -45,7 +44,6 @@ const variantToOutput = (variant: Product["variants"][0]): Variant => {
     sizes: variant.sizes,
     slug: variant.slug,
     sku: variant.sku,
-    stock: variant.stock,
     status: variant.status,
     productId: variant.productId,
   };

@@ -1,12 +1,10 @@
-import { useProduct } from '@/hooks/useProduct';
+import { useProduct } from "@/hooks/useProduct";
 
-import { MediaContainer } from '@/components/common';
+import { MediaContainer } from "@/components/common";
 
-import styles from './index.module.scss';
+import styles from "./index.module.scss";
 
-const ProductColors = ({ id, thumbnail, selectedId }) => {
-  const { selectVariant } = useProduct();
-
+const ProductColors = ({ id, thumbnail, selectedId, selectVariant }) => {
   let shouldAddEventHandler = false;
   if (selectedId !== id) {
     shouldAddEventHandler = true;

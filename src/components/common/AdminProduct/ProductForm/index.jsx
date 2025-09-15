@@ -66,6 +66,8 @@ const ProductForm = ({
   }, []);
 
   const onSubmit = (data) => {
+    console.log(data);
+    return;
     data.images = images;
     data.tags = tags;
     console.log(data, "data in product form");
@@ -128,13 +130,20 @@ const ProductForm = ({
               })}
             />
           </label>
-          <label className={styles.label}>
+          {/* <label className={styles.label}>
             <span>Category:</span>
-            <select {...register("category", { required: true })}>
-              <option value="men">female</option>
-              <option value="women">male</option>
+            <select
+              readonly
+              {...register("category", { required: true, value: "men" })}
+            >
+              <option readonly selected value="men">
+                Male
+              </option>
+              <option readonly value="women">
+                Female
+              </option>
             </select>
-          </label>
+          </label> */}
           <label className={styles.label}>
             <span>Status:</span>
             <select {...register("status", { required: true })}>
@@ -154,16 +163,18 @@ const ProductForm = ({
             handleDeleteTags={handleDeleteTags}
             className={styles.tags_input}
           />
-          <label className={styles.label}>
+          {/* <label className={styles.label}>
             <span>Product Category:</span>
             <input
               type="text"
+              readOnly
               {...register("productCategory", {
                 required: "Description is required.",
+                value: "Top wear",
               })}
             />
-          </label>
-          <label className={styles.label}>
+          </label> */}
+          {/* <label className={styles.label}>
             <span>Product Type:</span>
             <input
               type="text"
@@ -171,7 +182,7 @@ const ProductForm = ({
                 required: "Product type is required.",
               })}
             />
-          </label>
+          </label> */}
           <AttributesForm control={control} register={register} />
 
           <Variants

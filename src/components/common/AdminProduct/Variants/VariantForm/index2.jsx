@@ -222,15 +222,12 @@ const VariantFormV2 = ({
                         </i>
                       </span>
                     </th>
-                    <th>
-                      <span className={styles.table_header}>Inventory</span>
-                    </th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td className={styles.size_td}>
-                      <div className={styles.checkbox_wrapper}>
+                      {/* <div className={styles.checkbox_wrapper}>
                         {["S", "M", "L", "XL"].map((key) => (
                           <label key={key}>
                             <input
@@ -246,7 +243,24 @@ const VariantFormV2 = ({
                                   );
                                 }
                               }}
-                            />
+                            />{" "}
+                            <span>{key.toUpperCase()}</span>
+                          </label>
+                        ))}
+                      </div> */}
+                      <div className={styles.checkbox_wrapper}>
+                        {["S", "M", "L", "XL"].map((key) => (
+                          <label key={key}>
+                            <input
+                              type="number"
+                              {...register(
+                                `variants.${variantIndex}.sizes.${key}`,
+                                {
+                                  required: false,
+                                  valueAsNumber: true,
+                                }
+                              )}
+                            />{" "}
                             <span>{key.toUpperCase()}</span>
                           </label>
                         ))}
@@ -254,44 +268,48 @@ const VariantFormV2 = ({
                     </td>
                     <td className={styles.images_td}>
                       {
-                        // <ul className={styles.image_links}>
-                        //   {images.map((image) => (
-                        //     <li className={styles.image_link}>
-                        //       <input
-                        //         type="checkbox"
-                        //         key={image.name}
-                        //         value={image.name}
-                        //       />
-                        //       <div>
-                        //         <label htmlFor={image.name}>{image.name}</label>
-                        //       </div>
-                        //     </li>
-                        //   ))}
-                        // </ul>
-                        <div className={styles.images_button_wrapper}>
-                          {images.length === 0 && <p>No Images Uploaded</p>}
-                          {images.length > 0 && (
-                            <>
-                              {selectedImages.length === 0 && (
-                                <p>No files selected</p>
-                              )}
-                              {selectedImages.length > 0 && (
-                                <p>{`${selectedImages.length} File${
-                                  selectedImages.length > 1 ? "s" : ""
-                                } selected`}</p>
-                              )}
-                              <div>
-                                <Button
-                                  onClick={() => setIsSelectorOpen(true)}
-                                  className={styles.images_button}
-                                  type="button"
-                                >
-                                  Select
-                                </Button>
-                              </div>
-                            </>
-                          )}
-                        </div>
+                        <>
+                          <ul className={styles.image_links}>
+                            {images.map((image) => (
+                              <li className={styles.image_link}>
+                                <input
+                                  type="checkbox"
+                                  key={image.key}
+                                  value={image.key}
+                                />
+                                <div>
+                                  <label htmlFor={image.name}>
+                                    {image.name}
+                                  </label>
+                                </div>
+                              </li>
+                            ))}
+                          </ul>
+                          <div className={styles.images_button_wrapper}>
+                            {images.length === 0 && <p>No Images Uploaded</p>}
+                            {images.length > 0 && (
+                              <>
+                                {selectedImages.length === 0 && (
+                                  <p>No files selected</p>
+                                )}
+                                {selectedImages.length > 0 && (
+                                  <p>{`${selectedImages.length} File${
+                                    selectedImages.length > 1 ? "s" : ""
+                                  } selected`}</p>
+                                )}
+                                <div>
+                                  <Button
+                                    onClick={() => setIsSelectorOpen(true)}
+                                    className={styles.images_button}
+                                    type="button"
+                                  >
+                                    Select
+                                  </Button>
+                                </div>
+                              </>
+                            )}
+                          </div>
+                        </>
                       }
                     </td>
                     <td className={styles.color_td}>
@@ -323,8 +341,9 @@ const VariantFormV2 = ({
                       {
                         <input
                           type="number"
-                          {...register(`variants.${variantIndex}.price`, {
+                          {...register(`variants.${variantIndex}.salePrice`, {
                             required: false,
+                            valueAsNumber: true,
                           })}
                         />
                       }
@@ -333,19 +352,12 @@ const VariantFormV2 = ({
                       {
                         <input
                           type="number"
-                          {...register(`variants.${variantIndex}.salePrice`, {
+                          {...register(`variants.${variantIndex}.price`, {
                             required: false,
+                            valueAsNumber: true,
                           })}
                         />
                       }
-                    </td>
-                    <td className={styles.inventory_td}>
-                      <input
-                        type="number"
-                        {...register(`variants.${variantIndex}.stock`, {
-                          required: false,
-                        })}
-                      />
                     </td>
                   </tr>
                 </tbody>

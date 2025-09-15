@@ -5,10 +5,9 @@ export interface Variant {
   images: { id: string; name: string; key: string; src?: string }[];
   productId?: string; // reference to parent product
   id: string; // unique identifier
-  sizes: string[]; // size label (e.g., "S", "M", "L", "32", "34")
+  sizes: { size: string; quantity: number }[]; // size label (e.g., "S", "M", "L", "32", "34")
   price: number; // regular price
   salePrice: number; // discounted price
   sku: string; // stock keeping unit
-  stock: number; // available stock quantity
   status: "active" | "inactive";
 }

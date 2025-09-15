@@ -1,12 +1,16 @@
-.slider-navigation:hover .image-swiper-button-prev {
+@import "swiper/css/navigation";
+
+:global(.slider-navigation:hover .image-swiper-button-prev) {
   left: 1.5rem;
 }
 
-.slider-navigation:hover .image-swiper-button-next {
+
+:global(.slider-navigation:hover .image-swiper-button-next) {
   right: 1.5rem;
 }
 
-.swiper-button {
+
+:global(.swiper-button) {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -23,31 +27,37 @@
   transition: background 0.1s ease-in, color 0.1s ease-in, opacity 0.1s ease-in;
 }
 
-.swiper-button:hover {
+
+:global(.swiper-button:hover) {
   background: rgba(255, 255, 255, 1);
   color: rgba(0, 0, 0, 1);
 }
 
-.swiper-button svg {
+
+:global(.swiper-button) svg {
   width: 1.5rem;
   height: 1.5rem;
 }
 
-.image-swiper-button-prev {
+
+:global(.image-swiper-button-prev) {
   transition: left 0.2s ease-in;
   left: -5rem;
 }
 
-.image-swiper-button-next {
+
+:global(.image-swiper-button-next) {
   transition: right 0.2s ease-in;
   right: -5rem;
 }
 
-.swiper-button-disabled {
+
+:global(.swiper-button-disabled) {
   opacity: 0.5;
   pointer-events: none;
 }
 
-.no-show {
+
+:global(.no-show) {
   opacity: 0;
 }

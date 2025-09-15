@@ -1,14 +1,15 @@
-import { Swiper, SwiperSlide } from "swiper/react";
-
-import "swiper/css/pagination";
+import "./slider.module.css";
 import "swiper/css";
-import "swiper/css/navigation";
+// import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { Navigation } from "swiper";
+import styles from "./slider.module.css";
+
+import { Swiper, SwiperSlide } from "swiper/react";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 
 import MediaContainer from "../MediaContainer";
 
-import "./slider.module.css";
 import { useRouter } from "next/router";
 
 const SliderV2 = ({
@@ -38,6 +39,7 @@ const SliderV2 = ({
   imageFillClassName,
   imagePlaceholderClassName,
   imageClassName,
+  product,
 }) => {
   let slugCheck;
   if (toPage) {
@@ -45,6 +47,8 @@ const SliderV2 = ({
     // slugCheck = slides[0].url === pathname.split('/')[2]; //TODO fix this
     slugCheck = false;
   }
+
+  console.log(navigation, showPlaceholder, modules, "ooookk");
 
   return (
     <>
@@ -60,7 +64,7 @@ const SliderV2 = ({
         navigation={navigation}
         allowTouchMove={allowTouchMove}
         nested={nested}
-        modules={modules}
+        modules={[Navigation]}
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
         className={`${sliderClassName} slider-navigation`}
@@ -85,19 +89,19 @@ const SliderV2 = ({
         )}
         {slides?.map((slide) => (
           <SwiperSlide
-            key={slide.key}
+            key={slide.id}
             className={slideClassName}
             onClick={
               onVariantPick
-                ? () => onVariantPick({ variantId: slide.id })
+                ? () => onVariantPick(slide)
                 : onCardPick
-                ? onCardPick
+                ? onCardPick(slide)
                 : undefined
             }
           >
             <MediaContainer
               image={slide.src}
-              to={toPage && toPage + slide.url}
+              to={toPage && toPage + (product ? product.id : "")}
               alt={slide.alt || ""}
               slugCheck={slugCheck}
               clearPlaceholders={clearPlaceholders}
@@ -105,6 +109,7 @@ const SliderV2 = ({
               fillClassName={imageFillClassName}
               placeholderClassName={imagePlaceholderClassName}
               mediaClassName={imageClassName}
+              key={slide.id}
             />
           </SwiperSlide>
         ))}

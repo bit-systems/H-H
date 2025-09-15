@@ -44,7 +44,7 @@ const AdminProduct = ({ isEditPage, productId, product }) => {
   const [editCount, setEditCount] = useState(0);
 
   useEffect(() => {
-    if (product.images) {
+    if (product?.images) {
       console.log(product.images, "product images");
       const formattedImages = product.images.map((img) => ({
         id: img.id,

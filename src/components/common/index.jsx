@@ -14,6 +14,7 @@ export { default as NotFound } from "./NotFound";
 export { default as ProductCard } from "./ProductCard";
 export { default as ProductCardV2 } from "./ProductCard/index copy";
 export { default as ProductSlider } from "./ProductSlider";
+export { default as ProductSliderV2 } from "./ProductSlider/index copy";
 export { default as Slider } from "./Slider";
 export { default as SliderV2 } from "./Slider/index copy";
 export { default as TagsInput } from "./TagsInput";

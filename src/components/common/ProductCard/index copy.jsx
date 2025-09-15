@@ -1,4 +1,7 @@
 import { useState, useEffect, useRef } from "react";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 import { Navigation } from "swiper";
 
 import { useCart } from "@/hooks/useCart";
@@ -15,11 +18,9 @@ const ProductCardV2 = ({
   productId,
   variantId,
   model,
-  actualPrice,
   type,
   numberOfVariants,
   handleDeleteStart,
-  isSoldOut,
   allVariants,
   nested,
   onTouchStart,
@@ -36,17 +37,19 @@ const ProductCardV2 = ({
   const [currentVariant, setCurrentVariant] = useState({
     variantId: product.variants[0].id,
     color: product.variants[0].color,
-    currentPrice: product.variants[0].price,
+    currentPrice: product.variants[0].salePrice,
+    actualPrice: product.variants[0].price,
     discount: product.variants[0].salePrice,
     slides: product.images,
     skus: product.variants[0].sizes,
-    isSoldOut,
+    isSoldOut: false,
     ...product.variants[0],
   });
 
   const [showDetailsPlaceholder, setDetailsShowPlaceholder] = useState(true);
 
   const [isSmallContainer, setIsSmallContainer] = useState(false);
+  const [allVariantSlides, setAllVariantSlides] = useState([]);
 
   const containerRef = useRef(null);
 
@@ -67,21 +70,34 @@ const ProductCardV2 = ({
     };
   }, []);
 
-  const handlePickVariant = ({ variantId }) => {
-    const selectedVariant = allVariants.find(
-      (variant) => variant.id === variantId
-    );
+  useEffect(() => {
+    const allVariantSlides = product.variants.map((v) => ({
+      ...v.images[0],
+      variantId: v.id,
+    }));
+    setAllVariantSlides(() => [...allVariantSlides]);
+  }, []);
 
-    setCurrentVariant({
-      variantId,
-      color: selectedVariant.color,
-      currentPrice: selectedVariant.price,
-      discount: selectedVariant.salePrice,
-      slides: selectedVariant.slides,
-      skus: selectedVariant.sizes,
-      isSoldOut: selectedVariant.isSoldOut,
-      ...selectedVariant,
-    });
+  const handlePickVariant = (slide) => {
+    const selectedVariant = allVariants.find(
+      (variant) => variant.id === slide.variantId
+    );
+    console.log(selectedVariant, "selectedVariant");
+
+    setCurrentVariant(() => ({
+      ...{
+        variantId,
+        color: selectedVariant.color,
+        currentPrice: selectedVariant.salePrice,
+        actualPrice: selectedVariant.price,
+        discount: selectedVariant.salePrice,
+        slides: selectedVariant.images,
+        images: selectedVariant.images,
+        skus: selectedVariant.sizes,
+        isSoldOut: selectedVariant.stock <= 0,
+        ...selectedVariant,
+      },
+    }));
   };
 
   const handleAddItem = async ({ skuId, size }) => {
@@ -99,8 +115,6 @@ const ProductCardV2 = ({
     });
   };
 
-  const allVariantSlides = product.slides;
-
   return (
     <>
       <div
@@ -114,7 +128,7 @@ const ProductCardV2 = ({
             {currentVariant.isSoldOut && (
               <span className={styles.sold_out}>Sold Out</span>
             )}
-            {currentVariant.currentPrice < actualPrice && (
+            {currentVariant.currentPrice < currentVariant.actualPrice && ( //TODO calc
               <span className={styles.discount}>
                 -{currentVariant.discount}%
               </span>
@@ -127,7 +141,7 @@ const ProductCardV2 = ({
               onCardPick={onCardPick}
               clearPlaceholders={() => setDetailsShowPlaceholder(false)}
               showPlaceholder={showDetailsPlaceholder}
-              slides={currentVariant.slides} //TODO fix this
+              slides={currentVariant.slides}
               toPage={"/products/"}
               slidesPerView={1}
               spaceBetween={0}
@@ -148,7 +162,7 @@ const ProductCardV2 = ({
               mediaContainerClassName={styles.image_container}
               imageFillClassName={styles.image_fill}
               imageClassName={styles.image}
-              // slides={[]}
+              product={product}
             />
             {!showDetailsPlaceholder && !isSmallContainer && (
               <QuickAddV2
@@ -176,7 +190,7 @@ const ProductCardV2 = ({
                   clearPlaceholders={() => setDetailsShowPlaceholder(false)}
                   onVariantPick={handlePickVariant}
                   showPlaceholder={showDetailsPlaceholder}
-                  slides={currentVariant.slides}
+                  slides={allVariantSlides}
                   nested={nested}
                   slidesPerView="auto"
                   spaceBetween={5}
@@ -236,13 +250,13 @@ const ProductCardV2 = ({
                   )}
                 </li>
                 <li className={styles.price}>
-                  {currentVariant.currentPrice < actualPrice ? (
+                  {currentVariant.currentPrice < currentVariant.actualPrice ? ( //TODO
                     <>
                       <span className={styles.discounted_price}>
                         {formatPrice(currentVariant.currentPrice)}
                       </span>
                       <span className={styles.crossed_price}>
-                        {formatPrice(actualPrice)}
+                        {formatPrice(currentVariant.actualPrice)}
                       </span>
                     </>
                   ) : (
