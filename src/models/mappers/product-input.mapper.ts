@@ -49,9 +49,9 @@ export const mapVariantInputToVariant = (input: any): Variant => {
     ),
     price: (input.price || 0) as number,
     salePrice: (input.salePrice || 0) as number,
-    sizes: Object.entries(input.sizes).flatMap(([size, quantity]) => ({
-      size,
-      quantity: quantity as number,
+    sizes: input.sizes.flatMap((size: any) => ({
+      size: Object.keys(size)[0],
+      quantity: size[Object.keys(size)[0]] as number,
     })),
     slug: (input.slug || "") as string,
     sku: (input.sku || "") as string,

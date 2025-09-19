@@ -10,7 +10,7 @@ import {
   getDoc,
   setDoc,
 } from "firebase/firestore";
-import { Product, ProductModel } from "./product.model";
+import { Product, ProductModel, ProductOutput } from "./product.model";
 import {
   createVariants,
   deleteVariants,
@@ -85,7 +85,7 @@ export const removeProduct = async (product: Product): Promise<void> => {
   await deleteVariants(product.variants.map((v) => v.id));
 };
 
-export const getAllProducts = async (): Promise<Product[]> => {
+export const getAllProducts = async (): Promise<ProductOutput[]> => {
   const snapshot = await getDocs(productRef);
 
   const products = await Promise.all(
@@ -102,7 +102,7 @@ export const getAllProducts = async (): Promise<Product[]> => {
   return products;
 };
 
-export const getProduct = async (id: string): Promise<Product | null> => {
+export const getProduct = async (id: string): Promise<ProductOutput | null> => {
   console.log(id, "id in repo");
   const snapshot = await getDoc(doc(productRef, id));
 

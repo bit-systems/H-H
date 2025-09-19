@@ -32,13 +32,13 @@ const QuickAddV2 = ({
           onTouchEnd={onTouchEnd}
           className={sizesSliderClassName}
         >
-          {variant.sizes?.length > 1 ? (
+          {variant.sizeVariants?.length > 1 ? (
             <div
               className={`${styles.sizes_wrapper} ${
                 isLoading ? styles.center : undefined
               }`}
             >
-              {variant.sizes?.map((sku) => (
+              {variant.sizeVariants?.map((sku) => (
                 <SwiperSlide
                   key={sku}
                   onClick={
@@ -51,20 +51,20 @@ const QuickAddV2 = ({
                       sku.quantity > 0 ? styles.size : styles.size_no_quantity
                     } ${isLoading && styles.no_show}`}
                 >
-                  {sku}
+                  {sku.size}
                 </SwiperSlide>
               ))}
             </div>
           ) : (
             <div className={styles.single_size_wrapper}>
-              {variant.sizes?.map((singleSku) => (
+              {variant.sizeVariants?.map((singleSku) => (
                 <SwiperSlide
-                  key={singleSku.skuId}
+                  key={singleSku.size}
                   onClick={
                     !isLoading && singleSku.quantity > 0
                       ? () =>
                           handleAddItem({
-                            skuId: singleSku.skuId,
+                            skuId: singleSku.size,
                             size: singleSku.size,
                           })
                       : undefined
@@ -103,33 +103,33 @@ const QuickAddV2 = ({
           </span>
         </div>
         <div className={bottomContainerClassName}>
-          {variant.sizes?.length > 1 ? (
+          {variant.sizeVariants?.length > 1 ? (
             <div
               className={`${styles.sizes_wrapper} ${
                 isLoading ? styles.center : undefined
               }`}
             >
-              {variant.sizes?.map((sku) => (
+              {variant.sizeVariants?.map((sku) => (
                 <div
-                  key={sku}
+                  key={sku.size}
                   onClick={
-                    !isLoading && variant.stock > 0
+                    !isLoading && sku.quantity > 0
                       ? () => handleAddItem({ skuId: variant.id, size: sku })
                       : undefined
                   }
                   className={`
                     ${
-                      variant.stock > 0 ? styles.size : styles.size_no_quantity
+                      sku.quantity > 0 ? styles.size : styles.size_no_quantity
                     } ${isLoading && styles.no_show}`}
                 >
-                  {sku}
+                  {sku.size}
                 </div>
               ))}
               {isLoading && <div className={styles.loader}></div>}
             </div>
           ) : (
             <div className={styles.single_size_wrapper}>
-              {variant.sizes?.map((singleSku) => (
+              {variant.sizeVariants?.map((singleSku) => (
                 <div
                   key={size}
                   onClick={

@@ -1,4 +1,4 @@
-import { Variant } from "../variants/variant.model";
+import { Variant, VariantOutput } from "../variants/variant.model";
 
 export interface ProductModel {
   id: string; // unique identifier
@@ -24,3 +24,5 @@ interface Attribute {
 }
 
 export type Product = ProductModel & { variants: Variant[] };
+
+export type ProductOutput = ProductModel & { variants: VariantOutput[] };

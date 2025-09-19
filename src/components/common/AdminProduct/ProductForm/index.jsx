@@ -50,7 +50,6 @@ const ProductForm = ({
 
   useEffect(() => {
     if (productId) {
-      console.log(productId, "pp");
       setValue("title", productInput.title);
       setValue("subTitle", productInput.subTitle);
       setValue("brand", productInput.brand);
@@ -60,14 +59,27 @@ const ProductForm = ({
       setValue("productCategory", productInput.productCategory);
       setValue("productType", productInput.productType);
       setValue("attributes", productInput.attributes || []);
-      setValue("variants", productInput.variants || []);
+
+      const variants = productInput.variants.map((v) => {
+        const sizes = {};
+        v.sizeVariants.forEach((size) => {
+          sizes[size.size] = size.quantity;
+        });
+
+        return {
+          ...v,
+          sizes,
+        };
+      });
+
+      setValue("variants", variants || []);
       setTags(() => [...productInput.tags]);
     }
   }, []);
 
   const onSubmit = (data) => {
     console.log(data);
-    return;
+    console.log(mapInputToProduct(data), "data xxx form");
     data.images = images;
     data.tags = tags;
     console.log(data, "data in product form");
@@ -187,7 +199,6 @@ const ProductForm = ({
 
           <Variants
             productInput={productInput}
-            variants={[]}
             images={images}
             control={control}
             register={register}

@@ -41,7 +41,7 @@ const ProductCardV2 = ({
     actualPrice: product.variants[0].price,
     discount: product.variants[0].salePrice,
     slides: product.images,
-    skus: product.variants[0].sizes,
+    skus: product.variants[0].sizeVariants,
     isSoldOut: false,
     ...product.variants[0],
   });
@@ -93,7 +93,7 @@ const ProductCardV2 = ({
         discount: selectedVariant.salePrice,
         slides: selectedVariant.images,
         images: selectedVariant.images,
-        skus: selectedVariant.sizes,
+        skus: selectedVariant.sizeVariants,
         isSoldOut: selectedVariant.stock <= 0,
         ...selectedVariant,
       },
@@ -221,6 +221,7 @@ const ProductCardV2 = ({
                   topContainerClassName={styles.quick_add_top}
                   bottomContainerClassName={styles.quick_add_bottom}
                   sizesSliderClassName={styles.sizes_slider}
+                  variant={currentVariant}
                 />
               </div>
             )}

@@ -62,7 +62,7 @@ const VariantFormV2 = ({
   const updateItem = () => {
     console.log(sizes, "ss");
     console.log({ ...variant, images: selectedImages, sizes });
-    setValue(`variants.${variantIndex}.sizes`, sizes);
+    // setValue(`variants.${variantIndex}.sizes`, sizes);
     setValue(`variants.${variantIndex}.images`, selectedImages);
     setIsEditing(false);
   };
@@ -249,12 +249,12 @@ const VariantFormV2 = ({
                         ))}
                       </div> */}
                       <div className={styles.checkbox_wrapper}>
-                        {["S", "M", "L", "XL"].map((key) => (
+                        {["S", "M", "L", "XL"].map((key, i) => (
                           <label key={key}>
                             <input
                               type="number"
                               {...register(
-                                `variants.${variantIndex}.sizes.${key}`,
+                                `variants.${variantIndex}.sizes.${i}.${key}`,
                                 {
                                   required: false,
                                   valueAsNumber: true,

@@ -13,7 +13,6 @@ const VariantsV2 = ({ productInput, images, control, register, setValue }) => {
     name: "variants",
   });
 
-  console.log(fields, "ss");
   return (
     <>
       <div className={styles.section} style={{ margin: "0" }}>

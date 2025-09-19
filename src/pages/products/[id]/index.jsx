@@ -35,6 +35,7 @@ const ProductPage = () => {
   const [allSizes, setAllSizes] = useState([]);
   const [selectedSize, setSelectedSize] = useState();
   const [buttonContent, setButtonContent] = useState("");
+  const [addEventHandler, setAddEventHandler] = useState(false);
 
   const handleAddToCart = async () => {
     if (!selectedVariant) return;
@@ -42,7 +43,7 @@ const ProductPage = () => {
     await addItem({
       productId: selectedVariant.productId,
       variantId: selectedVariant.id,
-      skuId: "selectedSkuId",
+      skuId: selectedSize,
       size: selectedSize,
       ...selectedVariant,
     });
@@ -91,19 +92,8 @@ const ProductPage = () => {
     }
   }, [router.isReady]);
 
-  let addEventHandler = false;
-
-  if (selectedVariant) {
-    if (selectedVariant.stock > 0) {
-      addEventHandler = true;
-    }
-  } else {
-    if (selectedVariant?.sizes > 0) {
-      addEventHandler = true;
-    }
-  }
-
   const getButton = () => {
+    setAddEventHandler(false);
     if (!selectedVariant) {
       return "CHOOSE COLOR";
     }
@@ -111,12 +101,22 @@ const ProductPage = () => {
       return "SELECT SIZE";
     }
 
-    if (!selectedVariant.stock) {
+    if (selectedSize) {
+      const v = selectedVariant.sizeVariants.find(
+        (s) => s.size === selectedSize
+      );
+
+      if (v.quantity > 0) {
+        setAddEventHandler(true);
+      }
+
       //check if stock in that size exists
-      return "OUT OF STOCK";
+      return v.quantity <= 0
+        ? "OUT OF STOCK"
+        : `ADD ${selectedSize?.toUpperCase() ?? ""} TO BAG`;
     }
 
-    return `ADD ${selectedSize?.toUpperCase() ?? ""} TO BAG`;
+    return `NO ITEMS LEFT`;
   };
 
   useEffect(() => {
@@ -248,7 +248,7 @@ const ProductPage = () => {
                           ))}
                         </div>
                       </div>
-                      {!singleSize && (
+                      {selectedVariant && (
                         <div className={styles.sizes_container}>
                           <p className={styles.pick_size}>
                             {selectedVariant
@@ -258,16 +258,14 @@ const ProductPage = () => {
 
                           <div className={styles.sizes_wrapper}>
                             {(selectedVariant
-                              ? selectedVariant.sizes
-                              : allSizes
+                              ? selectedVariant.sizeVariants
+                              : []
                             ).map((size) => (
                               <ProductSize
-                                key={size}
-                                skuId={size}
-                                value={size}
-                                quantity={
-                                  selectedVariant ? selectedVariant.stock : 1
-                                }
+                                key={size.size}
+                                skuId={size.size}
+                                value={size.size}
+                                quantity={size.quantity}
                                 selectedSize={selectedSize}
                                 setSelectedSize={setSelectedSize}
                               />
@@ -381,27 +379,27 @@ const ProductPage = () => {
                       </div>
                     </div>
 
-                    <div className={styles.sizes_container}>
-                      <p className={styles.pick_size}>Select Size</p>
+                    {selectedVariant && (
+                      <div className={styles.sizes_container}>
+                        <p className={styles.pick_size}>Select Size</p>
 
-                      <div className={styles.sizes_wrapper}>
-                        {(selectedVariant
-                          ? selectedVariant.sizes
-                          : allSizes
-                        ).map((size) => (
-                          <ProductSize
-                            key={size}
-                            skuId={size}
-                            value={size}
-                            quantity={
-                              selectedVariant ? selectedVariant?.stock : 1
-                            }
-                            selectedSize={selectedSize}
-                            setSelectedSize={setSelectedSize}
-                          />
-                        ))}
+                        <div className={styles.sizes_wrapper}>
+                          {(selectedVariant
+                            ? selectedVariant.sizeVariants
+                            : []
+                          ).map((size) => (
+                            <ProductSize
+                              key={size.size}
+                              skuId={size.size}
+                              value={size.size}
+                              quantity={size?.quantity}
+                              selectedSize={selectedSize}
+                              setSelectedSize={setSelectedSize}
+                            />
+                          ))}
+                        </div>
                       </div>
-                    </div>
+                    )}
 
                     {!isLoading && (
                       <Button

@@ -1,8 +1,8 @@
-import { Product } from "../products/product.model";
-import { Variant } from "../variants/variant.model";
+import { Product, ProductOutput } from "../products/product.model";
+import { VariantOutput } from "../variants/variant.model";
 import { getCloudfrontUrl } from "@/utils/utils";
 
-export const mapProductToOutput = (product: Product): Product => {
+export const mapProductToOutput = (product: Product): ProductOutput => {
   return {
     id: product.id,
     attributes: product.attributes,
@@ -28,7 +28,13 @@ export const mapProductToOutput = (product: Product): Product => {
   };
 };
 
-const variantToOutput = (variant: Product["variants"][0]): Variant => {
+const sizeOrder = ["XS", "S", "M", "L", "XL", "XXL", "XXXL"];
+
+function sortSizes(sizes: string[]) {
+  return sizes.sort((a, b) => sizeOrder.indexOf(a) - sizeOrder.indexOf(b));
+}
+
+const variantToOutput = (variant: Product["variants"][0]): VariantOutput => {
   return {
     id: variant.id,
     color: variant.color,
@@ -41,7 +47,8 @@ const variantToOutput = (variant: Product["variants"][0]): Variant => {
     })),
     price: variant.price,
     salePrice: variant.salePrice,
-    sizes: variant.sizes,
+    sizes: sortSizes(variant.sizes.map((s) => s.size)),
+    sizeVariants: variant.sizes,
     slug: variant.slug,
     sku: variant.sku,
     status: variant.status,
