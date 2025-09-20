@@ -1,13 +1,13 @@
-import { useState } from 'react';
-import { v4 as uuid } from 'uuid';
+import { useState } from "react";
+import { v4 as uuid } from "uuid";
 
-import { doc, updateDoc, getDoc } from 'firebase/firestore';
+import { doc, updateDoc, getDoc } from "firebase/firestore";
 
-import { db } from '@/db/config';
+import { db } from "@/db/config";
 
-import { useAuthContext } from '@/hooks/useAuthContext';
+import { useAuthContext } from "@/hooks/useAuthContext";
 
-import { handleError } from '@/helpers/error/handleError';
+import { handleError } from "@/helpers/error/handleError";
 
 export const useAddress = () => {
   const { user, addresses, dispatch } = useAuthContext();
@@ -15,8 +15,12 @@ export const useAddress = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const userRef = doc(db, 'users', user.uid);
-  const checkoutSessionRef = doc(db, 'checkoutSessions', user.uid);
+  const userRef = doc(db, "users", user?.uid ?? "no-user"); //TODO change no-user
+  const checkoutSessionRef = doc(
+    db,
+    "checkoutSessions",
+    user?.uid ?? "no-user"
+  );
 
   const userAddresses = [...addresses];
 
@@ -47,12 +51,12 @@ export const useAddress = () => {
         id = uuid();
       }
 
-      const formattedName = name.trim().replace(/\s+/g, ' ');
-      const formattedLastName = lastName.trim().replace(/\s+/g, ' ');
-      const formattedAddress = address.trim().replace(/\s+/g, ' ');
-      const formattedZipCode = zipCode.trim().replace(/\s+/g, ' ');
-      const formattedCity = city.trim().replace(/\s+/g, ' ');
-      const formattedState = state.trim().replace(/\s+/g, ' ');
+      const formattedName = name.trim().replace(/\s+/g, " ");
+      const formattedLastName = lastName.trim().replace(/\s+/g, " ");
+      const formattedAddress = address.trim().replace(/\s+/g, " ");
+      const formattedZipCode = zipCode.trim().replace(/\s+/g, " ");
+      const formattedCity = city.trim().replace(/\s+/g, " ");
+      const formattedState = state.trim().replace(/\s+/g, " ");
 
       const addressToAdd = {
         id,
@@ -88,7 +92,7 @@ export const useAddress = () => {
         addresses: userAddresses,
       });
 
-      dispatch({ type: 'UPDATE_ADDRESSES', payload: userAddresses });
+      dispatch({ type: "UPDATE_ADDRESSES", payload: userAddresses });
       setIsLoading(false);
       return addressToAdd;
     } catch (err) {
@@ -125,12 +129,12 @@ export const useAddress = () => {
           : (isMain = false);
       }
 
-      const formattedName = name.trim().replace(/\s+/g, ' ');
-      const formattedLastName = lastName.trim().replace(/\s+/g, ' ');
-      const formattedAddress = address.trim().replace(/\s+/g, ' ');
-      const formattedZipCode = zipCode.trim().replace(/\s+/g, ' ');
-      const formattedCity = city.trim().replace(/\s+/g, ' ');
-      const formattedState = state.trim().replace(/\s+/g, ' ');
+      const formattedName = name.trim().replace(/\s+/g, " ");
+      const formattedLastName = lastName.trim().replace(/\s+/g, " ");
+      const formattedAddress = address.trim().replace(/\s+/g, " ");
+      const formattedZipCode = zipCode.trim().replace(/\s+/g, " ");
+      const formattedCity = city.trim().replace(/\s+/g, " ");
+      const formattedState = state.trim().replace(/\s+/g, " ");
 
       const updatedAddress = {
         id,
@@ -179,7 +183,7 @@ export const useAddress = () => {
         addresses: updatedAddresses,
       });
 
-      dispatch({ type: 'UPDATE_ADDRESSES', payload: updatedAddresses });
+      dispatch({ type: "UPDATE_ADDRESSES", payload: updatedAddresses });
 
       setIsLoading(false);
     } catch (err) {
@@ -225,7 +229,7 @@ export const useAddress = () => {
         addresses: updatedAddresses,
       });
 
-      dispatch({ type: 'UPDATE_ADDRESSES', payload: updatedAddresses });
+      dispatch({ type: "UPDATE_ADDRESSES", payload: updatedAddresses });
 
       setIsLoading(false);
     } catch (err) {

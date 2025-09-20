@@ -1,15 +1,15 @@
-import { useCheckoutContext } from '@/hooks/useCheckoutContext';
-import { useCheckout } from '@/hooks/useCheckout';
+import { useCheckoutContext } from "@/hooks/useCheckoutContext";
+import { useCheckout } from "@/hooks/useCheckout";
 
-import CheckoutSummary from '../CheckoutSummary';
+import CheckoutSummary from "../checkout-summary";
 
-import { Button, Loader } from '@/components/common';
+import { Button, Loader } from "@/components/common";
 
-import { BiChevronLeft } from 'react-icons/bi';
+import { BiChevronLeft } from "react-icons/bi";
 
-import { formatPrice } from '@/helpers/format';
+import { formatPrice } from "@/helpers/format";
 
-import styles from './index.module.scss';
+import styles from "./index.module.scss";
 
 const ShippingOption = () => {
   const { shippingOption } = useCheckoutContext();

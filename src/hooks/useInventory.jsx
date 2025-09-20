@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 import {
   doc,
@@ -9,16 +9,16 @@ import {
   deleteDoc,
   documentId,
   getDocs,
-} from 'firebase/firestore';
+} from "firebase/firestore";
 
-import { db } from '@/db/config';
+import { db } from "@/db/config";
 
-import { useAuthContext } from './useAuthContext';
-import { useCartContext } from './useCartContext';
+import { useAuthContext } from "./useAuthContext";
+import { useCartContext } from "./useCartContext";
 
-import { addAllItemsQuantity } from '@/helpers/item';
-import { CustomError } from '@/helpers/error/customError';
-import { handleError } from '@/helpers/error/handleError';
+import { addAllItemsQuantity } from "@/helpers/item";
+import { CustomError } from "@/helpers/error/customError";
+import { handleError } from "@/helpers/error/handleError";
 
 export const useInventory = () => {
   const { user } = useAuthContext();
@@ -27,22 +27,22 @@ export const useInventory = () => {
   const [isLoading, setIsLoading] = useState();
   const [error, setError] = useState();
 
-  const skusRef = collectionGroup(db, 'skus');
-  const cartRef = doc(db, 'carts', user.uid);
+  const skusRef = collectionGroup(db, "skus");
+  const cartRef = doc(db, "carts", user?.uid ?? "123");
 
   const checkInventory = async (items) => {
     setError(null);
     setIsLoading(true);
     try {
       const skuIdList = items.map(
-        (item) => 'products/' + item.productId + '/skus/' + item.skuId
+        (item) => "products/" + item.productId + "/skus/" + item.skuId
       );
 
       const skus = {};
 
       while (skuIdList.length) {
         const batch = skuIdList.splice(0, 10);
-        const q = query(skusRef, where(documentId(), 'in', [...batch]));
+        const q = query(skusRef, where(documentId(), "in", [...batch]));
         const skusSnapshot = await getDocs(q);
 
         skusSnapshot.forEach((doc) => {
@@ -73,12 +73,12 @@ export const useInventory = () => {
       const cartTotalItemQuantity = addAllItemsQuantity(updatedItems);
 
       if (cartTotalItemQuantity === 0) {
-        console.log('in here 1');
+        console.log("in here 1");
 
         await deleteDoc(cartRef);
 
         dispatch({
-          type: 'DELETE_CART',
+          type: "DELETE_CART",
         });
       } else if (stockDifference) {
         await setDoc(cartRef, {
@@ -86,15 +86,15 @@ export const useInventory = () => {
         });
 
         dispatch({
-          type: 'UPDATE_CART',
+          type: "UPDATE_CART",
           payload: updatedItems,
         });
       }
 
       if (stockDifference) {
-        console.log('in here 2');
+        console.log("in here 2");
         throw new CustomError(
-          'Available stock is limited. Quantities in cart have been updated!'
+          "Available stock is limited. Quantities in cart have been updated!"
         );
       }
 

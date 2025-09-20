@@ -1,40 +1,40 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
-import { BiChevronLeft } from 'react-icons/bi';
+import { BiChevronLeft } from "react-icons/bi";
 
-import { useAuthContext } from '@/hooks/useAuthContext';
-import { useCheckoutContext } from '@/hooks/useCheckoutContext';
-import { useCheckout } from '@/hooks/useCheckout';
+import { useAuthContext } from "@/hooks/useAuthContext";
+import { useCheckoutContext } from "@/hooks/useCheckoutContext";
+import { useCheckout } from "@/hooks/useCheckout";
 
-import AddressForm from '../AddressForm';
+import AddressForm from "../address-form";
 
-import { Button, Loader } from '@/components/common';
+import { Button, Loader } from "@/components/common";
 
-import styles from './index.module.scss';
+import styles from "./index.module.scss";
 
 const ShippingInfo = () => {
   const { addresses } = useAuthContext();
   const { email, shippingAddress } = useCheckoutContext();
   const { submitShippingInfo, isLoading } = useCheckout();
 
-  const options = [...addresses, { label: 'Add new address', value: 'new' }];
+  const options = [...addresses, { label: "Add new address", value: "new" }];
 
   const [isDisabled, setIsDisabled] = useState(false);
   const [defaultOption, setDefaultOption] = useState(null);
   const [newAddress, setNewAddress] = useState({});
 
   const [userInput, setUserInput] = useState({
-    email,
-    id: '',
-    name: '',
-    lastName: '',
-    address: '',
-    city: '',
-    state: '',
-    zipCode: '',
-    phoneNumber: '',
-    label: '',
-    value: '',
+    email: "", //TODO prefill email if logged in
+    id: "",
+    name: "",
+    lastName: "",
+    address: "",
+    city: "",
+    state: "",
+    zipCode: "",
+    phoneNumber: "",
+    label: "",
+    value: "",
   });
 
   useEffect(() => {
@@ -51,11 +51,11 @@ const ShippingInfo = () => {
     }
 
     if (!initialOption) {
-      setDefaultOption({ label: 'Add new address', value: 'new' });
+      setDefaultOption({ label: "Add new address", value: "new" });
       setUserInput({
         ...userInput,
-        label: 'Add new Address',
-        value: 'new',
+        label: "Add new Address",
+        value: "new",
       });
     } else {
       setDefaultOption(initialOption);
@@ -64,7 +64,7 @@ const ShippingInfo = () => {
   }, []);
 
   useEffect(() => {
-    if (userInput.value === 'new') {
+    if (userInput.value === "new") {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
@@ -72,31 +72,31 @@ const ShippingInfo = () => {
   }, [userInput.value]);
 
   const handleSelectAddress = (option) => {
-    if (option.value === 'new') {
+    if (option.value === "new") {
       setUserInput((prevState) => ({
         ...prevState,
-        id: newAddress.id || '',
-        name: newAddress.name || '',
-        lastName: newAddress.lastName || '',
-        address: newAddress.address || '',
-        city: newAddress.city || '',
-        state: newAddress.state || '',
-        zipCode: newAddress.zipCode || '',
-        phoneNumber: newAddress.phoneNumber || '',
+        id: newAddress.id || "",
+        name: newAddress.name || "",
+        lastName: newAddress.lastName || "",
+        address: newAddress.address || "",
+        city: newAddress.city || "",
+        state: newAddress.state || "",
+        zipCode: newAddress.zipCode || "",
+        phoneNumber: newAddress.phoneNumber || "",
         label: option.label,
         value: option.value,
       }));
     } else {
       setUserInput((prevState) => ({
         ...prevState,
-        id: option.id || '',
-        name: option.name || '',
-        lastName: option.lastName || '',
-        address: option.address || '',
-        city: option.city || '',
-        state: option.state || '',
-        zipCode: option.zipCode || '',
-        phoneNumber: option.phoneNumber || '',
+        id: option.id || "",
+        name: option.name || "",
+        lastName: option.lastName || "",
+        address: option.address || "",
+        city: option.city || "",
+        state: option.state || "",
+        zipCode: option.zipCode || "",
+        phoneNumber: option.phoneNumber || "",
         label: option.label,
         value: option.value,
       }));
@@ -138,7 +138,10 @@ const ShippingInfo = () => {
           <form className={styles.info_form} onSubmit={handleSubmit}>
             <div className={styles.contact_info_wrapper}>
               <p className={styles.title}>Contact Information</p>
-              <div className={styles.float_container}>
+              <div
+                className={styles.float_container}
+                style={{ marginBottom: "12px" }}
+              >
                 <label htmlFor="email" className={emailStyles.label}>
                   Email
                 </label>
@@ -152,6 +155,23 @@ const ShippingInfo = () => {
                   className={emailStyles.input}
                   required
                   placeholder="Email"
+                />
+              </div>
+
+              <div className={styles.float_container}>
+                <label htmlFor="mobileNumber" className={emailStyles.label}>
+                  Mobile Number
+                </label>
+                <input
+                  id="mobileNumber"
+                  name="mobileNumber"
+                  type="number"
+                  autoComplete="off"
+                  onChange={(e) => handleInput(e.target.name, e.target.value)}
+                  value={userInput.mobileNumber}
+                  className={emailStyles.input}
+                  required
+                  placeholder="Mobile Number"
                 />
               </div>
             </div>
@@ -174,7 +194,7 @@ const ShippingInfo = () => {
                 Back to cart
               </Button>
               <Button className={styles.button} type="submit">
-                Continue to shipping
+                Proceed to payment
               </Button>
             </div>
           </form>

@@ -14,7 +14,7 @@
     p,
     span,
     input {
-      color: #fff;
+      color: #000000;
       font-size: 1.6rem;
     }
 
@@ -40,7 +40,7 @@
     input {
       line-height: normal;
       width: 100%;
-      background-color: rgba(0, 0, 0, 0.3);
+      // background-color: rgba(0, 0, 0, 0.3);
       border: 1px solid #515255;
       border-radius: 1rem;
     }
@@ -106,7 +106,7 @@
     display: inline-flex;
     align-items: center;
     line-height: normal;
-    color: #fff;
+    color: #000000;
     font-size: 1.4rem;
 
     @media (min-width: 360px) {
@@ -124,7 +124,7 @@
     }
 
     &:hover {
-      color: #fff;
+      color: #000000;
     }
   }
 

@@ -1,11 +1,10 @@
-'use client';
+"use client";
 
-import Backdrop from '../Backdrop';
-import MediaContainer from '../MediaContainer';
+import Backdrop from "../Backdrop";
+import MediaContainer from "../MediaContainer";
 
-import styles from './index.module.scss';
-import Portal from '@/components/common/Portal';
-
+import styles from "./index.module.scss";
+import Portal from "@/components/common/Portal";
 
 const Loader = ({
   noPortal,
@@ -18,29 +17,27 @@ const Loader = ({
       <>
         <div className={`${styles.loader_np_container} ${containerClassName}`}>
           <MediaContainer
-            image={'/assets/images/logo-hero.png'}
+            image={"/assets/images/loader.png"}
             alt=""
             containerClassName={styles.image_container}
             fillClassName={styles.image_fill}
             mediaClassName={`${styles.image} ${loaderClassName}`}
           />
         </div>
-
-
       </>
     );
   }
 
   return (
     <>
-      <Portal containerId='overlay'>
+      <Portal containerId="overlay">
         <>
           <Backdrop
             backdropClassName={`${styles.backdrop} ${backdropClassName}`}
           />
           <div className={`${styles.loader_container} ${containerClassName}`}>
             <MediaContainer
-              image={'/assets/images/loader.png'}
+              image={"/assets/images/loader.png"}
               alt=""
               containerClassName={styles.image_container}
               fillClassName={styles.image_fill}
@@ -49,7 +46,6 @@ const Loader = ({
           </div>
         </>
       </Portal>
-
     </>
   );
 };

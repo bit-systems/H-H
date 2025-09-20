@@ -1,52 +1,20 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
-import { useCartContext } from '@/hooks/useCartContext';
-import { useCheckoutContext } from '@/hooks/useCheckoutContext';
-import { useCheckout } from '@/hooks/useCheckout';
+import { useCartContextV2 } from "@/hooks/useCartContextV2";
+import { useCheckoutContext } from "@/hooks/useCheckoutContext";
+import { useCheckout } from "@/hooks/useCheckout";
 
-import { formatPrice } from '@/helpers/format';
-import { addAllItemsPriceNumber } from '@/helpers/item';
+import { formatPrice } from "@/helpers/format";
+import { addAllItemsPriceNumber } from "@/helpers/item";
 
-import { MediaContainer } from '@/components/common';
+import { MediaContainer } from "@/components/common";
 
-import styles from './index.module.scss';
+import styles from "./index.module.scss";
 
 const OrderSummary = () => {
-  const { items } = useCartContext();
-  const { shippingOption, currentStep } = useCheckoutContext();
-  const { selectShippingOption } = useCheckout();
+  const { cartItems: items } = useCartContextV2();
 
-  useEffect(() => {
-    if (
-      currentStep === 2 &&
-      !shippingOption.standard &&
-      !shippingOption.expedited
-    ) {
-      selectShippingOption('standard');
-    }
-  }, [currentStep]);
-
-  let shipping_price;
-  let shipping_price_text;
-  let shipping_option;
-  let shipping_option_className;
-
-  if (!shippingOption.standard && !shippingOption.expedited) {
-    shipping_price = 0;
-    shipping_price_text = 'Calculated next step';
-    shipping_option_className = styles.no_shipping_option;
-  } else {
-    if (shippingOption.standard) {
-      shipping_price_text = 'Free';
-      shipping_price = 0;
-      shipping_option = '(standard)';
-      shipping_option_className = styles.shipping_option;
-    } else {
-      shipping_price = 15;
-      shipping_option = '(expedited)';
-      shipping_option_className = styles.shipping_option;
-    }
-  }
+  let shipping_price = 0;
 
   const subtotal = addAllItemsPriceNumber(items);
   const total = +subtotal + shipping_price;
@@ -60,28 +28,28 @@ const OrderSummary = () => {
               <MediaContainer
                 containerClassName={styles.image_container}
                 fillClassName={styles.image_fill}
-                image={item.image}
+                image={item.images[0].src}
               />
               <div className={styles.quantity}>
-                <div>{item.quantity}</div>
+                <div>{item.purchaseQuantity}</div>
               </div>
             </div>
             <div className={styles.info}>
               <p className={styles.name}>
-                {item.model} {item.type} - {item.color}
+                {item.title} {item.brand} - {item.color}
               </p>
               <p className={styles.size}>{item.size?.toUpperCase()}</p>
             </div>
-            <p className={styles.price}>$ {formatPrice(item.price)}</p>
+            <p className={styles.price}>{formatPrice(item.salePrice)}</p>
           </div>
         ))}
       </div>
       <div className={styles.subtotal_wrapper}>
         <div>
           <p>Subtotal</p>
-          <p className={styles.subtotal_price}>$ {formatPrice(subtotal)}</p>
+          <p className={styles.subtotal_price}> {formatPrice(subtotal)}</p>
         </div>
-        <div>
+        {/* <div>
           <p>
             Shipping <i>{shipping_option}</i>
           </p>
@@ -90,11 +58,11 @@ const OrderSummary = () => {
               ? `$ ${formatPrice(shipping_price)}`
               : shipping_price_text}
           </p>
-        </div>
+        </div> */}
       </div>
       <div className={styles.total_wrapper}>
         <p>Total</p>
-        <p className={styles.total_price}>$ {formatPrice(total)}</p>
+        <p className={styles.total_price}>{formatPrice(total)}</p>
       </div>
     </>
   );

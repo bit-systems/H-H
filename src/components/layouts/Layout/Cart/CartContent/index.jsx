@@ -1,21 +1,28 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
-import { CgShoppingBag, CgCheckO } from 'react-icons/cg';
+import { CgShoppingBag, CgCheckO } from "react-icons/cg";
 
-import { useCartContext } from '@/hooks/useCartContext';
-import { useCart } from '@/hooks/useCart';
-import { useToast } from '@/hooks/useToast';
+import { useCartContextV2 } from "@/hooks/useCartContextV2";
+import { useCartV2 } from "@/hooks/useCartV2";
+import { useToast } from "@/hooks/useToast";
 
-import { CartItem, ProductSlider, Button } from '@/components/common';
+import {
+  CartItem,
+  ProductSlider,
+  Button,
+  ProductSliderV2,
+} from "@/components/common";
 
-import { addAllItemsPrice, addAllItemsQuantity } from '@/helpers/item';
+import { addAllItemsPrice, addAllItemsQuantity } from "@/helpers/item";
 
-import styles from './index.module.scss';
+import styles from "./index.module.scss";
 
 const CartContent = ({ closeCartModal, slides }) => {
-  const { items } = useCartContext();
+  console.log("Rendering CartContent", slides);
+  const { cartItems: items } = useCartContextV2();
+  console.log("Cart items:", items);
   const { addItem, removeItem, deleteItem, isLoading, loadingItemId, error } =
-    useCart();
+    useCartV2();
   const { sendToast } = useToast();
 
   useEffect(() => {
@@ -44,8 +51,9 @@ const CartContent = ({ closeCartModal, slides }) => {
           </div>
           <div className={styles.product_slider_container}>
             <p className={styles.title}>Recommended Products</p>
-            <ProductSlider
+            <ProductSliderV2
               slides={slides}
+              products={slides}
               slidesPerView="auto"
               spaceBetween={20}
               pagination={false}
@@ -69,15 +77,15 @@ const CartContent = ({ closeCartModal, slides }) => {
                     productId={item.productId}
                     variantId={item.variantId}
                     skuId={item.skuId}
-                    model={item.model}
-                    type={item.type}
+                    model={item.title}
+                    type={item.brand}
                     color={item.color}
                     size={item.size}
-                    price={item.price}
+                    price={item.salePrice}
                     slug={item.slug}
-                    quantity={item.quantity}
-                    image={item.image}
-                    addItem={addItem}
+                    quantity={item.purchaseQuantity}
+                    image={item.images[0]?.src}
+                    addItem={() => addItem(item)}
                     removeItem={removeItem}
                     deleteItem={deleteItem}
                     isLoading={isLoading}
@@ -87,8 +95,9 @@ const CartContent = ({ closeCartModal, slides }) => {
               </div>
               <div className={styles.product_slider_container}>
                 <p className={styles.title}>Recommended Products</p>
-                <ProductSlider
+                <ProductSliderV2
                   slides={slides}
+                  products={slides}
                   slidesPerView="auto"
                   spaceBetween={20}
                   pagination={false}
@@ -104,8 +113,8 @@ const CartContent = ({ closeCartModal, slides }) => {
           <div className={styles.footer_container}>
             <div className={styles.footer_wrapper}>
               <p>
-                <span>Total: ${addAllItemsPrice(items)} </span> |{' '}
-                {totalQuantity} {+totalQuantity > 1 ? 'items' : 'item'}
+                <span>Total: {addAllItemsPrice(items)} </span> | {totalQuantity}{" "}
+                {+totalQuantity > 1 ? "items" : "item"}
               </p>
               <div className={styles.buttons_wrapper}>
                 <Button
@@ -113,7 +122,7 @@ const CartContent = ({ closeCartModal, slides }) => {
                   to="/cart"
                   onClick={closeCartModal}
                 >
-                  Your bag{' '}
+                  Your bag{" "}
                   <span>
                     <CgShoppingBag />
                   </span>
@@ -123,7 +132,7 @@ const CartContent = ({ closeCartModal, slides }) => {
                   to="/checkout"
                   onClick={closeCartModal}
                 >
-                  Checkout{' '}
+                  Checkout{" "}
                   <span>
                     <CgCheckO />
                   </span>

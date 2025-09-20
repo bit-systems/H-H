@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Pagination } from "swiper";
 
-import { useCart } from "@/hooks/useCart";
+import { useCartV2 } from "@/hooks/useCartV2";
 import { useToast } from "@/hooks/useToast";
 import { getProduct } from "@/models/products/product.repository";
 import ProductColors from "../product-colors";
@@ -23,7 +23,7 @@ import styles from "./index.module.scss";
 import { useRouter } from "next/router";
 
 const ProductPage = () => {
-  const { addItem, isLoading, error } = useCart();
+  const { addItem, isLoading, error } = useCartV2();
   const { sendToast } = useToast();
 
   const router = useRouter();
@@ -43,9 +43,17 @@ const ProductPage = () => {
     await addItem({
       productId: selectedVariant.productId,
       variantId: selectedVariant.id,
-      skuId: selectedSize,
+      skuId: selectedVariant.id + "_" + selectedSize,
       size: selectedSize,
-      ...selectedVariant,
+      availableQuantity:
+        selectedVariant.sizeVariants.find((s) => s.size === selectedSize)
+          ?.quantity ?? 0,
+      salePrice: selectedVariant.salePrice,
+      price: selectedVariant.price,
+      images: selectedVariant.images,
+      color: selectedVariant.color,
+      title: product.title,
+      brand: product.brand,
     });
     setNotify(true);
   };
@@ -62,7 +70,7 @@ const ProductPage = () => {
           addToCart: true,
           content: {
             image: selectedVariant.images[0].src,
-            message: `${product.title} ${product.model} - ${
+            message: `${product.title} ${product.brand} - ${
               selectedVariant.color
             } ${selectedSize ? ` - ${selectedSize.toUpperCase()}` : ""}`,
           },

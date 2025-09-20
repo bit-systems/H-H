@@ -1,6 +1,6 @@
-import Step from './Step';
+import Step from "./step";
 
-import styles from './index.module.scss';
+import styles from "./index.module.scss";
 
 const CheckoutProgression = ({ steps }) => {
   return (

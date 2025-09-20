@@ -1,29 +1,33 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-import { doc, updateDoc, deleteDoc } from 'firebase/firestore';
+import { doc, updateDoc, deleteDoc } from "firebase/firestore";
 
-import { db } from '@/db/config';
+import { db } from "@/db/config";
 
-import { useCheckoutContext } from './useCheckoutContext';
-import { useAuthContext } from './useAuthContext';
-import { useAddress } from './useAddress';
+import { useCheckoutContext } from "./useCheckoutContext";
+import { useAuthContext } from "./useAuthContext";
+import { useAddress } from "./useAddress";
 
 export const useCheckout = () => {
   const { dispatch } = useCheckoutContext();
   const { user } = useAuthContext();
   const { createAddress } = useAddress();
 
-  const checkoutSessionRef = doc(db, 'checkoutSessions', user.uid);
+  const checkoutSessionRef = doc(
+    db,
+    "checkoutSessions",
+    user?.uid ?? "no-user"
+  ); //TODO change no-user
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const selectPreviousStep = () => {
-    dispatch({ type: 'SELECT_PREVIOUS_STEP' });
+    dispatch({ type: "SELECT_PREVIOUS_STEP" });
   };
 
   const selectStep = (index) => {
-    dispatch({ type: 'SELECT_STEP', payload: index });
+    dispatch({ type: "SELECT_STEP", payload: index });
   };
 
   const submitShippingInfo = async (userInput) => {
@@ -34,7 +38,7 @@ export const useCheckout = () => {
 
       let formattedShippingAddress = shippingAddress;
 
-      if (shippingAddress.value === 'new') {
+      if (shippingAddress.value === "new") {
         await createAddress({
           ...shippingAddress,
         });
@@ -46,7 +50,7 @@ export const useCheckout = () => {
       });
 
       dispatch({
-        type: 'SUBMIT_SHIPPING_INFO',
+        type: "SUBMIT_SHIPPING_INFO",
         payload: { email, shippingAddress: formattedShippingAddress },
       });
 
@@ -60,7 +64,7 @@ export const useCheckout = () => {
 
   const selectShippingOption = (option) => {
     let selectedOption;
-    if (option === 'standard') {
+    if (option === "standard") {
       selectedOption = {
         standard: true,
         expedited: false,
@@ -72,7 +76,7 @@ export const useCheckout = () => {
       };
     }
 
-    dispatch({ type: 'SELECT_SHIPPING_OPTION', payload: selectedOption });
+    dispatch({ type: "SELECT_SHIPPING_OPTION", payload: selectedOption });
   };
 
   const submitShippingOption = async ({ shippingOption, shippingCost = 0 }) => {
@@ -84,7 +88,7 @@ export const useCheckout = () => {
         shippingCost,
       });
 
-      dispatch({ type: 'SUBMIT_SHIPPING_OPTION', payload: shippingCost });
+      dispatch({ type: "SUBMIT_SHIPPING_OPTION", payload: shippingCost });
 
       setIsLoading(false);
     } catch (err) {

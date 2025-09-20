@@ -1,15 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import { CgShoppingBag } from 'react-icons/cg';
+import { CgShoppingBag } from "react-icons/cg";
 
-import { useCartContext } from '@/hooks/useCartContext';
+import { useCartContextV2 } from "@/hooks/useCartContextV2";
 
-import { addAllItemsQuantity } from '@/helpers/item';
+import { addAllItemsQuantity } from "@/helpers/item";
 
-import styles from './index.module.scss';
+import styles from "./index.module.scss";
 
 const CartIcon = () => {
-  const { items } = useCartContext();
+  const { cartItems: items } = useCartContextV2();
 
   const [bump, setBump] = useState(false);
 

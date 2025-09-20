@@ -95,7 +95,7 @@ const SliderV2 = ({
               onVariantPick
                 ? () => onVariantPick(slide)
                 : onCardPick
-                ? onCardPick(slide)
+                ? () => onCardPick(slide)
                 : undefined
             }
           >

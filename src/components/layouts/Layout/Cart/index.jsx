@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
-import { useCollection } from '@/hooks/useCollection';
+import { useCollection } from "@/hooks/useCollection";
+import { getAllProducts } from "@/models/products/product.repository";
 
-import CartModal from './CartModal';
-import CartContent from './CartContent';
+import CartModal from "./CartModal";
+import CartContent from "./CartContent";
 
 const initialSlides = [
   { id: 1 },
@@ -26,22 +27,30 @@ const initialSlides = [
 const Cart = ({ isCartModalOpen, closeCartModal }) => {
   const { getCollection } = useCollection();
 
-  const [slides, setSlides] = useState(initialSlides);
+  const [slides, setSlides] = useState([]);
   const [fetchedVariants, setFetchedVariants] = useState(null);
 
   useEffect(() => {
     if (isCartModalOpen && !fetchedVariants) {
       setTimeout(() => {
         (async () => {
-          const fetchedVariants = await getCollection({
-            sortBy: { field: 'price', direction: 'desc' },
+          const fetchedVariants = await getAllProducts({
+            sortBy: { field: "price", direction: "desc" }, //TODO make dynamic add filters
           });
-
-          const sortedVariants = fetchedVariants.sort((a, b) =>
-            a.color.toUpperCase() > b.color.toUpperCase() ? 1 : -1
-          );
-          setFetchedVariants(sortedVariants);
-          setSlides(sortedVariants);
+          console.log("fetchedVariants", fetchedVariants);
+          // const sortedVariants = fetchedVariants.sort((a, b) =>
+          //   a.color.toUpperCase() > b.color.toUpperCase() ? 1 : -1
+          // );
+          const mappedProducts = fetchedVariants.map((p) => ({
+            ...p,
+            slides: p.images,
+            variants: p.variants.map((v) => ({
+              ...v,
+              slides: v.images,
+            })),
+          }));
+          setFetchedVariants(mappedProducts);
+          setSlides(mappedProducts);
         })();
       }, 200);
     }
@@ -54,7 +63,7 @@ const Cart = ({ isCartModalOpen, closeCartModal }) => {
 
     if (!isCartModalOpen) {
       setTimeout(() => {
-        setSlides(initialSlides);
+        setSlides([]);
       }, 200);
     }
   }, [isCartModalOpen]);

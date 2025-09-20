@@ -1,22 +1,25 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
+import { BiChevronLeft } from "react-icons/bi";
 
-import { BiChevronLeft } from 'react-icons/bi';
+import { useAuthContext } from "@/hooks/useAuthContext";
+import { useCheckoutContext } from "@/hooks/useCheckoutContext";
+import { useCheckout } from "@/hooks/useCheckout";
+import { useOrder } from "@/hooks/useOrder";
 
-import { useAuthContext } from '@/hooks/useAuthContext';
-import { useCheckoutContext } from '@/hooks/useCheckoutContext';
-import { useCheckout } from '@/hooks/useCheckout';
-import { useOrder } from '@/hooks/useOrder';
+import CheckoutSummary from "../checkout-summary";
+import AddressForm from "../address-form";
 
-import CheckoutSummary from '../CheckoutSummary';
-import AddressForm from '../AddressForm';
+import { Button, Loader } from "@/components/common";
 
-import { Button, Loader } from '@/components/common';
+import {
+  formatCardNumber,
+  formatExpiryDate,
+  formatCvv,
+} from "@/helpers/format";
 
-import { formatCardNumber, formatExpiryDate, formatCvv } from '@/helpers/format';
-
-import styles from './index.module.scss';
-import { useRouter } from 'next/router';
+import styles from "./index.module.scss";
+import { useRouter } from "next/router";
 
 const Payment = () => {
   const navigate = useRouter();
@@ -26,14 +29,14 @@ const Payment = () => {
   const { selectPreviousStep } = useCheckout();
   const { createOrder, isLoading, error } = useOrder();
 
-  const [paymentOption, setPaymentOption] = useState('creditCard');
+  const [paymentOption, setPaymentOption] = useState("creditCard");
   const [navigation, setNavigation] = useState(false);
 
   const [cardInput, setCardInput] = useState({
-    cardNumber: '',
-    name: '',
-    expiryDate: '',
-    securityCode: '',
+    cardNumber: "",
+    name: "",
+    expiryDate: "",
+    securityCode: "",
   });
 
   const handleCardNumberInput = (e) => {
@@ -61,24 +64,24 @@ const Payment = () => {
     }));
   };
 
-  const options = [...addresses, { label: 'Add new address', value: 'new' }];
+  const options = [...addresses, { label: "Add new address", value: "new" }];
 
-  const [billingAddress, setBillingAddress] = useState('same');
+  const [billingAddress, setBillingAddress] = useState("same");
   const [isDisabled, setIsDisabled] = useState(false);
   const [defaultOption, setDefaultOption] = useState(null);
   const [newAddress, setNewAddress] = useState({});
 
   const [billingInput, setBillingInput] = useState({
-    id: '',
-    name: '',
-    lastName: '',
-    address: '',
-    city: '',
-    state: '',
-    zipCode: '',
-    phoneNumber: '',
-    label: '',
-    value: '',
+    id: "",
+    name: "",
+    lastName: "",
+    address: "",
+    city: "",
+    state: "",
+    zipCode: "",
+    phoneNumber: "",
+    label: "",
+    value: "",
   });
 
   useEffect(() => {
@@ -95,11 +98,11 @@ const Payment = () => {
     }
 
     if (!initialOption) {
-      setDefaultOption({ label: 'Add new address', value: 'new' });
+      setDefaultOption({ label: "Add new address", value: "new" });
       setBillingInput({
         ...billingInput,
-        label: 'Add new Address',
-        value: 'new',
+        label: "Add new Address",
+        value: "new",
       });
     } else {
       setDefaultOption(initialOption);
@@ -108,7 +111,7 @@ const Payment = () => {
   }, []);
 
   useEffect(() => {
-    if (billingInput.value === 'new') {
+    if (billingInput.value === "new") {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
@@ -128,31 +131,31 @@ const Payment = () => {
   };
 
   const handleSelectAddress = (option) => {
-    if (option.value === 'new') {
+    if (option.value === "new") {
       setBillingInput((prevState) => ({
         ...prevState,
-        id: newAddress.id || '',
-        name: newAddress.name || '',
-        lastName: newAddress.lastName || '',
-        address: newAddress.address || '',
-        city: newAddress.city || '',
-        state: newAddress.state || '',
-        zipCode: newAddress.zipCode || '',
-        phoneNumber: newAddress.phoneNumber || '',
+        id: newAddress.id || "",
+        name: newAddress.name || "",
+        lastName: newAddress.lastName || "",
+        address: newAddress.address || "",
+        city: newAddress.city || "",
+        state: newAddress.state || "",
+        zipCode: newAddress.zipCode || "",
+        phoneNumber: newAddress.phoneNumber || "",
         label: option.label,
         value: option.value,
       }));
     } else {
       setBillingInput((prevState) => ({
         ...prevState,
-        id: option.id || '',
-        name: option.name || '',
-        lastName: option.lastName || '',
-        address: option.address || '',
-        city: option.city || '',
-        state: option.state || '',
-        zipCode: option.zipCode || '',
-        phoneNumber: option.phoneNumber || '',
+        id: option.id || "",
+        name: option.name || "",
+        lastName: option.lastName || "",
+        address: option.address || "",
+        city: option.city || "",
+        state: option.state || "",
+        zipCode: option.zipCode || "",
+        phoneNumber: option.phoneNumber || "",
         label: option.label,
         value: option.value,
       }));
@@ -177,7 +180,7 @@ const Payment = () => {
 
   useEffect(() => {
     if (navigation && !error) {
-      navigate.push('/account');
+      navigate.push("/account");
     } else {
       setNavigation(false);
     }
@@ -244,10 +247,10 @@ const Payment = () => {
                       <input
                         type="radio"
                         value="creditCard"
-                        checked={paymentOption === 'creditCard'}
+                        checked={paymentOption === "creditCard"}
                         onChange={(e) => setPaymentOption(e.target.value)}
                         className={
-                          paymentOption === 'creditCard'
+                          paymentOption === "creditCard"
                             ? styles.radio_selected
                             : styles.radio_unselected
                         }
@@ -255,7 +258,7 @@ const Payment = () => {
                       <span>Credit card</span>
                     </label>
                   </div>
-                  {paymentOption === 'creditCard' && (
+                  {paymentOption === "creditCard" && (
                     <div className={styles.inputs_wrapper}>
                       <div className={styles.float_container}>
                         <label
@@ -358,10 +361,10 @@ const Payment = () => {
                       <input
                         type="radio"
                         value="same"
-                        checked={billingAddress === 'same'}
+                        checked={billingAddress === "same"}
                         onChange={(e) => setBillingAddress(e.target.value)}
                         className={
-                          billingAddress === 'same'
+                          billingAddress === "same"
                             ? styles.radio_selected
                             : styles.radio_unselected
                         }
@@ -374,10 +377,10 @@ const Payment = () => {
                       <input
                         type="radio"
                         value="different"
-                        checked={billingAddress === 'different'}
+                        checked={billingAddress === "different"}
                         onChange={(e) => setBillingAddress(e.target.value)}
                         className={
-                          billingAddress === 'different'
+                          billingAddress === "different"
                             ? styles.radio_selected
                             : styles.radio_unselected
                         }
@@ -385,7 +388,7 @@ const Payment = () => {
                       <span>Use different billing address</span>
                     </label>
                   </div>
-                  {billingAddress === 'different' && (
+                  {billingAddress === "different" && (
                     <AddressForm
                       userInput={billingInput}
                       options={options}

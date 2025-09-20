@@ -1,14 +1,14 @@
-import  Link  from 'next/link';
+import Link from "next/link";
 
-import { FaTrash, FaPlus, FaMinus } from 'react-icons/fa';
+import { FaTrash, FaPlus, FaMinus } from "react-icons/fa";
 
-import MediaContainer from '../MediaContainer';
+import MediaContainer from "../MediaContainer";
 
-import { formatPrice } from '@/helpers/format';
-import { addIndividualItemPrice } from '@/helpers/item';
+import { formatPrice } from "@/helpers/format";
+import { addIndividualItemPrice } from "@/helpers/item";
 
-import styles from './index.module.scss';
-import { useRouter } from 'next/router';
+import styles from "./index.module.scss";
+import { useRouter } from "next/router";
 
 const CartItem = ({
   productId,
@@ -59,7 +59,7 @@ const CartItem = ({
     }
   };
 
-  const slugCheck = slug === pathname.split('/')[2];
+  const slugCheck = slug === pathname.split("/")[2];
 
   return (
     <div className={styles.card}>
@@ -73,7 +73,7 @@ const CartItem = ({
             <p className={styles.title}>{`${model} ${type}`}</p>
             <p className={styles.color}>{color}</p>
             <p className={styles.size}>{size?.toUpperCase()}</p>
-            <p className={styles.price}>${formatPrice(price)}</p>
+            <p className={styles.price}>{formatPrice(price)}</p>
           </div>
           <MediaContainer
             image={image}
@@ -112,7 +112,7 @@ const CartItem = ({
           </i>
         </div>
         <div className={styles.total}>
-          ${addIndividualItemPrice({ price, quantity })}
+          {addIndividualItemPrice({ price, quantity })}
         </div>
       </div>
     </div>

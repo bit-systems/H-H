@@ -1,18 +1,18 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
-import { useCartContext } from '@/hooks/useCartContext';
-import { useCart } from '@/hooks/useCart';
-import { useInventory } from '@/hooks/useInventory';
-import { useToast } from '@/hooks/useToast';
+import { useCartContextV2 } from "@/hooks/useCartContextV2";
+import { useCartV2 } from "@/hooks/useCartV2";
+import { useInventory } from "@/hooks/useInventory";
+import { useToast } from "@/hooks/useToast";
 
-import { CartItem, Button, Loader } from '@/components/common';
+import { CartItem, Button, Loader } from "@/components/common";
 
-import { addAllItemsPrice } from '@/helpers/item';
+import { addAllItemsPrice } from "@/helpers/item";
 
-import styles from './index.module.scss';
+import styles from "./index.module.scss";
 
 const CartPage = () => {
-  const { items, cartNeedsCheck } = useCartContext();
+  const { cartItems: items, cartNeedsCheck } = useCartContextV2();
   const {
     addItem,
     removeItem,
@@ -21,17 +21,21 @@ const CartPage = () => {
     isLoading,
     loadingItemId,
     error: cartError,
-  } = useCart();
-  const {
-    checkInventory,
-    isLoading: isInventoryLoading,
-    error: inventoryError,
-  } = useInventory();
+  } = useCartV2();
+  // const {
+  //   checkInventory,
+  //   isLoading: isInventoryLoading,
+  //   error: inventoryError,
+  // } = useInventory();
+
+  console.log("Rendering CartPage", items);
+  const isInventoryLoading = false;
+  const inventoryError = "false";
   const { sendToast } = useToast();
 
   useEffect(() => {
     if (cartNeedsCheck && items.length > 0) {
-      checkInventory(items);
+      // checkInventory(items);
     } else {
       activateCartCheck();
     }
@@ -54,7 +58,7 @@ const CartPage = () => {
       <>
         <div className={styles.checkout_wrapper}>
           <p className={styles.total}>
-            Total: <span>${addAllItemsPrice(items)}</span>
+            Total: <span>{addAllItemsPrice(items)}</span>
           </p>
           <Button to="/checkout" className={styles.checkout_button}>
             Checkout
@@ -68,14 +72,14 @@ const CartPage = () => {
                 productId={item.productId}
                 variantId={item.variantId}
                 skuId={item.skuId}
-                model={item.model}
-                type={item.type}
+                model={item.title}
+                type={item.brand}
                 color={item.color}
                 size={item.size}
-                price={item.price}
+                price={item.salePrice}
                 slug={item.slug}
-                quantity={item.quantity}
-                image={item.image}
+                quantity={item.purchaseQuantity}
+                image={item.images[0]?.src}
                 addItem={addItem}
                 removeItem={removeItem}
                 deleteItem={deleteItem}

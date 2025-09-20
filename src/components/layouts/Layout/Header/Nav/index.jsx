@@ -1,19 +1,19 @@
-import { useState, useEffect } from 'react';
-import  Link  from 'next/link';
+import { useState, useEffect } from "react";
+import Link from "next/link";
 
-import { useAuthContext } from '@/hooks/useAuthContext';
+import { useAuthContext } from "@/hooks/useAuthContext";
 
-import { RiMenuLine } from 'react-icons/ri';
-import { CgSearch } from 'react-icons/cg';
+import { RiMenuLine } from "react-icons/ri";
+import { CgSearch } from "react-icons/cg";
 
-import CartIcon from './CartIcon';
+import CartIcon from "./CartIcon";
 
-import { Button } from '@/components/common';
+import { Button } from "@/components/common";
 
 // import LogoNav from '/assets/images/logo-nav.png';
 
-import styles from './index.module.scss';
-import { useRouter } from 'next/router';
+import styles from "./index.module.scss";
+import { useRouter } from "next/router";
 
 const Navbar = ({ toggleSideNav, openCartModal }) => {
   const { pathname } = useRouter();
@@ -31,7 +31,6 @@ const Navbar = ({ toggleSideNav, openCartModal }) => {
     //   ) {
     //     return true;
     //   }
-
     //   if (
     //     hasScrolled &&
     //     document.body.scrollTop < 4 &&
@@ -39,19 +38,18 @@ const Navbar = ({ toggleSideNav, openCartModal }) => {
     //   ) {
     //     return false;
     //   }
-
     //   return hasScrolled;
     // }); // TODO fix this for nextjs
   };
 
   useEffect(() => {
-    window.addEventListener('scroll', resizeHeaderOnScroll);
+    window.addEventListener("scroll", resizeHeaderOnScroll);
 
-    return () => window.removeEventListener('scroll', resizeHeaderOnScroll);
+    return () => window.removeEventListener("scroll", resizeHeaderOnScroll);
   }, []);
 
   const handleOpenCartModal = () => {
-    if (pathname !== '/cart') {
+    if (pathname !== "/cart") {
       openCartModal();
     }
   };
@@ -112,7 +110,10 @@ const Navbar = ({ toggleSideNav, openCartModal }) => {
           </Link>
         )}
         {isVerified && (
-          <Link href="/account" className={`${styles.link} ${styles.login_link}`}>
+          <Link
+            href="/account"
+            className={`${styles.link} ${styles.login_link}`}
+          >
             My Account
           </Link>
         )}
@@ -124,7 +125,11 @@ const Navbar = ({ toggleSideNav, openCartModal }) => {
       </div>
       <div className={styles.container_bottom}>
         <Link href="/">
-          <img className={styles.logo} src={'/assets/images/logo-nav.png'} alt="Logo Nav" />
+          <img
+            className={styles.logo}
+            src={"/assets/images/logo-nav.png"}
+            alt="Logo Nav"
+          />
         </Link>
         <ul className={styles.links}>
           <li>

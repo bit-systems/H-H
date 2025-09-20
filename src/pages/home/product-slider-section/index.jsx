@@ -41,6 +41,7 @@ const ProductSliderSection = ({ titleTop, titleBottom, sortBy }) => {
         <div className={styles.carousel_container}>
           <ProductSliderV2
             products={slides}
+            slides={slides}
             slidesPerView="auto"
             spaceBetween={20}
             pagination={false}

@@ -1,8 +1,8 @@
-import { Dropdown } from '@/components/common';
+import { Dropdown } from "@/components/common";
 
-import { reactSelectStyles } from './data';
+import { reactSelectStyles } from "./data";
 
-import styles from './index.module.scss';
+import styles from "./index.module.scss";
 
 const AddressForm = ({
   userInput,
@@ -72,17 +72,17 @@ const AddressForm = ({
 
   return (
     <div className={`${styles.container} ${containerClassName}`}>
-      <Dropdown
+      {/* <Dropdown
         styles={reactSelectStyles}
         options={options}
         isSearchable={false}
         onChange={handleSelectAddress}
         defaultValue={defaultOption}
-      />
+      /> */}
       <div className={styles.name_wrapper}>
         <div
           className={`${styles.float_container} ${
-            isDisabled ? styles.disabled : ''
+            isDisabled ? styles.disabled : ""
           }`}
         >
           <label htmlFor="name" className={nameStyles.label}>
@@ -103,7 +103,7 @@ const AddressForm = ({
         </div>
         <div
           className={`${styles.float_container} ${
-            isDisabled ? styles.disabled : ''
+            isDisabled ? styles.disabled : ""
           }`}
         >
           <label htmlFor="lastName" className={lastNameStyles.label}>
@@ -125,7 +125,7 @@ const AddressForm = ({
       </div>
       <div
         className={`${styles.float_container} ${
-          isDisabled ? styles.disabled : ''
+          isDisabled ? styles.disabled : ""
         }`}
       >
         <label htmlFor="address" className={addressStyles.label}>
@@ -147,7 +147,7 @@ const AddressForm = ({
       <div className={styles.zip_wrapper}>
         <div
           className={`${styles.float_container} ${
-            isDisabled ? styles.disabled : ''
+            isDisabled ? styles.disabled : ""
           }`}
         >
           <label htmlFor="city" className={cityStyles.label}>
@@ -168,7 +168,7 @@ const AddressForm = ({
         </div>
         <div
           className={`${styles.float_container} ${
-            isDisabled ? styles.disabled : ''
+            isDisabled ? styles.disabled : ""
           }`}
         >
           <label htmlFor="state" className={stateStyles.label}>
@@ -189,7 +189,7 @@ const AddressForm = ({
         </div>
         <div
           className={`${styles.float_container} ${
-            isDisabled ? styles.disabled : ''
+            isDisabled ? styles.disabled : ""
           }`}
         >
           <label htmlFor="zipCode" className={zipCodeStyles.label}>
@@ -211,7 +211,7 @@ const AddressForm = ({
       </div>
       <div
         className={`${styles.float_container} ${
-          isDisabled ? styles.disabled : ''
+          isDisabled ? styles.disabled : ""
         }`}
       >
         <label htmlFor="phoneNumber" className={phoneNumberStyles.label}>

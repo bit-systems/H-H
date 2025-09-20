@@ -60,7 +60,7 @@
     .price {
       font-family: $font-f-secondary;
       letter-spacing: $ls-secondary;
-      color: $c-secondary;
+      color: $c-primary;
     }
   }
 }
@@ -76,7 +76,7 @@
   div {
     display: flex;
     p {
-      color: $c-secondary;
+      color: $c-primary;
       font-family: $font-f-secondary;
       letter-spacing: $ls-secondary;
     }
@@ -89,10 +89,10 @@
   align-items: center;
 
   p {
-    color: $c-secondary;
+    color: $c-primary;
     font-weight: $font-w-700;
-    font-family: $font-f-secondary;
-    letter-spacing: $ls-secondary;
+    font-family: $font-f-primary;
+    letter-spacing: $ls-primary;
   }
 
   .total_price {
