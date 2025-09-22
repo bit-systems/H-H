@@ -10,7 +10,6 @@ const AddressForm = ({
   defaultOption,
   isDisabled,
   handleInput,
-  handleSelectAddress,
   containerClassName,
 }) => {
   const nameStyles = {
@@ -90,14 +89,14 @@ const AddressForm = ({
           </label>
           <input
             id="name"
-            name="name"
+            name="firstName"
             type="text"
             autoComplete="off"
             onChange={(e) => handleInput(e.target.name, e.target.value)}
             value={userInput.name}
             className={nameStyles.input}
             required
-            placeholder="Name"
+            placeholder="First Name"
             disabled={isDisabled}
           />
         </div>
@@ -209,7 +208,7 @@ const AddressForm = ({
           />
         </div>
       </div>
-      <div
+      {/* <div
         className={`${styles.float_container} ${
           isDisabled ? styles.disabled : ""
         }`}
@@ -229,7 +228,7 @@ const AddressForm = ({
           placeholder="Phone"
           disabled={isDisabled}
         />
-      </div>
+      </div> */}
     </div>
   );
 };

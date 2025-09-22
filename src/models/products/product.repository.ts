@@ -17,7 +17,7 @@ import {
   getVariantsByProductId,
   updateVariants,
 } from "../variants/variant.repository";
-import { mapProductToOutput } from "../mappers/product-outout.mapper";
+import { mapProductToOutput } from "../mappers/product-output.mapper";
 const productRef = collection(db, "Product") as CollectionReference<Product>;
 
 const addProduct = async (product: ProductModel) => {
@@ -30,7 +30,7 @@ const addProduct = async (product: ProductModel) => {
 
   console.log(productWithId, "productWithId");
 
-  const resp = await setDoc(newProductRef, productWithId);
+  await setDoc(newProductRef, productWithId);
   return productWithId;
 };
 

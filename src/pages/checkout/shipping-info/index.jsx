@@ -4,7 +4,11 @@ import { BiChevronLeft } from "react-icons/bi";
 
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { useCheckoutContext } from "@/hooks/useCheckoutContext";
+import { createOrUpdateUser } from "@/models/user/user.repository.ts";
+import { createOrder } from "@/models/order/order.repository.ts";
 import { useCheckout } from "@/hooks/useCheckout";
+import { useCartContextV2 } from "@/hooks/useCartContextV2";
+import { orderInputMapper } from "@/models/mappers/order/order-input.mapper.ts";
 
 import AddressForm from "../address-form";
 
@@ -15,7 +19,8 @@ import styles from "./index.module.scss";
 const ShippingInfo = () => {
   const { addresses } = useAuthContext();
   const { email, shippingAddress } = useCheckoutContext();
-  const { submitShippingInfo, isLoading } = useCheckout();
+  const { isLoading } = useCheckout();
+  const { cartItems: items } = useCartContextV2();
 
   const options = [...addresses, { label: "Add new address", value: "new" }];
 
@@ -72,41 +77,25 @@ const ShippingInfo = () => {
   }, [userInput.value]);
 
   const handleSelectAddress = (option) => {
-    if (option.value === "new") {
-      setUserInput((prevState) => ({
-        ...prevState,
-        id: newAddress.id || "",
-        name: newAddress.name || "",
-        lastName: newAddress.lastName || "",
-        address: newAddress.address || "",
-        city: newAddress.city || "",
-        state: newAddress.state || "",
-        zipCode: newAddress.zipCode || "",
-        phoneNumber: newAddress.phoneNumber || "",
-        label: option.label,
-        value: option.value,
-      }));
-    } else {
-      setUserInput((prevState) => ({
-        ...prevState,
-        id: option.id || "",
-        name: option.name || "",
-        lastName: option.lastName || "",
-        address: option.address || "",
-        city: option.city || "",
-        state: option.state || "",
-        zipCode: option.zipCode || "",
-        phoneNumber: option.phoneNumber || "",
-        label: option.label,
-        value: option.value,
-      }));
-    }
+    setUserInput((prevState) => ({
+      ...prevState,
+      id: option.id || "",
+      firstName: option.name || "",
+      lastName: option.lastName || "",
+      address: option.address || "",
+      city: option.city || "",
+      state: option.state || "",
+      zipCode: option.zipCode || "",
+      phoneNumber: option.phoneNumber || "",
+    }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    submitShippingInfo(userInput);
+    const user = await createOrUpdateUser(userInput);
+
+    await createOrder(orderInputMapper(items, user));
   };
 
   const handleInput = (key, value) => {
@@ -170,6 +159,7 @@ const ShippingInfo = () => {
                   onChange={(e) => handleInput(e.target.name, e.target.value)}
                   value={userInput.mobileNumber}
                   className={emailStyles.input}
+                  onWheel={(e) => e.target.blur()}
                   required
                   placeholder="Mobile Number"
                 />
@@ -183,7 +173,6 @@ const ShippingInfo = () => {
                 defaultOption={defaultOption}
                 isDisabled={isDisabled}
                 handleInput={handleInput}
-                handleSelectAddress={handleSelectAddress}
               />
             </div>
             <div className={styles.form_controls}>

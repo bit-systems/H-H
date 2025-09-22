@@ -5,7 +5,7 @@ import {
   S3Client,
   S3ServiceException,
 } from "@aws-sdk/client-s3";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import path from "path";
 
 const upload = async ({ key, file }: { key: string; file: any }) => {
