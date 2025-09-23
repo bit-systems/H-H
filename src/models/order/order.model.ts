@@ -1,5 +1,5 @@
 export interface Order {
-  id: string;
+  id?: string;
   userId: string;
   totalAmount: number;
   status:
@@ -20,14 +20,15 @@ export interface OrderItem {
   productId: string;
   quantity: number;
   price: number;
-  id: string;
+  id?: string;
   orderId: string;
   variantId: string;
   size: string;
+  totalAmount: number;
 }
 
 export interface OrderInput {
-  id: string;
+  id?: string;
   userId: string;
   orderItems: OrderItem[];
   totalAmount: number;
@@ -46,7 +47,7 @@ export interface OrderInput {
 }
 
 export interface OrderOutput {
-  id: string;
+  id?: string;
   userId: string;
   orderItems: OrderItem[];
   totalAmount: number;

@@ -31,5 +31,6 @@ const mapInputToOrderItem = (
     quantity: item.quantity,
     size: item.size,
     variantId: item.variantId,
+    totalAmount: item.totalAmount,
   };
 };

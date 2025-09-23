@@ -21,3 +21,4 @@ export { default as TagsInput } from "./TagsInput";
 export { default as Toast } from "./Toast";
 export { default as ToastMessage } from "./ToastMessage";
 export { default as ToolTip } from "./ToolTip";
+export { default as RazorpayGateway } from "./Razorpay";

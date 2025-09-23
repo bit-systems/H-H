@@ -84,7 +84,7 @@ export const getAllOrders = async (): Promise<OrderOutput[]> => {
   const orders = await Promise.all(
     snapshot.docs.map(async (doc) => {
       const order = doc.data();
-      const v = await getOrderItemsByOrderId(order.id);
+      const v = await getOrderItemsByOrderId(order.id as string);
       return { ...order, orderItems: v };
     })
   );
@@ -100,7 +100,7 @@ export const getOrder = async (id: string): Promise<OrderOutput | null> => {
 
   const orderData = snapshot.data();
 
-  const variants = await getOrderItemsByOrderId(orderData.id);
+  const variants = await getOrderItemsByOrderId(orderData.id as string);
 
   return { ...orderData, orderItems: variants };
 };

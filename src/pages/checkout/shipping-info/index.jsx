@@ -9,10 +9,13 @@ import { createOrder } from "@/models/order/order.repository.ts";
 import { useCheckout } from "@/hooks/useCheckout";
 import { useCartContextV2 } from "@/hooks/useCartContextV2";
 import { orderInputMapper } from "@/models/mappers/order/order-input.mapper.ts";
+import { useToast } from "@/hooks/useToast";
 
 import AddressForm from "../address-form";
 
 import { Button, Loader } from "@/components/common";
+import { RazorpayGateway } from "@/components/common";
+import { postApi } from "@/fetch-api/fetch-api";
 
 import styles from "./index.module.scss";
 
@@ -21,6 +24,9 @@ const ShippingInfo = () => {
   const { email, shippingAddress } = useCheckoutContext();
   const { isLoading } = useCheckout();
   const { cartItems: items } = useCartContextV2();
+  const { sendToast } = useToast();
+
+  const [rzpOrderId, setRzpOrderId] = useState(null);
 
   const options = [...addresses, { label: "Add new address", value: "new" }];
 
@@ -31,13 +37,13 @@ const ShippingInfo = () => {
   const [userInput, setUserInput] = useState({
     email: "", //TODO prefill email if logged in
     id: "",
-    name: "",
+    firstName: "",
     lastName: "",
     address: "",
     city: "",
     state: "",
     zipCode: "",
-    phoneNumber: "",
+    mobileNumber: "",
     label: "",
     value: "",
   });
@@ -86,16 +92,60 @@ const ShippingInfo = () => {
       city: option.city || "",
       state: option.state || "",
       zipCode: option.zipCode || "",
-      phoneNumber: option.phoneNumber || "",
+      mobileNumber: option.mobileNumber || "",
     }));
   };
 
+  const openRazorpay = () => {
+    try {
+      console.log(userInput, "key id");
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID, // Enter the Key ID generated from the Dashboard"
+        amount: "50000", // Amount is in currency subunits.
+        currency: "INR",
+        order_id: rzpOrderId, // This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+        handler: function (response) {
+          console.log(response);
+        },
+        prefill: {
+          name: userInput.firstName + " " + userInput.lastName, //your customer's name
+          email: userInput.email,
+          contact: "+91" + userInput.mobileNumber, //Provide the customer's phone number for better conversion rates
+        },
+        notes: {
+          address: "Hawk and Hounds Corporate Office",
+        },
+        theme: {
+          color: "#ffffffff",
+        },
+      };
+
+      const rzp1 = new window.Razorpay(options);
+      rzp1.open();
+    } catch (error) {
+      console.log(error, "error in razorpay");
+    }
+  };
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    try {
+      e.preventDefault();
 
-    const user = await createOrUpdateUser(userInput);
+      const user = await createOrUpdateUser(userInput);
 
-    await createOrder(orderInputMapper(items, user));
+      const resp = await postApi(
+        "/api/order",
+        JSON.stringify({
+          cart: items,
+          userId: user.id,
+        })
+      );
+      setRzpOrderId(resp.orderId);
+      console.log(resp.orderId, "order resp");
+      openRazorpay();
+    } catch (err) {
+      console.log(err);
+      sendToast({ error: true, content: { message: err.message } });
+    }
   };
 
   const handleInput = (key, value) => {
@@ -119,6 +169,8 @@ const ShippingInfo = () => {
 
   return (
     <div className={styles.info_container}>
+      <RazorpayGateway />
+      <button onClick={openRazorpay}> Sed</button>
       {(isLoading || !defaultOption) && (
         <Loader containerClassName={styles.loader_container} noPortal={true} />
       )}

@@ -1,0 +1,63 @@
+{
+    "entity": "event",
+    "account_id": "acc_RJXP1YWDjYmVrM",
+    "event": "payment.failed",
+    "contains": [
+        "payment"
+    ],
+    "payload": {
+        "payment": {
+            "entity": {
+                "id": "pay_RL2r1t10JUGGAc",
+                "entity": "payment",
+                "amount": 100000,
+                "currency": "INR",
+                "status": "failed",
+                "order_id": "order_RL2oD7OoF5npDa",
+                "invoice_id": null,
+                "international": false,
+                "method": "card",
+                "amount_refunded": 0,
+                "refund_status": null,
+                "captured": false,
+                "description": null,
+                "card_id": "card_RL2r25iyPq3K8O",
+                "card": {
+                    "id": "card_RL2r25iyPq3K8O",
+                    "entity": "card",
+                    "name": "",
+                    "last4": "8228",
+                    "network": "MasterCard",
+                    "type": "credit",
+                    "issuer": "HDFC",
+                    "international": false,
+                    "emi": true,
+                    "sub_type": "business",
+                    "token_iin": null
+                },
+                "bank": null,
+                "wallet": null,
+                "vpa": null,
+                "email": "vusoja@mailinator.com",
+                "contact": "+919038888882",
+                "notes": {
+                    "orderId": "q6woqX2BjNYGUVgMx2dt",
+                    "address": "Hawk and Hounds Corporate Office"
+                },
+                "fee": null,
+                "tax": null,
+                "error_code": "BAD_REQUEST_ERROR",
+                "error_description": "Payment failed",
+                "error_source": "gateway",
+                "error_step": "payment_authorization",
+                "error_reason": "payment_failed",
+                "acquirer_data": {
+                    "auth_code": null
+                },
+                "created_at": 1758630935,
+                "reward": null
+            }
+        }
+    },
+    "created_at": 1758630939
+}

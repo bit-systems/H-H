@@ -34,7 +34,9 @@ function sortSizes(sizes: string[]) {
   return sizes.sort((a, b) => sizeOrder.indexOf(a) - sizeOrder.indexOf(b));
 }
 
-const variantToOutput = (variant: Product["variants"][0]): VariantOutput => {
+export const variantToOutput = (
+  variant: Product["variants"][0]
+): VariantOutput => {
   return {
     id: variant.id,
     color: variant.color,

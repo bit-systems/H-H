@@ -14,6 +14,7 @@ import {
   where,
 } from "firebase/firestore";
 import { Variant } from "./variant.model";
+import { variantToOutput } from "../mappers/product-output.mapper";
 
 const variantRef = collection(db, "Variant") as CollectionReference<Variant>;
 
@@ -73,4 +74,14 @@ export const getVariantsByProductId = async (productId: string) => {
   return snapshot.docs.map((doc) => ({
     ...doc.data(),
   }));
+};
+
+export const getVariantsByIds = async (ids: string[]) => {
+  const q = query(variantRef, where("id", "in", ids));
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map((doc) =>
+    variantToOutput({
+      ...doc.data(),
+    })
+  );
 };

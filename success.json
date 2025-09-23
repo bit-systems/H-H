@@ -1,0 +1,64 @@
+{
+    "entity": "event",
+    "account_id": "acc_RJXP1YWDjYmVrM",
+    "event": "payment.captured",
+    "contains": [
+        "payment"
+    ],
+    "payload": {
+        "payment": {
+            "entity": {
+                "id": "pay_RL2ogbBUNxPHVm",
+                "entity": "payment",
+                "amount": 100000,
+                "currency": "INR",
+                "status": "captured",
+                "order_id": "order_RL2kEswoN9gjG6",
+                "invoice_id": null,
+                "international": false,
+                "method": "card",
+                "amount_refunded": 0,
+                "refund_status": null,
+                "captured": true,
+                "description": null,
+                "card_id": "card_RL2oiJhLTKPoki",
+                "card": {
+                    "id": "card_RL2oiJhLTKPoki",
+                    "entity": "card",
+                    "name": "",
+                    "last4": "8228",
+                    "network": "MasterCard",
+                    "type": "credit",
+                    "issuer": "HDFC",
+                    "international": false,
+                    "emi": true,
+                    "sub_type": "business",
+                    "token_iin": null
+                },
+                "bank": null,
+                "wallet": null,
+                "vpa": null,
+                "email": "vusoja@mailinator.com",
+                "contact": "+919038888881",
+                "notes": {
+                    "orderId": "o6fGbxkhhCtJAKhEByon",
+                    "address": "Hawk and Hounds Corporate Office"
+                },
+                "fee": 3000,
+                "tax": 0,
+                "error_code": null,
+                "error_description": null,
+                "error_source": null,
+                "error_step": null,
+                "error_reason": null,
+                "acquirer_data": {
+                    "auth_code": "313340"
+                },
+                "created_at": 1758630804,
+                "reward": null,
+                "base_amount": 100000
+            }
+        }
+    },
+    "created_at": 1758630813
+}

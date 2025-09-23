@@ -14,9 +14,13 @@ const AddressForm = ({
 }) => {
   const nameStyles = {
     label:
-      userInput.name.length > 0 ? styles.label_focus : styles.label_no_focus,
+      userInput.firstName.length > 0
+        ? styles.label_focus
+        : styles.label_no_focus,
     input:
-      userInput.name.length > 0 ? styles.input_focus : styles.input_no_focus,
+      userInput.firstName.length > 0
+        ? styles.input_focus
+        : styles.input_no_focus,
   };
 
   const lastNameStyles = {
@@ -58,16 +62,16 @@ const AddressForm = ({
       userInput.zipCode.length > 0 ? styles.input_focus : styles.input_no_focus,
   };
 
-  const phoneNumberStyles = {
-    label:
-      userInput.phoneNumber.length > 0
-        ? styles.label_focus
-        : styles.label_no_focus,
-    input:
-      userInput.phoneNumber.length > 0
-        ? styles.input_focus
-        : styles.input_no_focus,
-  };
+  // const phoneNumberStyles = {
+  //   label:
+  //     userInput.phoneNumber.length > 0
+  //       ? styles.label_focus
+  //       : styles.label_no_focus,
+  //   input:
+  //     userInput.phoneNumber.length > 0
+  //       ? styles.input_focus
+  //       : styles.input_no_focus,
+  // };
 
   return (
     <div className={`${styles.container} ${containerClassName}`}>
@@ -93,7 +97,7 @@ const AddressForm = ({
             type="text"
             autoComplete="off"
             onChange={(e) => handleInput(e.target.name, e.target.value)}
-            value={userInput.name}
+            value={userInput.firstName}
             className={nameStyles.input}
             required
             placeholder="First Name"

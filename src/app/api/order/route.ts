@@ -1,5 +1,7 @@
 import { createRazorpayOrder } from "@/app/utils/razorpay/order";
 import { getOrder } from "@/models/order/order.repository";
+import { OrderInputBody } from "./inputs";
+import { prepareOrder } from "./helper";
 
 export async function GET(request: Request) {
   const users = [
@@ -14,16 +16,19 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   const body = await request.json();
-  const { orderId } = body;
+  const payload = body as OrderInputBody;
 
-  const order = await getOrder(orderId);
+  const order = await prepareOrder(payload);
 
-  //TODO get product and variants and check if the price and stock is valid
+  const rzOrder = await createRazorpayOrder(order);
 
-  await createRazorpayOrder(orderId);
-
-  return new Response(JSON.stringify(orderId), {
-    status: 201,
-    headers: { "Content-Type": "application/json" },
-  });
+  return new Response(
+    JSON.stringify({
+      orderId: rzOrder.id,
+    }),
+    {
+      status: 201,
+      headers: { "Content-Type": "application/json" },
+    }
+  );
 }

@@ -140,7 +140,8 @@ export const getUserByMobileNumber = async (
   const q = query(userRef, where("mobileNumber", "==", mobileNumber));
   const snapshots = await getDocs(q);
   const snapshot = snapshots.docs[0];
-  return snapshot.exists() ? snapshot.data() : null;
+  console.log(snapshots, "snapshot in repo");
+  return snapshot?.exists() ? snapshot.data() : null;
 };
 
 export const getUserById = async (id: string): Promise<User | null> => {
@@ -182,8 +183,12 @@ export const verifyOtpForUser = async (
 
 export const createOrUpdateUser = async (user: User) => {
   const existingUser = await getUserByMobileNumber(user.mobileNumber);
+  console.log(existingUser, "existingUser in repo");
   if (existingUser) {
-    return await updateUser({ ...existingUser, ...user }, false);
+    return await updateUser(
+      { ...existingUser, ...user, id: existingUser.id },
+      false
+    );
   } else {
     return await createUser(user, false);
   }
