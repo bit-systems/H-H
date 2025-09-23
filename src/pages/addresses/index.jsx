@@ -1,17 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
-import { BiChevronLeft, BiPlus } from 'react-icons/bi';
+import { BiChevronLeft, BiPlus } from "react-icons/bi";
 
-import { useAuthContext } from '@/hooks/useAuthContext';
-import { useAddress } from '@/hooks/useAddress';
-import { useToast } from '@/hooks/useToast';
+import { useAuthContext } from "@/hooks/useAuthContext";
+import { useAddress } from "@/hooks/useAddress";
+import { useToast } from "@/hooks/useToast";
 
-import AddAddress from './AddAddress';
-import Address from './Address';
+import AddAddress from "@/components/address/add-address";
+import Address from "@/components/address/address";
 
-import { Button, Loader, CenterModal } from '@/components/common';
+import { Button, Loader, CenterModal } from "@/components/common";
 
-import styles from './index.module.scss';
+import styles from "./index.module.scss";
 
 const AddressesPage = () => {
   const { addresses } = useAuthContext();

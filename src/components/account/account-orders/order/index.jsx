@@ -1,12 +1,12 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-import OrderContent from './OrderContent';
+import OrderContent from "./order-content";
 
-import { CenterModal } from '@/components/common';
+import { CenterModal } from "@/components/common";
 
-import { formatDate } from '@/helpers/format';
+import { formatDate } from "@/helpers/format";
 
-import styles from './index.module.scss';
+import styles from "./index.module.scss";
 
 const Order = ({
   id,

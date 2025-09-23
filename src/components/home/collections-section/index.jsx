@@ -1,8 +1,30 @@
-import CollectionCard from './collection-card';
+import CollectionCard from "./collection-card";
 
-import { COLLECTIONS as collections } from './data';
+import styles from "./index.module.scss";
 
-import styles from './index.module.scss';
+const collections = [
+  {
+    id: 1,
+    image: "/assets/images/collection-remeras-top.jpg",
+    title: "t-shirts",
+    text: "T-shirts & tank tops",
+    url: "/collections/t-shirts",
+  },
+  {
+    id: 2,
+    image: "/assets/images/collection-buzos-top.jpg",
+    title: "hoodies",
+    text: "Hoodies & sweatshirts",
+    url: "/collections/hoodies-sweatshirts",
+  },
+  {
+    id: 3,
+    image: "/assets/images/collection-accesorios-bottom.jpg",
+    title: "accessories",
+    text: "Dad hats, bucket hats & more",
+    url: "/collections/accessories",
+  },
+];
 
 const CollectionsSection = () => {
   return (

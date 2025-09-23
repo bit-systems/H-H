@@ -1,17 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
-import { useAuthContext } from '@/hooks/useAuthContext';
-import { useOrder } from '@/hooks/useOrder';
-import { useAuth } from '@/hooks/useAuth';
-import { useToast } from '@/hooks/useToast';
+import { useAuthContext } from "@/hooks/useAuthContext";
+import { useOrder } from "@/hooks/useOrder";
+import { useAuth } from "@/hooks/useAuth";
+import { useToast } from "@/hooks/useToast";
 
-import AccountOrders from './AccountOrders';
-import AccountProfile from './AccountProfile';
-import AccountAddresses from './AccountAddresses';
+import AccountOrders from "@/components/account/account-addresses";
+import AccountProfile from "@/components/account/account-profile";
+import AccountAddresses from "@/components/account/account-addresses";
 
-import { Button, Loader } from '@/components/common';
+import { Button, Loader } from "@/components/common";
 
-import styles from './index.module.scss';
+import styles from "./index.module.scss";
 
 const AccountPage = () => {
   const { name, lastName, email, phoneNumber } = useAuthContext();

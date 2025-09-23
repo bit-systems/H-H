@@ -1,17 +1,14 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-import { useCheckoutContext } from "@/hooks/useCheckoutContext";
 import { useCartContext } from "@/hooks/useCartContext";
 import { useCart } from "@/hooks/useCart";
 import { useInventory } from "@/hooks/useInventory";
 import { useToast } from "@/hooks/useToast";
 
-import CheckoutProgression from "./checkout-progression";
-import ShippingInfo from "./shipping-info";
-import ShippingOption from "./shipping-option";
-import Payment from "./payment";
-import OrderSummary from "./order-summary";
+import CheckoutProgression from "@/components/checkout/checkout-progression";
+import ShippingInfo from "@/components/checkout/shipping-info";
+import OrderSummary from "@/components/checkout/order-summary";
 
 import { Loader } from "@/components/common";
 

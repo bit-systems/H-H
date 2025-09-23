@@ -1,7 +1,5 @@
 import { Dropdown } from "@/components/common";
 
-import { reactSelectStyles } from "./data";
-
 import styles from "./index.module.scss";
 
 const AddressForm = ({

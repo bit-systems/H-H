@@ -5,9 +5,9 @@ import { Pagination } from "swiper";
 import { useCartV2 } from "@/hooks/useCartV2";
 import { useToast } from "@/hooks/useToast";
 import { getProduct } from "@/models/products/product.repository";
-import ProductColors from "../product-colors";
-import ProductSize from "../product-size";
-import ProductTags from "../product-tags";
+import ProductColors from "@/components/product/product-colors";
+import ProductSize from "@/components/product/product-size";
+import ProductTags from "@/components/product/product-tags";
 
 import {
   Button,

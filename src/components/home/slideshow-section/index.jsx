@@ -1,21 +1,44 @@
-import { useState, useEffect } from 'react';
-import { useMediaQuery } from 'react-responsive';
+import { useState, useEffect } from "react";
+import { useMediaQuery } from "react-responsive";
 
-import { Autoplay, Pagination } from 'swiper';
+import { Autoplay, Pagination } from "swiper";
 
-import { Button, Slider } from '@/components/common';
+import { Button, Slider } from "@/components/common";
 
-import {
-  BIG_SCREEN_SLIDES as bigScreenSlides,
-  SMALL_SCREEN_SLIDES as smallScreenSlides,
-} from './data';
+export const bigScreenSlides = [
+  {
+    src: "/assets/images/slide-1-b.jpg",
+    id: 1,
+  },
+  {
+    src: "/assets/images/slide-2-b.jpg",
+    id: 2,
+  },
+  {
+    src: "/assets/images/slide-3-b.jpg",
+    id: 3,
+  },
+];
 
-import styles from './index.module.scss';
+export const smallScreenSlides = [
+  {
+    src: "/assets/images/productos-hoodie-de-gira-blanco-2.jpg",
+    id: 1,
+  },
+  {
+    src: "/assets/images/productos-remera-ojos-negra-2.jpg",
+    id: 2,
+  },
+  {
+    src: "/assets/images/productos-remera-de-gira-blanca-2.jpg",
+    id: 3,
+  },
+];
+
+import styles from "./index.module.scss";
 
 const SlideshowSection = () => {
   const [showContent, setShowContent] = useState(true);
-
- 
 
   useEffect(() => {
     setShowContent(false);
@@ -27,15 +50,14 @@ const SlideshowSection = () => {
     return () => clearTimeout(timer);
   }, []);
 
-    const isBigScreen = useMediaQuery({
-    query: '(min-width: 900px)',
+  const isBigScreen = useMediaQuery({
+    query: "(min-width: 900px)",
   });
 
-   if(!showContent) {
-    console.log('Not showing content');
+  if (!showContent) {
+    console.log("Not showing content");
     return null;
   }
-
 
   return (
     <section className={styles.section}>

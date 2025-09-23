@@ -1,6 +1,6 @@
-import Order from './Order';
+import Order from "./order";
 
-import styles from './index.module.scss';
+import styles from "./index.module.scss";
 
 const AccountOrders = ({ orders }) => {
   // TODO: handle credit card number fetch

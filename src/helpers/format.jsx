@@ -64,7 +64,7 @@ export const formatCvv = (value) => {
 };
 
 export const formatDate = (value) => {
-  const timestamp = `${value.seconds}.${value.nanoseconds}`;
+  const timestamp = Date.now() / 1000;
 
   return moment.unix(parseFloat(timestamp)).format("MM/DD/YY");
 };

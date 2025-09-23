@@ -8,7 +8,6 @@ import { useCheckout } from "@/hooks/useCheckout";
 import { useOrder } from "@/hooks/useOrder";
 
 import CheckoutSummary from "../checkout-summary";
-import AddressForm from "../address-form";
 
 import { Button, Loader } from "@/components/common";
 
@@ -74,6 +73,7 @@ const Payment = () => {
   const [billingInput, setBillingInput] = useState({
     id: "",
     name: "",
+    firstName: "",
     lastName: "",
     address: "",
     city: "",
@@ -388,7 +388,7 @@ const Payment = () => {
                       <span>Use different billing address</span>
                     </label>
                   </div>
-                  {billingAddress === "different" && (
+                  {/* {billingAddress === "different" && (
                     <AddressForm
                       userInput={billingInput}
                       options={options}
@@ -398,7 +398,7 @@ const Payment = () => {
                       handleSelectAddress={handleSelectAddress}
                       containerClassName={styles.billing_form_container}
                     />
-                  )}
+                  )} */}
                 </div>
               </div>
             </form>

@@ -1,12 +1,12 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-import { FaTrash } from 'react-icons/fa';
+import { FaTrash } from "react-icons/fa";
 
-import EditAddress from './EditAddress';
+import EditAddress from "./edit-address";
 
-import { CenterModal } from '@/components/common';
+import { CenterModal } from "@/components/common";
 
-import styles from './index.module.scss';
+import styles from "./index.module.scss";
 
 const Address = ({
   id,

@@ -1,7 +1,7 @@
-import HeroSection from "./home/hero-section";
-import ProductSliderSection from "./home/product-slider-section";
-import SlideshowSection from "./home/slideshow-section";
-import CollectionsSection from "./home/collections-section";
+import HeroSection from "../components/home/hero-section";
+import ProductSliderSection from "../components/home/product-slider-section";
+import SlideshowSection from "../components/home/slideshow-section";
+import CollectionsSection from "../components/home/collections-section";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { useCartContext } from "@/hooks/useCartContext";
 import { Loader } from "@/components/common";

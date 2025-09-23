@@ -1,12 +1,12 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-import { BiUser, BiEnvelope, BiPhone } from 'react-icons/bi';
+import { BiUser, BiEnvelope, BiPhone } from "react-icons/bi";
 
-import EditProfile from './EditProfile';
+import EditProfile from "./edit-profile";
 
-import { CenterModal, Button } from '@/components/common';
+import { CenterModal, Button } from "@/components/common";
 
-import styles from './index.module.scss';
+import styles from "./index.module.scss";
 
 const AccountProfile = ({ name, email, lastName, phoneNumber }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -42,7 +42,7 @@ const AccountProfile = ({ name, email, lastName, phoneNumber }) => {
             </li>
             <li>
               <BiPhone className={styles.profile_icon} />
-              {phoneNumber ? phoneNumber : 'No phone added yet'}
+              {phoneNumber ? phoneNumber : "No phone added yet"}
             </li>
           </ul>
           <Button className={styles.edit_button} onClick={toggleEditProfile}>
