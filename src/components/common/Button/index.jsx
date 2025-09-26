@@ -1,6 +1,6 @@
-import  Link  from 'next/link';
+import Link from "next/link";
 
-import styles from './index.module.scss';
+import styles from "./index.module.scss";
 
 const Button = ({ children, form, className, to, type, onClick, disabled }) => {
   if (to) {
@@ -8,7 +8,7 @@ const Button = ({ children, form, className, to, type, onClick, disabled }) => {
       <Link
         // to={to}
         className={`${styles.button} ${className}`}
-        // onClick={onClick}
+        onClick={onClick}
         href={to}
       >
         {children}

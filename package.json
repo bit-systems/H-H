@@ -7,7 +7,8 @@
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint",
-    "r": "npx localtunnel --port 3000 --subdomain h-and-h-akhil"
+    "r": "npx localtunnel --port 3000 --subdomain h-and-h-akhil",
+    "v": "vercel --prod"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.888.0",
@@ -25,7 +26,8 @@
     "react-select": "^5.7.3",
     "react-slider": "^2.0.6",
     "swiper": "^8.4.6",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "vercel": "^48.1.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -34,9 +36,9 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.5.2",
+    "localtunnel": "^2.0.2",
     "sass": "^1.91.0",
-    "typescript": "^5",
-    "localtunnel": "^2.0.2"
+    "typescript": "^5"
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

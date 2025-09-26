@@ -11,15 +11,15 @@ import path from "path";
 const upload = async ({ key, file }: { key: string; file: any }) => {
   const client = new S3Client({
     credentials: {
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID || "",
-      secretAccessKey: process.env.AWS_ACCESS_SECRET_KEY || "",
+      accessKeyId: process.env.HAH_AWS_ACCESS_KEY_ID || "",
+      secretAccessKey: process.env.HAH_AWS_ACCESS_SECRET_KEY || "",
     },
-    region: process.env.AWS_REGION || "us-east-1",
+    region: process.env.HAH_AWS_REGION || "us-east-1",
   });
   const arrayBuffer = await file.arrayBuffer();
   const buffer = Buffer.from(arrayBuffer);
   const command = new PutObjectCommand({
-    Bucket: process.env.AWS_S3_BUCKET_NAME,
+    Bucket: process.env.HAH_AWS_S3_BUCKET_NAME,
     Key: key,
     Body: buffer,
     ContentType: file.type,

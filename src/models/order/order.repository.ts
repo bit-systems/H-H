@@ -58,11 +58,6 @@ export const createOrder = async (order: OrderInput) => {
   return orderData;
 };
 
-const deleteOrder = async (id: string): Promise<void> => {
-  const orderDoc = doc(orderRef, id);
-  await deleteDoc(orderDoc);
-};
-
 export const updateOrder = async (orderId: string, order: OrderInput) => {
   const { orderItems, ...orderInput } = order;
 
@@ -78,21 +73,27 @@ export const updateOrder = async (orderId: string, order: OrderInput) => {
   return order;
 };
 
-export const getAllOrders = async (): Promise<OrderOutput[]> => {
-  const snapshot = await getDocs(orderRef);
+export const updateOrderOnly = async (orderId: string, order: OrderInput) => {
+  await editOrder(orderId, order as Order);
 
-  const orders = await Promise.all(
-    snapshot.docs.map(async (doc) => {
-      const order = doc.data();
-      const v = await getOrderItemsByOrderId(order.id as string);
-      return { ...order, orderItems: v };
-    })
-  );
-
-  return orders;
+  return order;
 };
 
-export const getOrder = async (id: string): Promise<OrderOutput | null> => {
+// export const getAllOrders = async (): Promise<OrderOutput[]> => {
+//   const snapshot = await getDocs(orderRef);
+
+//   const orders = await Promise.all(
+//     snapshot.docs.map(async (doc) => {
+//       const order = doc.data();
+//       const v = await getOrderItemsByOrderId(order.id as string);
+//       return { ...order, orderItems: v };
+//     })
+//   );
+
+//   return orders;
+// };
+
+export const getOrderOnly = async (id: string): Promise<Order | null> => {
   console.log(id, "id in repo");
   const snapshot = await getDoc(doc(orderRef, id));
 
@@ -100,7 +101,5 @@ export const getOrder = async (id: string): Promise<OrderOutput | null> => {
 
   const orderData = snapshot.data();
 
-  const variants = await getOrderItemsByOrderId(orderData.id as string);
-
-  return { ...orderData, orderItems: variants };
+  return { ...orderData };
 };

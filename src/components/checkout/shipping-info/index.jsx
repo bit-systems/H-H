@@ -137,7 +137,10 @@ const ShippingInfo = () => {
         JSON.stringify({
           cart: items,
           userId: user.id,
-        })
+        }),
+        {
+          "Content-Type": "application/json",
+        }
       );
       setRzpOrderId(resp.orderId);
       console.log(resp.orderId, "order resp");

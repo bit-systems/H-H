@@ -4,7 +4,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation } from "swiper";
 
-import { useCart } from "@/hooks/useCart";
+import { useCartV2 } from "@/hooks/useCartV2";
 
 import QuickAddV2 from "./QuickAdd/index copy";
 import { Button, SliderV2 } from "@/components/common";
@@ -32,7 +32,7 @@ const ProductCardV2 = ({
   const location = useRouter();
   const isAdmin = location.pathname.split("/")[1] === "admin";
 
-  const { addItem, isLoading } = useCart();
+  const { addItem, isLoading } = useCartV2();
 
   const [currentVariant, setCurrentVariant] = useState({
     variantId: product.variants[0].id,
@@ -102,16 +102,18 @@ const ProductCardV2 = ({
 
   const handleAddItem = async ({ skuId, size }) => {
     await addItem({
-      skuId,
       productId: productId,
       variantId: currentVariant.variantId,
       size,
-      model: model,
-      type: type,
+      skuId: currentVariant.id + "_" + size,
+      availableQuantity:
+        currentVariant.sizeVariants.find((s) => s.size === size)?.quantity ?? 0,
+      salePrice: currentVariant.salePrice,
+      price: currentVariant.price,
+      images: currentVariant.images,
       color: currentVariant.color,
-      price: currentVariant.currentPrice,
-      slug: currentVariant.slides[0].url,
-      image: currentVariant.slides[0].src,
+      title: product.title,
+      brand: product.brand,
     });
   };
 

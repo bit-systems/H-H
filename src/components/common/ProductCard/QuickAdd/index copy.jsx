@@ -43,7 +43,8 @@ const QuickAddV2 = ({
                   key={sku}
                   onClick={
                     !isLoading && sku.quantity > 0
-                      ? () => handleAddItem({ skuId: variant.id, size: sku })
+                      ? () =>
+                          handleAddItem({ skuId: variant.id, size: sku.size })
                       : undefined
                   }
                   className={`
@@ -114,7 +115,8 @@ const QuickAddV2 = ({
                   key={sku.size}
                   onClick={
                     !isLoading && sku.quantity > 0
-                      ? () => handleAddItem({ skuId: variant.id, size: sku })
+                      ? () =>
+                          handleAddItem({ skuId: variant.id, size: sku.size })
                       : undefined
                   }
                   className={`
@@ -137,7 +139,7 @@ const QuickAddV2 = ({
                       ? () =>
                           handleAddItem({
                             skuId: variant.id,
-                            size: singleSku,
+                            size: singleSku.size,
                           })
                       : undefined
                   }

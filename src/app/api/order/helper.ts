@@ -1,12 +1,12 @@
-import {
-  Order,
-  OrderInput,
-  OrderItem,
-  OrderOutput,
-} from "@/models/order/order.model";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Order, OrderInput, OrderItem } from "@/models/order/order.model";
 import { getVariantsByIds } from "@/models/variants/variant.repository";
 import { OrderInputBody } from "./inputs";
-import { createOrder } from "@/models/order/order.repository";
+import {
+  createOrder,
+  getOrderOnly,
+  updateOrder,
+} from "@/models/order/order.repository";
 
 const calculatePrice = (orderItems: OrderItem[]) => {
   let price = 0;
@@ -72,4 +72,24 @@ export const prepareOrder = async ({
   };
 
   return await createOrder(order);
+};
+
+export const updateOrderPayment = async (
+  paymentEvent: any,
+  status: "paid" | "failed"
+) => {
+  const order = await getOrderOnly(
+    paymentEvent.payload.payment.entity.notes.orderId
+  );
+
+  if (!order) {
+    throw new Error("Order not found");
+  }
+
+  order.paymentStatus = status;
+  order.paymentGatewayPaymentId = paymentEvent.payload.payment.entity.id;
+  order.updatedAt = new Date().toISOString();
+  order.paymentGatewayResponse = JSON.stringify(paymentEvent);
+
+  await updateOrder(order.id as string, order as OrderInput);
 };

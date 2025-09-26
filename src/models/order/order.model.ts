@@ -13,7 +13,8 @@ export interface Order {
   updatedAt: string;
   paymentGatewayPaymentId: string;
   deliveryPartnerTrackingId: string;
-  paymentStatus: "pending" | "completed" | "failed" | "refunded";
+  paymentGatewayResponse?: string;
+  paymentStatus: "pending" | "paid" | "failed" | "refunded";
 }
 
 export interface OrderItem {
@@ -62,5 +63,5 @@ export interface OrderOutput {
   updatedAt: string;
   paymentGatewayPaymentId: string;
   deliveryPartnerTrackingId: string;
-  paymentStatus: "pending" | "completed" | "failed" | "refunded";
+  paymentStatus: "pending" | "paid" | "failed" | "refunded";
 }

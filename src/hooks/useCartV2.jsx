@@ -210,32 +210,13 @@ export const useCartV2 = () => {
         (item) => item.skuId !== itemInCart.skuId
       );
 
-      const cartRef = doc(db, "carts", user.uid);
-
       const cartTotalItemQuantity = addAllItemsQuantity(updatedItems);
 
       if (cartTotalItemQuantity === 0) {
-        await deleteDoc(cartRef);
-
-        dispatch({
-          type: "DELETE_CART",
-        });
+        console.log("deleting entire cart");
       } else {
-        const updatedItemsDb = updatedItems.map((item) => ({
-          skuId: item.skuId,
-          productId: item.productId,
-          variantId: item.variantId,
-          quantity: item.quantity,
-        }));
-
-        await setDoc(cartRef, {
-          items: updatedItemsDb,
-        });
-
-        dispatch({
-          type: "UPDATE_CART",
-          payload: updatedItems,
-        });
+        setItems(() => [...updatedItems]);
+        localStorage.setItem("cartItems", JSON.stringify(updatedItems));
       }
 
       setIsLoading(false);
