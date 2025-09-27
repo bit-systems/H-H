@@ -3,6 +3,12 @@ import { OrderInputBody } from "./inputs";
 import { prepareOrder } from "./helper";
 
 export async function GET(request: Request) {
+  console.log(
+    "Razorpay Instance:",
+    process.env.RAZORPAY_KEY_ID,
+    process.env.RAZORPAY_SECRET_KEY
+  );
+
   const users = [
     { id: 1, name: "Alice" },
     { id: 2, name: "Bob" },
