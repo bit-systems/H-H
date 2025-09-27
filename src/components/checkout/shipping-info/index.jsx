@@ -173,7 +173,6 @@ const ShippingInfo = () => {
   return (
     <div className={styles.info_container}>
       <RazorpayGateway />
-      <button onClick={openRazorpay}> Sed</button>
       {(isLoading || !defaultOption) && (
         <Loader containerClassName={styles.loader_container} noPortal={true} />
       )}

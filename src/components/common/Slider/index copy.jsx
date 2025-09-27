@@ -1,9 +1,9 @@
-import "./slider.module.css";
 import "swiper/css";
-// import "swiper/css/navigation";
+import "swiper/css/navigation";
 import "swiper/css/pagination";
+import "./slider.module.css";
+
 import { Navigation } from "swiper";
-import styles from "./slider.module.css";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
