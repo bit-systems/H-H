@@ -1,6 +1,6 @@
-import  Link  from 'next/link';
+import Link from "next/link";
 
-import { Autoplay, Pagination } from 'swiper';
+import { Autoplay, Pagination } from "swiper";
 
 import {
   FaExclamationTriangle,
@@ -17,15 +17,18 @@ import {
   FaFacebookF,
   FaTiktok,
   FaYoutube,
-} from 'react-icons/fa';
+  FaPhone,
+} from "react-icons/fa";
 
-import { useAuthContext } from '@/hooks/useAuthContext';
+import { GlobeLock, Handshake } from "lucide-react";
 
-import { Slider } from '@/components/common';
+import { useAuthContext } from "@/hooks/useAuthContext";
 
-import { SLIDES as slides } from './data';
+import { Slider } from "@/components/common";
 
-import styles from './index.module.scss';
+import { SLIDES as slides } from "./data";
+
+import styles from "./index.module.scss";
 
 const NavDrawerContent = ({ toggleSideNav }) => {
   const { isAdmin, isVerified, name } = useAuthContext();
@@ -35,7 +38,7 @@ const NavDrawerContent = ({ toggleSideNav }) => {
       <div className={styles.links_container}>
         <ul className={styles.links_list}>
           <h2>Products</h2>
-          <li>
+          {/* <li>
             <Link
               href="/collections/t-shirts"
               onClick={toggleSideNav}
@@ -43,17 +46,17 @@ const NavDrawerContent = ({ toggleSideNav }) => {
             >
               T-Shirts
             </Link>
-          </li>
+          </li> */}
           <li>
             <Link
-              href="/collections/hoodies-sweatshirts"
+              href="/collections/shirts"
               onClick={toggleSideNav}
               className={styles.link}
             >
-              Hoodies
+              Shirts
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link
               href="/collections/accessories"
               onClick={toggleSideNav}
@@ -61,7 +64,7 @@ const NavDrawerContent = ({ toggleSideNav }) => {
             >
               Accessories
             </Link>
-          </li>
+          </li> */}
         </ul>
         <ul className={styles.links_list}>
           <h2>Drops</h2>
@@ -102,7 +105,11 @@ const NavDrawerContent = ({ toggleSideNav }) => {
         <ul className={styles.links_list}>
           {isAdmin && (
             <li>
-              <Link href="/admin" onClick={toggleSideNav} className={styles.link}>
+              <Link
+                href="/admin"
+                onClick={toggleSideNav}
+                className={styles.link}
+              >
                 <i>
                   <FaExclamationTriangle />
                 </i>
@@ -112,18 +119,22 @@ const NavDrawerContent = ({ toggleSideNav }) => {
           )}
           <li>
             <Link
-              href={isVerified ? '/account' : '/login'}
+              href={isVerified ? "/account" : "/login"}
               onClick={toggleSideNav}
               className={styles.link}
             >
               <i>
                 <FaUserCircle />
               </i>
-              {isVerified ? 'My account' : 'Login'}
+              {isVerified ? "My account" : "Login"}
             </Link>
           </li>
           <li>
-            <Link href="/" onClick={toggleSideNav} className={styles.link}>
+            <Link
+              href="/help-center"
+              onClick={toggleSideNav}
+              className={styles.link}
+            >
               <i>
                 <FaQuestionCircle />
               </i>
@@ -131,11 +142,15 @@ const NavDrawerContent = ({ toggleSideNav }) => {
             </Link>
           </li>
           <li>
-            <Link href="/" onClick={toggleSideNav} className={styles.link}>
+            <Link
+              href="/terms-conditions"
+              onClick={toggleSideNav}
+              className={styles.link}
+            >
               <i>
-                <FaShippingFast />
+                <Handshake />
               </i>
-              Shipping Info
+              Terms & Conditions
             </Link>
           </li>
           <li>
@@ -155,23 +170,35 @@ const NavDrawerContent = ({ toggleSideNav }) => {
             </Link>
           </li>
           <li>
-            <Link href="/" onClick={toggleSideNav} className={styles.link}>
+            <Link
+              href="/privacy-policy"
+              onClick={toggleSideNav}
+              className={styles.link}
+            >
               <i>
-                <FaBriefcase />
+                <GlobeLock />
               </i>
-              Careers
+              Privacy Policy
             </Link>
           </li>
           <li>
-            <Link href="/" onClick={toggleSideNav} className={styles.link}>
+            <Link
+              href="/contact-us"
+              onClick={toggleSideNav}
+              className={styles.link}
+            >
               <i>
-                <FaSyncAlt />
+                <FaPhone />
               </i>
-              Returns and Exchange
+              Contact Us
             </Link>
           </li>
           <li>
-            <Link href="/" onClick={toggleSideNav} className={styles.link}>
+            <Link
+              href="/about-us"
+              onClick={toggleSideNav}
+              className={styles.link}
+            >
               <i>
                 <FaInfoCircle />
               </i>

@@ -1,12 +1,12 @@
 import "@/styles/variables.scss";
-import type { AppProps } from "next/app";
 import { Layout } from "@/components/layouts";
 import Provider from "@/context/Provider";
 import "@/styles/global.scss";
+import "@/styles/globals.css";
 import "swiper/css";
 import Head from "next/head";
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps }) {
   return (
     <>
       <Head>

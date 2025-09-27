@@ -25,7 +25,7 @@ const AdminCollections = () => {
   useEffect(() => {
     if (!products) {
       const fetchVariants = async () => {
-        const fetchedProducts = await getAllProducts();
+        const fetchedProducts = await getAllProducts(true);
         console.log(fetchedProducts, "fetchedVariants");
 
         const mappedProducts = fetchedProducts.map((p) => ({

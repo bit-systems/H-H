@@ -66,23 +66,23 @@ const Navbar = ({ toggleSideNav, openCartModal }) => {
         </Button>
         <ul className={styles.info_list}>
           <li>
-            <Link className={styles.link} href="/">
+            <Link className={styles.link} href="/help-center">
               Help Center
             </Link>
           </li>
           <li>
-            <Link className={styles.link} href="/">
+            <Link className={styles.link} href="/contact-us">
               Contact Us
             </Link>
           </li>
           <li>
-            <Link className={styles.link} href="/">
-              Shipping Info
+            <Link className={styles.link} href="/privacy-policy">
+              Privacy Policy
             </Link>
           </li>
           <li>
-            <Link className={styles.link} href="/">
-              Track My Order
+            <Link className={styles.link} href="/terms-conditions">
+              Terms & Conditions
             </Link>
           </li>
           <li>
@@ -91,7 +91,7 @@ const Navbar = ({ toggleSideNav, openCartModal }) => {
             </Link>
           </li>
           <li>
-            <Link className={styles.link} href="/">
+            <Link className={styles.link} href="/about-us">
               About Us
             </Link>
           </li>
@@ -132,29 +132,26 @@ const Navbar = ({ toggleSideNav, openCartModal }) => {
           />
         </Link>
         <ul className={styles.links}>
-          <li>
+          {/* <li>
             <Link className={styles.link} href="/collections/t-shirts">
               T-shirts
             </Link>
-          </li>
+          </li> */}
           <li>
-            <Link
-              className={styles.link}
-              href="/collections/hoodies-sweatshirts"
-            >
-              Hoodies
+            <Link className={styles.link} href="/collections/shirts">
+              Shirts
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link className={styles.link} href="/collections/accessories">
               Accessories
             </Link>
-          </li>
+          </li> */}
         </ul>
         <ul className={styles.icons_menu}>
-          <li className={`${styles.search_icon} disabled-link`}>
+          {/* <li className={`${styles.search_icon} disabled-link`}>
             <CgSearch />
-          </li>
+          </li> */}
           <li className={styles.cart_icon} onClick={handleOpenCartModal}>
             <CartIcon />
           </li>

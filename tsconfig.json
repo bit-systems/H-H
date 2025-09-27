@@ -32,7 +32,6 @@
     "**/*.ts",
     "**/*.tsx",
     "next-env.d.ts",
-    "src/components/common/AdminProduct/attributes-form/indxe.jsx",
     ".next/types/**/*.ts"
   ],
   "exclude": [

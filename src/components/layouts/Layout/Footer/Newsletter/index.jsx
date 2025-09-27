@@ -1,11 +1,12 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect } from "react";
 
-import { useNewsletter } from '@/hooks/useNewsletter';
-import { useToast } from '@/hooks/useToast';
+import { useNewsletter } from "@/hooks/useNewsletter";
+import { useToast } from "@/hooks/useToast";
 
-import { Button } from '@/components/common';
+import { Button } from "@/components/common";
 
-import styles from './index.module.scss';
+import styles from "./index.module.scss";
+import { APP_CONFIG } from "@/utils/constants";
 
 const Newsletter = () => {
   const { subscribeToNewsletter, success, error } = useNewsletter();
@@ -40,7 +41,9 @@ const Newsletter = () => {
     <>
       <section className={styles.section}>
         <div className={styles.container}>
-          <h3 className={styles.title}>Sign up for the FLAAKKO newsletter</h3>
+          <h3 className={styles.title}>
+            Sign up for the {APP_CONFIG.APP_FULL_NAME} newsletter
+          </h3>
           <form
             className={styles.form}
             onSubmit={handleSubmit}

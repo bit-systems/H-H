@@ -11,7 +11,7 @@ import { DrawerModal } from "@/components/common";
 import styles from "./index.module.scss";
 import "./sliderStyles.css";
 
-const ProductFilter = ({
+const ProductFilterV0 = ({
   allProducts,
   filterConditions,
   sortByDescription,
@@ -24,8 +24,8 @@ const ProductFilter = ({
   const [availableFilterOptions, setAvailableFilterOptions] = useState({
     color: [],
     size: [],
-    // fit: [],
-    // type: [],
+    fit: [],
+    type: [],
     discount: [],
     price: [],
     sortBy: ["newest", "price: low-high", "price: high-low"],
@@ -46,8 +46,8 @@ const ProductFilter = ({
             ([property, conditions]) => {
               if (
                 property === "color" ||
-                // property === "fit" ||
-                // property === "type" ||
+                property === "fit" ||
+                property === "type" ||
                 property === "discount"
               )
                 return conditions.some((condition) => {
@@ -80,7 +80,7 @@ const ProductFilter = ({
       (result, obj) => {
         for (let key in result) {
           if (key === "sizes") {
-            const newArr = ["S", "M", "L", "XL", "XXL"];
+            const newArr = [...result.sizes, ...obj.sizes];
             result[key] = new Set(newArr);
           } else if (key === "price") {
             result[key].push(obj[key]);
@@ -94,8 +94,8 @@ const ProductFilter = ({
       {
         color: new Set(),
         sizes: new Set(),
-        // fit: new Set(),
-        // type: new Set(),
+        fit: new Set(),
+        type: new Set(),
         discount: new Set(),
         price: [],
       }
@@ -104,8 +104,8 @@ const ProductFilter = ({
       ...prevState,
       color: [...availableOptions.color],
       size: [...availableOptions.sizes],
-      // fit: [...availableOptions.fit],
-      // type: [...availableOptions.type],
+      fit: [...availableOptions.fit],
+      type: [...availableOptions.type],
       discount: [...availableOptions.discount].filter(
         (discount) => discount !== 0
       ),
@@ -257,8 +257,8 @@ const ProductFilter = ({
                     <>
                       {(option === "color" ||
                         option === "size" ||
-                        // option === "fit" ||
-                        // option === "type" ||
+                        option === "fit" ||
+                        option === "type" ||
                         option === "discount") &&
                         availableFilterOptions[option]?.map((value) => (
                           <div
@@ -368,8 +368,8 @@ const ProductFilter = ({
                 <>
                   {(showOption === "color" ||
                     showOption === "size" ||
-                    // showOption === "fit" ||
-                    // showOption === "type" ||
+                    showOption === "fit" ||
+                    showOption === "type" ||
                     showOption === "discount") &&
                     availableFilterOptions[showOption]?.map((value) => (
                       <div
@@ -473,7 +473,7 @@ const ProductFilter = ({
               <span>Size</span>
               <FaChevronUp />
             </li>
-            {/* <li
+            <li
               onClick={() => handleSelectOption("fit")}
               className={`${styles.option} ${
                 showOption === "fit" ? styles.is_selected : undefined
@@ -490,7 +490,7 @@ const ProductFilter = ({
             >
               <span>Type</span>
               <FaChevronUp />
-            </li> */}
+            </li>
             <li
               onClick={() => handleSelectOption("price")}
               className={`${styles.option} ${
@@ -541,4 +541,4 @@ const ProductFilter = ({
   );
 };
 
-export default ProductFilter;
+export default ProductFilterV0;

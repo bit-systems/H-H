@@ -9,6 +9,11 @@ import {
   getDocs,
   getDoc,
   setDoc,
+  query,
+  where,
+  orderBy,
+  limit,
+  startAfter,
 } from "firebase/firestore";
 import { Product, ProductModel, ProductOutput } from "./product.model";
 import {
@@ -85,8 +90,16 @@ export const removeProduct = async (product: Product): Promise<void> => {
   await deleteVariants(product.variants.map((v) => v.id));
 };
 
-export const getAllProducts = async (): Promise<ProductOutput[]> => {
-  const snapshot = await getDocs(productRef);
+export const getAllProducts = async (
+  isAdmin = false
+): Promise<ProductOutput[]> => {
+  const fQuery = query(
+    productRef,
+    where("status", "in", isAdmin ? ["active", "inactive"] : ["active"]),
+    orderBy("createdAt", "desc")
+  );
+
+  const snapshot = await getDocs(fQuery);
 
   const products = await Promise.all(
     snapshot.docs.map(async (doc) => {
@@ -113,4 +126,23 @@ export const getProduct = async (id: string): Promise<ProductOutput | null> => {
   const variants = await getVariantsByProductId(productData.id);
 
   return mapProductToOutput({ ...productData, variants });
+};
+
+export const getProductsByQuery = async (
+  queryConstraints = []
+): Promise<ProductOutput[]> => {
+  const fQuery = query(productRef, ...queryConstraints);
+  const snapshot = await getDocs(fQuery);
+
+  const products = await Promise.all(
+    snapshot.docs.map(async (doc) => {
+      const product = doc.data();
+      const v = await getVariantsByProductId(product.id);
+      return mapProductToOutput({
+        ...product,
+        variants: v,
+      });
+    })
+  );
+  return products;
 };

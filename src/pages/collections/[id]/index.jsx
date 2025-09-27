@@ -2,11 +2,11 @@ import { useState, useEffect, useRef, useCallback } from "react";
 
 import { FaRedoAlt } from "react-icons/fa";
 
-import { useCollection } from "@/hooks/useCollection";
+import { useCollectionV2 } from "@/hooks/useCollectionV2";
 
 import ProductFilter from "@/components/collection/product-filter";
 
-import { ProductCard, Loader } from "@/components/common";
+import { ProductCardV2, Loader } from "@/components/common";
 
 import styles from "./index.module.scss";
 import { useRouter } from "next/router";
@@ -16,13 +16,14 @@ const validSlugs = [
   "t-shirts",
   "hoodies-sweatshirts",
   "accessories",
+  "shirts",
 ];
 
 const CollectionPage = () => {
   const navigate = useRouter();
   const { id: slugId } = navigate.query;
 
-  const { getCollection, isLoading, hasMore, error } = useCollection();
+  const { getCollection, isLoading, hasMore, error } = useCollectionV2();
 
   const newSlug = useRef(true);
   const [productVariants, setProductVariants] = useState(null);
@@ -36,6 +37,8 @@ const CollectionPage = () => {
   const [filtering, setIsFiltering] = useState(false);
 
   useEffect(() => {
+    if (!navigate.isReady) return;
+    console.log("slugId", slugId);
     setProductVariants(null);
     setFilteredProducts(null);
     setFilterConditions({});
@@ -49,20 +52,22 @@ const CollectionPage = () => {
     }
 
     if (!validSlugs.includes(slugId)) {
-      navigate.push("/");
+      // navigate.push("/");
     }
 
     const fetchProductVariants = async () => {
       const productVariants = await getCollection({
         collectionName: slugId,
       });
+      console.log("productVariants", productVariants);
       setProductVariants(productVariants);
     };
 
     fetchProductVariants();
-  }, [slugId]);
+  }, [, navigate.isReady]);
 
   useEffect(() => {
+    if (!navigate.isReady) return;
     if (newSlug.current) {
       newSlug.current = false;
       return;
@@ -77,9 +82,11 @@ const CollectionPage = () => {
         sortBy,
       });
 
+      console.log("productVariants", productVariants);
+
       setProductVariants(productVariants);
     })();
-  }, [sortBy]);
+  }, [sortBy, navigate.isReady]);
 
   const observer = useRef();
   const lastProductVariantRef = useCallback(
@@ -179,10 +186,10 @@ const CollectionPage = () => {
                       </>
                     )}
                   <div className={styles.grid_container}>
-                    {filteredProducts.map((productVariant, index) => (
+                    {filteredProducts.map((product, index) => (
                       <div
-                        id={productVariant.id}
-                        key={productVariant.id}
+                        id={product.id}
+                        key={product.id}
                         ref={
                           index + 1 === filteredProducts.length
                             ? lastProductVariantRef
@@ -190,21 +197,22 @@ const CollectionPage = () => {
                         }
                         className={styles.product_card_container}
                       >
-                        <ProductCard
-                          productId={productVariant.productId}
-                          variantId={productVariant.variantId}
-                          model={productVariant.model}
-                          color={productVariant.color}
-                          discount={productVariant.discount}
-                          currentPrice={productVariant.price}
-                          actualPrice={productVariant.actualPrice}
-                          type={productVariant.type}
-                          slides={productVariant.slides}
-                          images={productVariant.images}
-                          numberOfVariants={productVariant.numberOfVariants}
-                          skus={productVariant.skus}
-                          isSoldOut={productVariant.isSoldOut}
-                          allVariants={productVariant.allVariants}
+                        <ProductCardV2
+                          productId={product.productId}
+                          variantId={product.variants[0].id}
+                          model={product.title}
+                          color={product.variants[0].color}
+                          type={product.brand}
+                          numberOfVariants={product.variants.length}
+                          allVariants={product.variants}
+                          product={product}
+                          discount={product.discount}
+                          currentPrice={product.price}
+                          actualPrice={product.actualPrice}
+                          slides={product.slides}
+                          images={product.images}
+                          skus={product.variants}
+                          isSoldOut={false} // TODO fix this
                         />
                       </div>
                     ))}

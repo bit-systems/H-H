@@ -9,7 +9,7 @@ import { useCartV2 } from "@/hooks/useCartV2";
 import QuickAddV2 from "./QuickAdd/index copy";
 import { Button, SliderV2 } from "@/components/common";
 
-import { formatPrice } from "@/helpers/format";
+import { formatPrice, formatDiscount } from "@/helpers/format";
 
 import styles from "./index.module.scss";
 import { useRouter } from "next/router";
@@ -39,7 +39,10 @@ const ProductCardV2 = ({
     color: product.variants[0].color,
     currentPrice: product.variants[0].salePrice,
     actualPrice: product.variants[0].price,
-    discount: product.variants[0].salePrice,
+    discount: formatDiscount({
+      currentPrice: product.variants[0].salePrice,
+      actualPrice: product.variants[0].price,
+    }),
     slides: product.images,
     skus: product.variants[0].sizeVariants,
     isSoldOut: false,
@@ -131,9 +134,7 @@ const ProductCardV2 = ({
               <span className={styles.sold_out}>Sold Out</span>
             )}
             {currentVariant.currentPrice < currentVariant.actualPrice && ( //TODO calc
-              <span className={styles.discount}>
-                -{currentVariant.discount}%
-              </span>
+              <span className={styles.discount}>{currentVariant.discount}</span>
             )}
           </div>
         )}

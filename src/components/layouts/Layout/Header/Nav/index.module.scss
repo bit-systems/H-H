@@ -136,7 +136,7 @@
 }
 
 .logo {
-  width: 11rem;
+  width: 20rem;
 }
 
 .icons_menu {
@@ -209,6 +209,7 @@
     color: $c-link-primary;
     display: inline-block;
     position: relative;
+    top: -6px;
 
     &:hover {
       color: $c-link-hover;

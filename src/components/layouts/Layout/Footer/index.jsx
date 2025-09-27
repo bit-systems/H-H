@@ -1,40 +1,36 @@
-'use client';
-import  Link  from 'next/link';
-import { useMediaQuery } from 'react-responsive';
+"use client";
+import Link from "next/link";
+import { useMediaQuery } from "react-responsive";
 import {
   FaInstagram,
   FaTwitterSquare,
   FaTiktok,
   FaFacebookF,
   FaYoutube,
-} from 'react-icons/fa';
+} from "react-icons/fa";
 
-import Newsletter from './Newsletter';
+import Newsletter from "./Newsletter";
 
-import styles from './index.module.scss';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import styles from "./index.module.scss";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 const Footer = () => {
-
   const [isCollectionPage, setIsCollectionPage] = useState(false);
 
   const location = useRouter();
 
   const isBigScreen = useMediaQuery({
-    query: '(min-width: 1024px)',
+    query: "(min-width: 1024px)",
   });
 
   useEffect(() => {
-
-    if(location.isReady) {
-      const pathname = location.pathname.split('/');
-      const isCollectionPage = pathname.includes('collections');
+    if (location.isReady) {
+      const pathname = location.pathname.split("/");
+      const isCollectionPage = pathname.includes("collections");
       setIsCollectionPage(isCollectionPage);
     }
-
   }, [location.pathname]);
-
 
   return (
     <footer
@@ -43,25 +39,25 @@ const Footer = () => {
           ? styles.is_collection_page_b
           : styles.is_collection_page_s
       }`}
-      suppressHydrationWarning 
+      suppressHydrationWarning
     >
-      {!isBigScreen && <Newsletter />}
-      <div className={styles.container} suppressHydrationWarning >
+      {/* {!isBigScreen && <Newsletter />} */}
+      <div className={styles.container} suppressHydrationWarning>
         <div className={styles.sitemap}>
           <div className={styles.nav_wrapper}>
             <h4 className={styles.nav_title}>Help</h4>
             <ul className={styles.nav}>
               <li>
-                <Link href="/">Help Center</Link>
+                <Link href="/help-center">Help Center</Link>
               </li>
               <li>
-                <Link href="/">Contact Us</Link>
+                <Link href="/contact-us">Contact Us</Link>
               </li>
               <li>
-                <Link href="/">Shipping Info</Link>
+                <Link href="/privacy-policy">Privacy Policy</Link>
               </li>
               <li>
-                <Link href="/">Track My Order</Link>
+                <Link href="/terms-conditions">Terms & Conditions</Link>
               </li>
               <li>
                 <Link href="/">Returns & Exchanges</Link>
@@ -72,16 +68,16 @@ const Footer = () => {
             <h4 className={styles.nav_title}>More</h4>
             <ul className={styles.nav}>
               <li>
-                <Link href="">About Us</Link>
+                <Link href="/about-us">About Us</Link>
               </li>
               <li>
-                <Link href="">Carreers</Link>
+                <Link href="">Careers</Link>
               </li>
             </ul>
           </div>
         </div>
         <div className={styles.socials_wrapper}>
-          {isBigScreen && <Newsletter />}
+          {/* {isBigScreen && <Newsletter />} */}
           <div className={styles.socials}>
             <a
               href="https://www.instagram.com"
