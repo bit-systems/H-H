@@ -1,14 +1,15 @@
-import { useRef, useEffect } from 'react';
-import  Link  from 'next/link';
+import { useRef, useEffect, useState } from "react";
+import Link from "next/link";
 
-import { useAuth } from '@/hooks/useAuth';
-import { useToast } from '@/hooks/useToast';
+import { useAuth } from "@/hooks/useAuth";
+import { useToast } from "@/hooks/useToast";
 
-import { Loader } from '@/components/common';
+import { Loader } from "@/components/common";
+import OTPInput from "@/components/account/otp-input";
 
-import styles from './index.module.scss';
-import { useRouter } from 'next/router';
-import { APP_CONFIG } from '@/utils/constants';
+import styles from "./index.module.scss";
+import { useRouter } from "next/router";
+import { APP_CONFIG } from "@/utils/constants";
 
 const LoginPage = () => {
   const { state: routerState } = useRouter();
@@ -16,15 +17,16 @@ const LoginPage = () => {
   const { login, isLoading, error, defaultValue } = useAuth();
   const { sendToast } = useToast();
 
-  const emailInput = useRef();
-  const passwordInput = useRef();
+  const [isOtpSent, setIsOtpSent] = useState(false);
+
+  const phoneNumberInput = useRef();
+  const otpInput = useRef();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setIsOtpSent(true);
     await login({
-      email: emailInput.current.value,
-      password: passwordInput.current.value,
+      phoneNumber: phoneNumberInput.current.value,
     });
   };
 
@@ -43,37 +45,35 @@ const LoginPage = () => {
           <section className={styles.section}>
             <div className={styles.container}>
               <div className={`${styles.wrapper} main-container`}>
-                <form onSubmit={handleSubmit} className={styles.form}>
-                  <h2 className={styles.title}>Log into your account</h2>
-                  <label className={styles.label}>
-                    <span>Email:</span>
-                    <input
-                      defaultValue={defaultValue?.email || ''}
-                      className={styles.input}
-                      type="email"
-                      placeholder="yourname@email.com"
-                      required
-                      ref={emailInput}
-                    />
-                  </label>
-                  <label className={styles.label}>
-                    <span>Password:</span>
-                    <input
-                      className={styles.input}
-                      type="password"
-                      required
-                      ref={passwordInput}
-                    />
-                  </label>
-                  <button className={styles.button} type="submit">
-                    Login
-                  </button>
-                </form>
+                {!isOtpSent && (
+                  <>
+                    <form onSubmit={handleSubmit} className={styles.form}>
+                      <h2 className={styles.title}>Log into your account</h2>
+                      <label className={styles.label}>
+                        <span>Phone Number:</span>
+                        <input
+                          defaultValue={defaultValue?.phoneNumber || ""}
+                          className={styles.input}
+                          type="number"
+                          placeholder="Phone Number"
+                          required
+                          ref={phoneNumberInput}
+                        />
+                      </label>
+
+                      <button className={styles.button} type="submit">
+                        Send OTP
+                      </button>
+                    </form>
+                  </>
+                )}
+                {isOtpSent && <OTPInput ref={otpInput} />}
                 <p className={styles.no_account}>
-                  New to {APP_CONFIG.APP_FULL_NAME}?{' '}
-                  <Link href="/account/signup" state={routerState}>
-                    Create account
+                  You must be a customer to login. Please place an order at{" "}
+                  <Link href="/" className={styles.link}>
+                    {APP_CONFIG.APP_FULL_NAME}
                   </Link>
+                  .
                 </p>
               </div>
             </div>
