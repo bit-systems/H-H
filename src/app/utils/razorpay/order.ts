@@ -1,11 +1,10 @@
 import { Order } from "@/models/order/order.model";
 import Razorpay from "razorpay";
-
+const instance = new Razorpay({
+  key_id: process.env.RAZORPAY_KEY_ID || "",
+  key_secret: process.env.RAZORPAY_SECRET_KEY || "",
+});
 export const createRazorpayOrder = async (order: Order, currency = "INR") => {
-  const instance = new Razorpay({
-    key_id: process.env.RAZORPAY_KEY_ID,
-    key_secret: process.env.RAZORPAY_SECRET_KEY || "",
-  });
   return await instance.orders.create({
     amount: order.totalAmount * 100, // amount in the smallest currency unit
     currency,
