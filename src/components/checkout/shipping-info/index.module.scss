@@ -12,7 +12,6 @@
     }
 
     p,
-    span,
     input {
       color: #000000;
       font-size: 1.6rem;
@@ -131,17 +130,17 @@
   .button {
     margin-left: auto;
     padding: 1.2rem;
-    background-color: #48e471;
+    background-color: #000000;
     font-size: 1.4rem;
     font-weight: $font-w-700;
     border-radius: 1rem;
-
+    color: rgb(255, 255, 255) !important;
     -webkit-user-select: none;
     -webkit-touch-callout: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-
+      text-transform: uppercase;
     -moz-transition: all 0.1s ease-in;
     -o-transition: all 0.1s ease-in;
     -webkit-transition: all 0.1s ease-in;
@@ -157,7 +156,8 @@
     }
 
     &:hover {
-      background-color: #74eb93 !important;
+      background-color: #000000 !important;
+      color: rgb(255, 255, 255);
     }
   }
 }

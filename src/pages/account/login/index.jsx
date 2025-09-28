@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/useToast";
 
-import { Loader } from "@/components/common";
+import { Loader, Button } from "@/components/common";
 import OTPInput from "@/components/account/otp-input";
 
 import styles from "./index.module.scss";
@@ -24,10 +24,11 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsOtpSent(true);
     await login({
+      //TODO send OTP
       phoneNumber: phoneNumberInput.current.value,
     });
+    setIsOtpSent(true);
   };
 
   useEffect(() => {
@@ -38,8 +39,8 @@ const LoginPage = () => {
 
   return (
     <>
-      {isLoading && <Loader />}
-      {!isLoading && (
+      {/* {isLoading && <Loader />} */}
+      {
         <>
           <section className={styles.nav_section}></section>
           <section className={styles.section}>
@@ -61,9 +62,13 @@ const LoginPage = () => {
                         />
                       </label>
 
-                      <button className={styles.button} type="submit">
+                      <Button
+                        isLoading={isLoading}
+                        className={styles.button}
+                        type="submit"
+                      >
                         Send OTP
-                      </button>
+                      </Button>
                     </form>
                   </>
                 )}
@@ -79,7 +84,7 @@ const LoginPage = () => {
             </div>
           </section>
         </>
-      )}
+      }
     </>
   );
 };

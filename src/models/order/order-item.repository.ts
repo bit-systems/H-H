@@ -24,7 +24,6 @@ const createOrderItem = async (orderItem: OrderItem) => {
   const newProductRef: DocumentReference<OrderItem> = doc(orderItemRef);
 
   const orderItemWithId = { ...orderItem, id: newProductRef.id };
-  console.log(orderItemWithId, "orderItemWithId");
   await setDoc(newProductRef, orderItemWithId);
   return orderItemWithId;
 };

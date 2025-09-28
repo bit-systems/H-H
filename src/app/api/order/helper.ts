@@ -30,20 +30,23 @@ export const prepareOrder = async ({
 
   const variants = await getVariantsByIds(inputItems.map((oi) => oi.variantId));
 
-  const orderItems: OrderItem[] = variants.map((v) => {
-    const variantToBuy = inputItems.find((v) => v.variantId === v.variantId);
+  console.log(JSON.stringify(variants), "oooooooooooooooooooooooo");
+  console.log(inputItems, "pppppppppppppppppppppp");
 
-    if (!variantToBuy) {
+  const orderItems: OrderItem[] = inputItems.map((input) => {
+    const v = variants.find((v) => input.variantId === v.id);
+
+    if (!v) {
       throw new Error("Variant not found, Please contact admin");
     }
 
-    const sku = v.sizeVariants.find((size) => size.size === variantToBuy.size);
+    const variantSize = v.sizeVariants.find((s) => s.size === input.size);
 
-    if (!sku) {
-      throw new Error("Size not found, Please contact admin");
+    if (!variantSize) {
+      throw new Error("Variant size not found, Please contact admin");
     }
 
-    if (sku.quantity < variantToBuy.quantity) {
+    if (variantSize.quantity < input.quantity) {
       throw new Error("Out of quantity, Please try again");
     }
 
@@ -52,10 +55,10 @@ export const prepareOrder = async ({
       orderId: null as unknown as string,
       price: v.salePrice,
       productId: v.productId as string,
-      quantity: variantToBuy.quantity,
-      size: variantToBuy.size,
-      variantId: variantToBuy.variantId,
-      totalAmount: variantToBuy.quantity * v.salePrice,
+      quantity: input.quantity,
+      size: input.size,
+      variantId: v.id,
+      totalAmount: input.quantity * v.salePrice,
     };
   });
 
@@ -87,6 +90,7 @@ export const updateOrderPayment = async (
   }
 
   order.paymentStatus = status;
+  order.status = "confirmed";
   order.paymentGatewayPaymentId = paymentEvent.payload.payment.entity.id;
   order.updatedAt = new Date().toISOString();
   order.paymentGatewayResponse = JSON.stringify(paymentEvent);

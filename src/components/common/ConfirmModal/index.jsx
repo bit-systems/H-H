@@ -1,11 +1,11 @@
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from "framer-motion";
 
-import { useKeyDown } from '@/hooks/useKeyDown';
+import { useKeyDown } from "@/hooks/useKeyDown";
 
-import { Backdrop, Button } from '@/components/common';
+import { Backdrop, Button } from "@/components/common";
 
-import styles from './index.module.scss';
-import Portal from '../Portal';
+import styles from "./index.module.scss";
+import Portal from "../Portal";
 
 const ConfirmModal = ({
   show,
@@ -17,23 +17,24 @@ const ConfirmModal = ({
   containerClassName,
   wrapperClassName,
   modalClassName,
+  confirmBtnText,
+  cancelBtnText,
 }) => {
   useKeyDown(() => {
     close();
-  }, ['Escape']);
+  }, ["Escape"]);
 
-  
   const variants = {
-    initial: { y: '50vh', opacity: 0 },
+    initial: { y: "50vh", opacity: 0 },
     visible: { y: 0, opacity: 1 },
-    exit: { y: '50vh', opacity: 0 },
+    exit: { y: "50vh", opacity: 0 },
   };
   return (
     <>
       <AnimatePresence>
         {show && (
           <>
-              <Portal containerId='overlay'>
+            <Portal containerId="overlay">
               <>
                 <Backdrop
                   backdropClassName={`${styles.backdrop} ${backdropClassName}`}
@@ -63,21 +64,21 @@ const ConfirmModal = ({
                           type="button"
                           className={styles.button}
                         >
-                          Confirm
+                          {confirmBtnText ?? "Confirm"}
                         </Button>
                         <Button
                           onClick={close}
                           type="button"
                           className={styles.error_button}
                         >
-                          Cancel
+                          {cancelBtnText ?? "Cancel"}
                         </Button>
                       </div>
                     </motion.div>
                   </div>
                 </div>
               </>
-              </Portal>
+            </Portal>
           </>
         )}
       </AnimatePresence>

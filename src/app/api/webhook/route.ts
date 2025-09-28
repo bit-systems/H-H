@@ -8,6 +8,8 @@ const webhookSecret = process.env.RAZORPAY_WEBHOOK_SECRET || "";
 
 export async function POST(req: NextRequest) {
   try {
+    console.log("Webhook received");
+
     const rawBody = await req.text();
 
     const signature = req.headers.get("x-razorpay-signature") as string;
@@ -22,6 +24,8 @@ export async function POST(req: NextRequest) {
     }
 
     const body = JSON.parse(rawBody);
+
+    console.log("Webhook event:", body.event);
 
     // Example: Handle events
     if (body.event === "payment.captured") {

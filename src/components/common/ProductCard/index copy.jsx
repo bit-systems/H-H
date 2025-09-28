@@ -89,7 +89,7 @@ const ProductCardV2 = ({
 
     setCurrentVariant(() => ({
       ...{
-        variantId,
+        variantId: selectedVariant.id,
         color: selectedVariant.color,
         currentPrice: selectedVariant.salePrice,
         actualPrice: selectedVariant.price,
