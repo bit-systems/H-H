@@ -6,7 +6,7 @@ import { APP_CONFIG } from "@/utils/constants";
 import { Wallet, Palette, CheckCircle } from "lucide-react";
 
 const AboutUs = () => {
-  const STORE_NAME = APP_CONFIG.APP_FULL_NAME;
+  const STORE_NAME = APP_CONFIG.FULL_REGISTERED_COMPANY_NAME;
   const features = [
     {
       icon: CheckCircle,

@@ -8,4 +8,5 @@ export const APP_CONFIG = {
   INSTAGRAM_URL: "https://www.instagram.com/hawkandhounds",
   TWITTER_URL: "https://www.twitter.com/hawkandhounds",
   LINKEDIN_URL: "https://www.linkedin.com/company/hawkandhounds",
+  FULL_REGISTERED_COMPANY_NAME: "HAWK AND HOUNDS TEXTILES PRIVATE LIMITED",
 };

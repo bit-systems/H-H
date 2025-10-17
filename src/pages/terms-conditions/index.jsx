@@ -4,7 +4,7 @@ import { FileText } from "lucide-react";
 import styles from "./index.module.scss";
 import { APP_CONFIG } from "@/utils/constants";
 
-const STORE_NAME = APP_CONFIG.APP_FULL_NAME;
+const STORE_NAME = APP_CONFIG.FULL_REGISTERED_COMPANY_NAME;
 const CustomStyles = () => (
   <style>
     {`
