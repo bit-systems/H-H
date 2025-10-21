@@ -9,6 +9,7 @@ const options = {
 
 export const delhiveryGet = async (endpoint: string) => {
   try {
+    console.log(FULL_URL, endpoint);
     const res = await fetch(FULL_URL + endpoint, {
       ...options,
       method: "GET",
