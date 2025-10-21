@@ -7,6 +7,7 @@ import {
   getOrderOnly,
   updateOrder,
 } from "@/models/order/order.repository";
+import { createDelhiveryShipment } from "@/app/utils/delhivery/shipment";
 
 const calculatePrice = (orderItems: OrderItem[]) => {
   let price = 0;
@@ -94,6 +95,10 @@ export const updateOrderPayment = async (
   order.paymentGatewayPaymentId = paymentEvent.payload.payment.entity.id;
   order.updatedAt = new Date().toISOString();
   order.paymentGatewayResponse = JSON.stringify(paymentEvent);
+
+  if (status === "paid") {
+    await createDelhiveryShipment(order.userId, order.id as string);
+  }
 
   await updateOrder(order.id as string, order as OrderInput);
 };

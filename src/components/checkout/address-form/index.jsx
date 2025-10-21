@@ -1,15 +1,16 @@
-import { Dropdown } from "@/components/common";
-
+import { useState } from "react";
 import styles from "./index.module.scss";
+import { getApi } from "@/fetch-api/fetch-api";
 
 const AddressForm = ({
   userInput,
-  options,
-  defaultOption,
   isDisabled,
   handleInput,
   containerClassName,
+  disableButton,
 }) => {
+  const [isDeliverable, setIsDeliverable] = useState(null);
+
   const nameStyles = {
     label:
       userInput.firstName.length > 0
@@ -70,6 +71,16 @@ const AddressForm = ({
   //       ? styles.input_focus
   //       : styles.input_no_focus,
   // };
+
+  const handleIsDeliverable = async () => {
+    if (userInput.zipCode.length === 0) {
+      setIsDeliverable(null);
+      return;
+    }
+    const res = await getApi("/api/pin-codes", { pin_code: userInput.zipCode });
+    setIsDeliverable(res.isDeliverable);
+    disableButton(!res.isDeliverable);
+  };
 
   return (
     <div className={`${styles.container} ${containerClassName}`}>
@@ -194,7 +205,7 @@ const AddressForm = ({
           }`}
         >
           <label htmlFor="zipCode" className={zipCodeStyles.label}>
-            Zip Code
+            Pin Code
           </label>
           <input
             id="zipCode"
@@ -202,12 +213,18 @@ const AddressForm = ({
             type="text"
             autoComplete="off"
             onChange={(e) => handleInput(e.target.name, e.target.value)}
+            onBlur={handleIsDeliverable}
             value={userInput.zipCode}
             className={zipCodeStyles.input}
             required
-            placeholder="Zip Code"
+            placeholder="Pin Code"
             disabled={isDisabled}
           />
+          {isDeliverable === false && (
+            <span className={styles.warning}>
+              Item's are not deliverable to provided pincode
+            </span>
+          )}
         </div>
       </div>
       {/* <div

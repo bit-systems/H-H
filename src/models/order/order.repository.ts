@@ -94,7 +94,6 @@ export const updateOrderOnly = async (orderId: string, order: OrderInput) => {
 // };
 
 export const getOrderOnly = async (id: string): Promise<Order | null> => {
-  console.log(id, "id in repo");
   const snapshot = await getDoc(doc(orderRef, id));
 
   if (!snapshot.exists()) return null;

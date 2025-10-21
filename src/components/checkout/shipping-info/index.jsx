@@ -7,6 +7,7 @@ import { LiaShippingFastSolid } from "react-icons/lia";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { useCheckoutContext } from "@/hooks/useCheckoutContext";
 import { createOrUpdateUser } from "@/models/user/user.repository.ts";
+import { userInputMapper } from "@/models/mappers/user/user-input.mapper.ts";
 import { useCartContextV2 } from "@/hooks/useCartContextV2";
 import { useToast } from "@/hooks/useToast";
 
@@ -30,6 +31,7 @@ const ShippingInfo = () => {
   const options = [...addresses, { label: "Add new address", value: "new" }];
 
   const [isDisabled, setIsDisabled] = useState(false);
+  const [isSubmitDisabled, setIsSubmitDisabled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState(null);
   const [defaultOption, setDefaultOption] = useState(null);
@@ -88,7 +90,7 @@ const ShippingInfo = () => {
       const options = {
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID, // Enter the Key ID generated from the Dashboard"
         // currency: "INR",
-        amount: "50000",
+        amount: "550000",
         order_id: orderId, // This is a sample Order ID. Pass the `id` obtained in the response of Step 1
         handler: function (response) {
           console.log(response);
@@ -126,7 +128,7 @@ const ShippingInfo = () => {
       e.preventDefault();
       setIsLoading(true);
 
-      const user = await createOrUpdateUser(userInput);
+      const user = await createOrUpdateUser(userInputMapper(userInput));
 
       const resp = await postApi(
         "/api/order",
@@ -223,6 +225,7 @@ const ShippingInfo = () => {
                 defaultOption={defaultOption}
                 isDisabled={isDisabled}
                 handleInput={handleInput}
+                disableButton={(value) => setIsSubmitDisabled(value)}
               />
             </div>
             <div className={styles.form_controls}>
@@ -236,6 +239,7 @@ const ShippingInfo = () => {
                 isLoading={isLoading}
                 className={styles.button}
                 type="submit"
+                disabled={isSubmitDisabled}
               >
                 Proceed to payment
               </Button>
