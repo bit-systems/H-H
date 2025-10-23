@@ -19,6 +19,7 @@ export const Home = () => {
     />
   ) : (
     <>
+      <div></div>
       <SlideshowSection />
       <ProductSliderSection
         titleBottom="New Arrivals"

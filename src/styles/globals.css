@@ -43,7 +43,9 @@ a {
   }
 } */
 
-
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 .slider-navigation:hover .image-swiper-button-prev {
   left: 1.5rem;
