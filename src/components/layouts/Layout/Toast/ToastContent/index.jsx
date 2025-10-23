@@ -1,11 +1,15 @@
-import { useEffect } from 'react';
-import { IoIosCheckmarkCircle, IoIosAlert } from 'react-icons/io';
+import { useEffect } from "react";
+import {
+  IoIosCheckmarkCircle,
+  IoIosAlert,
+  IoIosCheckmark,
+} from "react-icons/io";
 
-import { MediaContainer } from '@/components/common';
+import { MediaContainer } from "@/components/common";
 
-import { useToast } from '@/hooks/useToast';
+import { useToast } from "@/hooks/useToast";
 
-import styles from './index.module.scss';
+import styles from "./index.module.scss";
 
 const ToastContent = ({ content, addToCart, error, close, className }) => {
   useEffect(() => {
@@ -52,6 +56,21 @@ const ToastContent = ({ content, addToCart, error, close, className }) => {
         </div>
         <i className={styles.icon}>
           <IoIosAlert />
+        </i>
+      </div>
+    );
+  }
+  if (!error) {
+    return (
+      <div onClick={close} className={`${styles.success} ${className}`}>
+        <div className={styles.content_wrapper}>
+          <div>
+            <p className={styles.title}>Success.</p>
+            <p className={styles.error_details}>{content.message}</p>
+          </div>
+        </div>
+        <i className={styles.icon}>
+          <IoIosCheckmark />
         </i>
       </div>
     );

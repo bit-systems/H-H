@@ -140,9 +140,17 @@ const ShippingInfo = () => {
           "Content-Type": "application/json",
         }
       );
-      setRzpOrderId(() => resp.orderId);
-      console.log(resp.orderId, "order resp");
-      openRazorpay(resp.orderId);
+
+      if (resp.isSuccess) {
+        setRzpOrderId(() => resp.orderId);
+        console.log(resp.orderId, "order resp");
+        openRazorpay(resp.orderId);
+      } else {
+        sendToast({
+          error: true,
+          content: { message: "Error occurred while handling the request" },
+        });
+      }
     } catch (err) {
       console.log(err);
       sendToast({ error: true, content: { message: err.message } });

@@ -3,8 +3,7 @@ import Order from "./order";
 import styles from "./index.module.scss";
 
 const AccountOrders = ({ orders }) => {
-  // TODO: handle credit card number fetch
-
+  console.log(orders, "orders in account orders");
   return (
     <div className={styles.orders_wrapper}>
       {orders.length === 0 && (
@@ -18,16 +17,14 @@ const AccountOrders = ({ orders }) => {
               <Order
                 key={order.id}
                 id={order.id}
-                items={order.items}
+                items={order.orderItems}
                 date={order.createdAt}
                 email={order.email}
                 address={order.shippingAddress.address}
                 city={order.shippingAddress.city}
                 state={order.shippingAddress.state}
                 zipCode={order.shippingAddress.zipCode}
-                payment="**** **** **** ****"
-                shippingOption={order.shippingOption}
-                shippingCost={order.shippingCost}
+                totalAmount={order.totalAmount}
               />
             ))}
           </div>

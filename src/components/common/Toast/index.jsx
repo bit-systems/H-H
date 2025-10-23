@@ -1,13 +1,14 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from "react";
 
-import Backdrop from '../Backdrop';
+import Backdrop from "../Backdrop";
 
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from "framer-motion";
 
-import styles from './index.module.scss';
-import Portal from '../Portal';
+import styles from "./index.module.scss";
+import Portal from "../Portal";
 
 const Toast = ({ children, content, stop }) => {
+  console.log(content, stop, "toast content");
   const [bump, setBump] = useState(false);
   const firstLoad = useRef(true);
 
@@ -26,18 +27,17 @@ const Toast = ({ children, content, stop }) => {
   }, [content]);
 
   const toastVariants = {
-    initial: { y: '50vh', x: '-50%', opacity: 0 },
-    visible: { y: 0, x: '-50%', opacity: 1, scale: bump ? 1.1 : 1 },
-    exit: { y: '50vh', x: '-50%', opacity: 0 },
+    initial: { y: "50vh", x: "-50%", opacity: 0 },
+    visible: { y: 0, x: "-50%", opacity: 1, scale: bump ? 1.1 : 1 },
+    exit: { y: "50vh", x: "-50%", opacity: 0 },
   };
 
   return (
     <AnimatePresence>
       {children && (
         <>
-         
-          <Portal containerId='overlay'>
-             <>
+          <Portal containerId="overlay">
+            <>
               {stop && <Backdrop backdropClassName={styles.backdrop} />}
               <motion.div
                 key="toast"
@@ -51,7 +51,7 @@ const Toast = ({ children, content, stop }) => {
                 {children}
               </motion.div>
             </>
-            </Portal>
+          </Portal>
         </>
       )}
     </AnimatePresence>

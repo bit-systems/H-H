@@ -1,20 +1,22 @@
-import { useToastContext } from '@/hooks/useToastContext';
+import { useToastContext } from "@/hooks/useToastContext";
 
 export const useToast = () => {
   const { dispatch } = useToastContext();
 
   const sendToast = ({ addToCart, error, content }) => {
     if (addToCart) {
-      dispatch({ type: 'ADD_TO_CART', payload: content });
+      dispatch({ type: "ADD_TO_CART", payload: content });
     }
 
     if (error) {
-      dispatch({ type: 'ERROR', payload: content });
+      dispatch({ type: "ERROR", payload: content });
+    } else {
+      dispatch({ type: "SUCCESS", payload: content });
     }
   };
 
   const close = () => {
-    dispatch({ type: 'CLOSE' });
+    dispatch({ type: "CLOSE" });
   };
 
   return { sendToast, close };

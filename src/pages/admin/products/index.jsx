@@ -12,6 +12,7 @@ import {
 } from "@/components/common";
 
 import styles from "./index.module.scss";
+import withAuth from "@/components/with-auth/with-auth";
 
 const AdminCollections = () => {
   const { getCollection } = useCollection();
@@ -110,4 +111,4 @@ const AdminCollections = () => {
   );
 };
 
-export default AdminCollections;
+export default withAuth(AdminCollections, true);

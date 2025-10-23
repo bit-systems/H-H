@@ -149,15 +149,15 @@ export const getUserById = async (id: string): Promise<User | null> => {
   return snapshot.exists() ? snapshot.data() : null;
 };
 
-export const sendOtpToUser = async (user: User): Promise<void> => {
+export const sendOtpToUser = async (user: User, otp: string): Promise<void> => {
   const userDoc = doc(userRef, user.id);
-  await updateDoc(userDoc, { otp: getOtp(), otpExpiry: setOtpExpiry() });
+  await updateDoc(userDoc, { otp, otpExpiry: setOtpExpiry() });
 };
 
 export const verifyOtpForUser = async (
   mobileNumber: string,
   otp: string
-): Promise<boolean> => {
+): Promise<Partial<User>> => {
   const user = await getUserByMobileNumber(mobileNumber);
 
   if (!user) {
@@ -178,7 +178,14 @@ export const verifyOtpForUser = async (
     otpExpiry: null,
     isMobileVerified: true,
   });
-  return true;
+  return {
+    id: user.id,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    role: user.role,
+    mobileNumber: user.mobileNumber,
+    email: user.email,
+  };
 };
 
 export const createOrUpdateUser = async (user: User) => {

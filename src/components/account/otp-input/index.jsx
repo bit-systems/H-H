@@ -1,14 +1,19 @@
 import React, { useState, useRef, useEffect } from "react";
+import { getApi, postApi } from "@/fetch-api/fetch-api";
 
 import styles from "./index.module.scss";
+import { useAuthContextV2 } from "@/hooks/useAuthContextV2";
+import { useRouter } from "next/router";
 
-const OTPInput = () => {
+const OTPInput = ({ phoneNumber, resend }) => {
   const resetTime = 30;
 
   const [otp, setOtp] = useState(new Array(4).fill(""));
   const [status, setStatus] = useState("");
   const [isResendDisabled, setIsResendDisabled] = useState(true);
   const inputRefs = useRef([]);
+  const router = useRouter();
+  const { setUser } = useAuthContextV2();
 
   const handleChange = (element, index) => {
     if (isNaN(element.value)) return;
@@ -50,14 +55,24 @@ const OTPInput = () => {
     }
   };
 
-  const verifyOTP = () => {
+  const verifyOTP = async () => {
     const code = otp.join("");
     if (code.length === 4) {
-      if (code === "1234") {
+      const resp = await postApi(
+        "/api/otp",
+        JSON.stringify({ otp: code, phoneNumber })
+      );
+
+      if (resp && resp.isSuccess) {
         setStatus("OTP Verified Successfully!");
         setTimer(0);
+        localStorage.setItem("jwt_token", resp.data.token);
+        setUser(resp.data.user);
+        router.push("/account");
+        return;
       } else {
         setStatus("Invalid OTP. Please try again.");
+        return;
       }
     } else {
       setStatus("Please enter the complete 4-digit code.");
@@ -66,8 +81,9 @@ const OTPInput = () => {
 
   const isComplete = otp.every((digit) => digit !== "");
 
-  const handleResend = () => {
+  const handleResend = async () => {
     setOtp(new Array(4).fill(""));
+    await resend();
     setStatus("New OTP sent successfully.");
     setIsResendDisabled(true);
     setTimer(resetTime);

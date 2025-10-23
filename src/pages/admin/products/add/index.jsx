@@ -1,4 +1,5 @@
-import { AdminProduct } from '@/components/common';
+import { AdminProduct } from "@/components/common";
+import withAuth from "@/components/with-auth/with-auth";
 
 const AdminAddProduct = () => {
   return (
@@ -8,4 +9,4 @@ const AdminAddProduct = () => {
   );
 };
 
-export default AdminAddProduct;
+export default withAuth(AdminAddProduct, true);

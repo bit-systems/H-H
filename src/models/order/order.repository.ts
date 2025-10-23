@@ -9,6 +9,8 @@ import {
   getDocs,
   getDoc,
   setDoc,
+  query,
+  where,
 } from "firebase/firestore";
 import { Order, OrderInput, OrderOutput } from "./order.model";
 import {
@@ -79,19 +81,36 @@ export const updateOrderOnly = async (orderId: string, order: OrderInput) => {
   return order;
 };
 
-// export const getAllOrders = async (): Promise<OrderOutput[]> => {
-//   const snapshot = await getDocs(orderRef);
+export const getAllOrders = async (): Promise<OrderOutput[]> => {
+  const snapshot = await getDocs(orderRef);
 
-//   const orders = await Promise.all(
-//     snapshot.docs.map(async (doc) => {
-//       const order = doc.data();
-//       const v = await getOrderItemsByOrderId(order.id as string);
-//       return { ...order, orderItems: v };
-//     })
-//   );
+  const orders = await Promise.all(
+    snapshot.docs.map(async (doc) => {
+      const order = doc.data();
+      const v = await getOrderItemsByOrderId(order.id as string);
+      return { ...order, orderItems: v };
+    })
+  );
 
-//   return orders;
-// };
+  return orders;
+};
+
+export const getOrdersByUserId = async (
+  userId: string
+): Promise<OrderOutput[]> => {
+  const q = query(orderRef, where("userId", "==", userId));
+  const snapshot = await getDocs(q);
+
+  const orders = await Promise.all(
+    snapshot.docs.map(async (doc) => {
+      const order = doc.data();
+      const v = await getOrderItemsByOrderId(order.id as string);
+      return { ...order, orderItems: v };
+    })
+  );
+
+  return orders;
+};
 
 export const getOrderOnly = async (id: string): Promise<Order | null> => {
   const snapshot = await getDoc(doc(orderRef, id));

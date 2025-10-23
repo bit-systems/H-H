@@ -1,10 +1,22 @@
 @use "@/styles/variables.scss" as *;
+
 .success {
   background-color: rgba(85, 209, 119, 0.8);
   border: 1px solid #48e472;
   border-radius: 1rem;
   backdrop-filter: blur(8px);
+  display: grid;
+  grid-template-columns: 8fr 2fr;
+  align-items: center;
+
+  .content_wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    justify-content: center;
+  }
 }
+
 
 .error {
   background-color: rgba(243, 121, 120, 0.8);

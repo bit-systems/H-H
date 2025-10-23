@@ -1,13 +1,11 @@
 import { useState, useEffect } from "react";
 
-import { useAdmin } from "@/hooks/useAdmin";
-
 import { AdminProduct, Loader } from "@/components/common";
 import { getProduct } from "@/models/products/product.repository";
 import { useRouter } from "next/router";
+import withAuth from "@/components/with-auth/with-auth";
 
 const AdminEditProduct = () => {
-  // const { getProduct, isLoading } = useAdmin();
   const {
     query: { id },
     isReady,
@@ -19,11 +17,9 @@ const AdminEditProduct = () => {
   useEffect(() => {
     if (!isReady) return;
 
-    console.log(id, "id");
     const fetchProduct = async () => {
       setIsLoading(true);
       const product = await getProduct(id);
-      console.log(product, "product");
 
       setProduct(product);
       setIsLoading(false);
@@ -47,4 +43,4 @@ const AdminEditProduct = () => {
   );
 };
 
-export default AdminEditProduct;
+export default withAuth(AdminEditProduct, true);

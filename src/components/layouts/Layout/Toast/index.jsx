@@ -1,17 +1,18 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from "react";
 
-import ToastModal from './ToastModal';
-import ToastContent from './ToastContent';
+import ToastModal from "./ToastModal";
+import ToastContent from "./ToastContent";
 
-import { useToastContext } from '@/hooks/useToastContext';
-import { useToast } from '@/hooks/useToast';
-import { useRouter } from 'next/router';
+import { useToastContext } from "@/hooks/useToastContext";
+import { useToast } from "@/hooks/useToast";
+import { useRouter } from "next/router";
 
 const Toast = () => {
   const { pathname } = useRouter();
 
   const { content, addToCart, error } = useToastContext();
   const { close } = useToast();
+  console.log(content, "toast content in toast component", error);
 
   const isFirstLoad = useRef(true);
 

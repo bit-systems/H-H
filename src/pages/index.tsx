@@ -2,15 +2,15 @@ import HeroSection from "../components/home/hero-section";
 import ProductSliderSection from "../components/home/product-slider-section";
 import SlideshowSection from "../components/home/slideshow-section";
 import CollectionsSection from "../components/home/collections-section";
-import { useAuthContext } from "@/hooks/useAuthContext";
+import { useAuthContextV2 } from "@/hooks/useAuthContextV2";
 import { useCartContext } from "@/hooks/useCartContext";
 import { Loader } from "@/components/common";
 
 export const Home = () => {
-  const { authIsReady } = useAuthContext();
-  const { cartIsReady } = useCartContext();
+  const { authIsReady } = useAuthContextV2();
+  // const { cartIsReady } = useCartContext();
 
-  return !authIsReady || !cartIsReady ? (
+  return !authIsReady ? (
     <Loader
       noPortal={false}
       backdropClassName={""}

@@ -1,3 +1,6 @@
+import { Product, ProductModel } from "../products/product.model";
+import { Variant } from "../variants/variant.model";
+
 export interface Order {
   id?: string;
   userId: string;
@@ -26,6 +29,20 @@ export interface OrderItem {
   variantId: string;
   size: string;
   totalAmount: number;
+  variant: Pick<
+    Variant,
+    "images" | "colorDisplay" | "sku" | "price" | "salePrice" | "color"
+  > &
+    Pick<
+      ProductModel,
+      | "title"
+      | "subTitle"
+      | "brand"
+      | "category"
+      | "description"
+      | "productCategory"
+      | "productType"
+    >;
 }
 
 export interface OrderInput {
@@ -45,6 +62,12 @@ export interface OrderInput {
   paymentGatewayPaymentId: string | null;
   deliveryPartnerTrackingId: string | null;
   paymentStatus: "pending" | "completed" | "failed" | "refunded";
+  address: {
+    address: string;
+    city: string;
+    state: string;
+    zipCode: string;
+  };
 }
 
 export interface OrderOutput {

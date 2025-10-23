@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-import { useAuthContext } from "@/hooks/useAuthContext";
+import { useAuthContextV2 } from "@/hooks/useAuthContextV2";
 
 import { RiMenuLine } from "react-icons/ri";
 import { CgSearch } from "react-icons/cg";
@@ -18,7 +18,7 @@ import { useRouter } from "next/router";
 const Navbar = ({ toggleSideNav, openCartModal }) => {
   const { pathname } = useRouter();
 
-  const { isVerified, isAdmin } = useAuthContext();
+  const { user } = useAuthContextV2();
 
   const [hasScrolled, setHasSrolled] = useState(false);
 
@@ -101,7 +101,7 @@ const Navbar = ({ toggleSideNav, openCartModal }) => {
             </Link>
           </li>
         </ul>
-        {!isVerified && (
+        {!user && (
           <Link
             href="/account/login"
             className={`${styles.link} ${styles.login_link}`}
@@ -109,7 +109,7 @@ const Navbar = ({ toggleSideNav, openCartModal }) => {
             Login
           </Link>
         )}
-        {isVerified && (
+        {user && (
           <Link
             href="/account"
             className={`${styles.link} ${styles.login_link}`}
@@ -117,7 +117,7 @@ const Navbar = ({ toggleSideNav, openCartModal }) => {
             My Account
           </Link>
         )}
-        {isAdmin && (
+        {user?.role === "admin" && (
           <Link href="/admin" className={`${styles.link} ${styles.login_link}`}>
             Admin
           </Link>

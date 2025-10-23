@@ -1,9 +1,9 @@
-import { useEffect } from 'react';
-import { IoIosCheckmarkCircle, IoIosAlert } from 'react-icons/io';
+import { useEffect } from "react";
+import { IoIosCheckmarkCircle, IoIosAlert } from "react-icons/io";
 
-import { MediaContainer } from '@/components/common';
+import { MediaContainer } from "@/components/common";
 
-import styles from './index.module.scss';
+import styles from "./index.module.scss";
 
 const ToastMessage = ({ close, content, className }) => {
   useEffect(() => {
@@ -42,6 +42,21 @@ const ToastMessage = ({ close, content, className }) => {
   if (content.error) {
     return (
       <div className={`${styles.error} ${className}`}>
+        <div className={styles.content_wrapper}>
+          <div>
+            <p className={styles.title}>There was an error.</p>
+            <p className={styles.error_details}>{content.message}</p>
+          </div>
+        </div>
+        <i className={styles.icon}>
+          <IoIosAlert />
+        </i>
+      </div>
+    );
+  }
+  if (!content.error) {
+    return (
+      <div className={`${styles.success} ${className}`}>
         <div className={styles.content_wrapper}>
           <div>
             <p className={styles.title}>There was an error.</p>

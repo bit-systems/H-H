@@ -85,12 +85,17 @@ const AdminProduct = ({ isEditPage, productId, product }) => {
       formData.append("file", inputFiles[0]);
 
       const resp = await postApi("/api/media", formData, {});
+
+      if (!resp.isSuccess) {
+        return;
+      }
+
       console.log(inputFiles[0], "inputFiles");
       console.log(resp, "resp");
       const updatedImages = [...inputFiles].map((file) => ({
         id: uuid(),
         name: file.name,
-        key: resp.key,
+        key: resp.data.key,
         src: URL.createObjectURL(file),
         file,
       }));

@@ -1,10 +1,11 @@
-import { useState } from 'react';
-import Link from 'next/link';
+import { useState } from "react";
+import Link from "next/link";
 
-import { useSeed } from '@/hooks/useSeed';
+import { useSeed } from "@/hooks/useSeed";
+import withAuth from "@/components/with-auth/with-auth";
 
-import { ConfirmModal, Loader } from '@/components/common';
-import styles from './index.module.scss';
+import { ConfirmModal, Loader } from "@/components/common";
+import styles from "./index.module.scss";
 
 const AdminPage = () => {
   const { uploadProducts, isLoading, error } = useSeed();
@@ -31,11 +32,11 @@ const AdminPage = () => {
           <h1>Panel</h1>
           <div className={styles.options_wrapper}>
             <Link href="/admin/products" className={styles.option}>
-            <div>Products</div>
-          </Link>
-          <Link href="/admin/products/add" className={styles.option}>
-            <div>Add Product</div>
-          </Link>
+              <div>Products</div>
+            </Link>
+            <Link href="/admin/products/add" className={styles.option}>
+              <div>Add Product</div>
+            </Link>
             <div
               onClick={() => setNeedConfirm(true)}
               className={`${styles.option} ${styles.seed}`}
@@ -49,4 +50,4 @@ const AdminPage = () => {
   );
 };
 
-export default AdminPage;
+export default withAuth(AdminPage, true);

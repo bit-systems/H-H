@@ -1,20 +1,20 @@
 import { useState, useEffect } from "react";
 
-import { useAuthContext } from "@/hooks/useAuthContext";
+import { useAuthContextV2 } from "@/hooks/useAuthContextV2";
 import { useOrder } from "@/hooks/useOrder";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/useToast";
-
-import AccountOrders from "@/components/account/account-addresses";
+import withAuth from "@/components/with-auth/with-auth";
+import AccountOrders from "@/components/account/account-orders";
 import AccountProfile from "@/components/account/account-profile";
 import AccountAddresses from "@/components/account/account-addresses";
-
+import { getOrdersByUserId } from "@/models/order/order.repository";
 import { Button, Loader } from "@/components/common";
 
 import styles from "./index.module.scss";
 
 const AccountPage = () => {
-  const { name, lastName, email, phoneNumber } = useAuthContext();
+  const { user } = useAuthContextV2();
   const { getOrders, error } = useOrder();
   const { logout } = useAuth();
   const { sendToast } = useToast();
@@ -22,8 +22,14 @@ const AccountPage = () => {
   const [orders, setOrders] = useState(null);
 
   useEffect(() => {
+    if (!user?.id) return;
     const fetchOrders = async () => {
-      const fetchedOrders = await getOrders();
+      let fetchedOrders = await getOrdersByUserId(user.id);
+      console.log(fetchedOrders, "fetched orders");
+      fetchedOrders = fetchedOrders.map((order) => ({
+        ...order,
+        shippingAddress: order.address,
+      }));
       if (fetchedOrders) {
         setOrders(fetchedOrders);
       } else {
@@ -32,7 +38,7 @@ const AccountPage = () => {
     };
 
     fetchOrders();
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     if (error) {
@@ -66,10 +72,10 @@ const AccountPage = () => {
                 <AccountOrders orders={orders} />
                 <aside className={styles.sidebar}>
                   <AccountProfile
-                    name={name}
-                    lastName={lastName}
-                    email={email}
-                    phoneNumber={phoneNumber}
+                    name={user.firstName}
+                    lastName={user.firstName}
+                    email={user.email}
+                    phoneNumber={user.mobileNumber}
                   />
                   <AccountAddresses />
                 </aside>
@@ -82,4 +88,4 @@ const AccountPage = () => {
   );
 };
 
-export default AccountPage;
+export default withAuth(AccountPage, false);

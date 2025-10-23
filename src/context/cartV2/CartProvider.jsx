@@ -16,12 +16,7 @@ const initialState = {
 };
 
 const CartProvider = ({ children }) => {
-  const { sendToast } = useToast();
-
   const [cartItems, setCartItems] = useState([]);
-  const location = useRouter();
-
-  const { user } = useAuthContext();
 
   useEffect(() => {
     const cartItesmsFromStorage =

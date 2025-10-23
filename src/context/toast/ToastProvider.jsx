@@ -1,6 +1,6 @@
-import { useReducer } from 'react';
+import { useReducer } from "react";
 
-import ToastContext from './toast-context';
+import ToastContext from "./toast-context";
 
 const initialState = {
   addToCart: false,
@@ -10,19 +10,27 @@ const initialState = {
 
 const toastReducer = (state, action) => {
   const { type, payload } = action;
+  console.log(type, payload);
 
   switch (type) {
-    case 'ADD_TO_CART': {
+    case "ADD_TO_CART": {
       return {
         ...initialState,
         addToCart: true,
         content: payload,
       };
     }
-    case 'ERROR': {
+    case "ERROR": {
       return { ...initialState, error: true, content: payload };
     }
-    case 'CLOSE': {
+    case "SUCCESS": {
+      return {
+        ...initialState,
+        error: false,
+        content: payload,
+      };
+    }
+    case "CLOSE": {
       return initialState;
     }
     default: {

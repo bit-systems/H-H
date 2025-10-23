@@ -78,8 +78,8 @@ const AddressForm = ({
       return;
     }
     const res = await getApi("/api/pin-codes", { pin_code: userInput.zipCode });
-    setIsDeliverable(res.isDeliverable);
-    disableButton(!res.isDeliverable);
+    setIsDeliverable(res.data.isDeliverable);
+    disableButton(!res.data.isDeliverable);
   };
 
   return (

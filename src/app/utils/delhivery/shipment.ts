@@ -38,5 +38,9 @@ export const createDelhiveryShipment = async (
   const payload = prepareShipmentPayload(user, orderId);
   const res = await delhiveryPost(endpoint, payload);
   console.log(JSON.stringify(res), "delhivery shipment response");
-  return res;
+  if (!res.success) {
+    console.error("Delhivery shipment creation failed", JSON.stringify(res));
+    return null;
+  }
+  return res.packages[0].waybill;
 };

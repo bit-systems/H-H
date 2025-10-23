@@ -146,3 +146,14 @@ export const getProductsByQuery = async (
   );
   return products;
 };
+
+export const getProductsByIds = async (ids: string[]) => {
+  const q = query(productRef, where("id", "in", ids));
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map((doc) =>
+    mapProductToOutput({
+      ...doc.data(),
+      variants: [],
+    })
+  );
+};

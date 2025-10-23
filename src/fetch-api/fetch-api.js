@@ -7,10 +7,25 @@ export const postApi = async (url, data, headers = {}) => {
         ...headers,
       },
     });
-    return response.json();
+
+    if (response.ok) {
+      return {
+        isSuccess: true,
+        status: response.status,
+        data: await response.json(),
+      };
+    }
+    return {
+      isSuccess: false,
+      status: response.status,
+      message: "Error posting data",
+    };
   } catch (error) {
     console.error("Error in postApi:", error);
-    throw error;
+    return {
+      isSuccess: false,
+      message: error.message,
+    };
   }
 };
 
@@ -25,9 +40,24 @@ export const getApi = async (url, query, headers = {}) => {
         ...headers,
       },
     });
-    return response.json();
+
+    if (response.ok) {
+      return {
+        isSuccess: true,
+        status: response.status,
+        data: await response.json(),
+      };
+    }
+    return {
+      isSuccess: false,
+      status: response.status,
+      message: "Error fetching data",
+    };
   } catch (error) {
     console.error("Error in postApi:", error);
-    throw error;
+    return {
+      isSuccess: false,
+      message: error.message,
+    };
   }
 };

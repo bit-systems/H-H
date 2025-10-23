@@ -1,11 +1,10 @@
-import { useKeyDown } from '@/hooks/useKeyDown';
+import { useKeyDown } from "@/hooks/useKeyDown";
 
-import { Button, MediaContainer } from '@/components/common';
+import { Button, MediaContainer } from "@/components/common";
 
-import { addAllItemsPriceNumber } from '@/helpers/item';
-import { formatPrice, formatDate } from '@/helpers/format';
+import { formatPrice, formatDate } from "@/helpers/format";
 
-import styles from './index.module.scss';
+import styles from "./index.module.scss";
 
 const OrderContent = ({
   closeModal,
@@ -17,19 +16,11 @@ const OrderContent = ({
   city,
   state,
   zipCode,
-  payment,
-  shippingOption,
-  shippingCost,
+  totalAmount,
 }) => {
   useKeyDown(() => {
     closeModal();
-  }, ['Escape']);
-
-  const shippingOptionContent = shippingOption.standard
-    ? 'Standard  (3 - 5 Bus. Days)'
-    : 'Expedited (2 - 3 Bus. Days)';
-  const subtotal = addAllItemsPriceNumber(items);
-  const total = subtotal + shippingCost;
+  }, ["Escape"]);
 
   return (
     <div className={styles.container}>
@@ -52,13 +43,10 @@ const OrderContent = ({
               className={styles.details_content}
             >{`${city}, ${state} ${zipCode}`}</p>
           </li>
+
           <li>
-            <p className={styles.details_title}>Payment:</p>
-            <p className={styles.details_content}>{payment}</p>
-          </li>
-          <li>
-            <p className={styles.details_title}>Shipping:</p>
-            <p className={styles.details_content}>{shippingOptionContent}</p>
+            <p className={styles.details_title}>Tracking:</p>
+            <p className={styles.details_content}>{"shippingOptionContent"}</p>
           </li>
         </ul>
       </div>
@@ -68,7 +56,7 @@ const OrderContent = ({
             <div key={item.skuId} className={styles.item_container}>
               <div className={styles.image_wrapper}>
                 <MediaContainer
-                  image={item.image}
+                  image={item.variant.images[0].src}
                   alt=""
                   containerClassName={styles.image_container}
                   fillClassName={styles.image_fill}
@@ -80,28 +68,25 @@ const OrderContent = ({
               </div>
               <div className={styles.info_wrapper}>
                 <p className={styles.name}>
-                  {`${item.model} ${item.type} - ${item.color}`}
+                  {`${item.variant.title} - ${item.variant.brand} - ${item.variant.color}`}
                 </p>
                 <p className={styles.size}>{item.size?.toUpperCase()}</p>
               </div>
-              <p className={styles.price}>${formatPrice(item.price)}</p>
+              <p className={styles.price}>{formatPrice(item.price)}</p>
             </div>
           ))}
         </div>
       </div>
       <div className={styles.footer}>
         <ul>
-          <li>
+          {/* <li>
             <span>Subtotal</span>
             <span>$ {formatPrice(subtotal)}</span>
-          </li>
-          <li>
-            <span>Shipping</span>
-            <span>$ {formatPrice(shippingCost)} </span>
-          </li>
+          </li> */}
+
           <li>
             <span>Total</span>
-            <span>$ {formatPrice(total)} </span>
+            <span> {formatPrice(totalAmount)} </span>
           </li>
         </ul>
       </div>
