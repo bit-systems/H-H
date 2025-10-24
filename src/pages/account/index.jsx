@@ -15,7 +15,7 @@ import styles from "./index.module.scss";
 import { useRouter } from "next/router";
 
 const AccountPage = () => {
-  const { user } = useAuthContextV2();
+  const { user, setUser } = useAuthContextV2();
 
   const [orders, setOrders] = useState(null);
 
@@ -41,6 +41,7 @@ const AccountPage = () => {
 
   const handleLogout = async () => {
     localStorage.removeItem("jwt_token");
+    setUser(null);
     router.push("/");
   };
 
