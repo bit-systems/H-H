@@ -16,6 +16,12 @@ export const orderInputMapper = (input: any, user: User): OrderInput => {
     totalAmount: input.totalAmount,
     status: "pending",
     paymentStatus: "pending",
+    address: {
+      address: user.address.address,
+      city: user.address.city,
+      state: user.address.state,
+      zipCode: user.address.zipCode,
+    },
   };
 };
 
@@ -32,5 +38,6 @@ const mapInputToOrderItem = (
     size: item.size,
     variantId: item.variantId,
     totalAmount: item.totalAmount,
+    variant: item.variant,
   };
 };

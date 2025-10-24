@@ -1,4 +1,10 @@
-import { User, UserInput, UserOutput } from "@/models/user/user.model";
+import {
+  User,
+  UserInput,
+  UserOutput,
+  UserRole,
+  UserStatus,
+} from "@/models/user/user.model";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const userInputMapper = (data: any): User => {
@@ -14,10 +20,10 @@ export const userInputMapper = (data: any): User => {
       state: data?.state || "",
       zipCode: data?.zipCode || "",
     },
-    role: "user",
+    role: UserRole.USER,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
-    status: "active",
+    status: UserStatus.ACTIVE,
     otp: "",
     isEmailVerified: false,
     isMobileVerified: false,
