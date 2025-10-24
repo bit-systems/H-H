@@ -5,8 +5,18 @@ interface Address {
   zipCode: string;
 }
 
+export enum UserStatus {
+  ACTIVE = "active",
+  INACTIVE = "inactive",
+}
+
+export enum UserRole {
+  USER = "user",
+  ADMIN = "admin",
+}
+
 export interface User {
-  status: "active" | "inactive";
+  status: UserStatus;
   email: string;
   mobileNumber: string;
   firstName: string;
@@ -14,7 +24,7 @@ export interface User {
   id: string;
   otp: string;
   otpExpiry: number;
-  role: "user" | "admin";
+  role: UserRole;
   address: Address;
   createdAt: string;
   updatedAt: string;

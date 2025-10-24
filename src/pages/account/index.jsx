@@ -12,20 +12,19 @@ import { getOrdersByUserId } from "@/models/order/order.repository";
 import { Button, Loader } from "@/components/common";
 
 import styles from "./index.module.scss";
+import { useRouter } from "next/router";
 
 const AccountPage = () => {
   const { user } = useAuthContextV2();
-  const { getOrders, error } = useOrder();
-  const { logout } = useAuth();
-  const { sendToast } = useToast();
 
   const [orders, setOrders] = useState(null);
+
+  const router = useRouter();
 
   useEffect(() => {
     if (!user?.id) return;
     const fetchOrders = async () => {
       let fetchedOrders = await getOrdersByUserId(user.id);
-      console.log(fetchedOrders, "fetched orders");
       fetchedOrders = fetchedOrders.map((order) => ({
         ...order,
         shippingAddress: order.address,
@@ -40,14 +39,9 @@ const AccountPage = () => {
     fetchOrders();
   }, [user]);
 
-  useEffect(() => {
-    if (error) {
-      sendToast({ error: true, content: { message: error.message } });
-    }
-  }, [error]);
-
   const handleLogout = async () => {
-    await logout();
+    localStorage.removeItem("jwt_token");
+    router.push("/");
   };
 
   return (

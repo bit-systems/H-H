@@ -1,9 +1,11 @@
 import Order from "./order";
 
 import styles from "./index.module.scss";
+import { useAuthContextV2 } from "@/hooks/useAuthContextV2";
 
 const AccountOrders = ({ orders }) => {
-  console.log(orders, "orders in account orders");
+  const { user } = useAuthContextV2();
+
   return (
     <div className={styles.orders_wrapper}>
       {orders.length === 0 && (
@@ -19,7 +21,7 @@ const AccountOrders = ({ orders }) => {
                 id={order.id}
                 items={order.orderItems}
                 date={order.createdAt}
-                email={order.email}
+                email={user.email}
                 address={order.shippingAddress.address}
                 city={order.shippingAddress.city}
                 state={order.shippingAddress.state}

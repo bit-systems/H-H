@@ -1,11 +1,11 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from "react";
 
-import { useProfile } from '@/hooks/useProfile';
-import { useToast } from '@/hooks/useToast';
+import { useProfile } from "@/hooks/useProfile";
+import { useToast } from "@/hooks/useToast";
 
-import { Loader, Button } from '@/components/common';
+import { Loader, Button } from "@/components/common";
 
-import styles from './index.module.scss';
+import styles from "./index.module.scss";
 
 const EditProfile = ({ close, name, lastName, phoneNumber }) => {
   const { editProfile, isLoading, error } = useProfile();
@@ -77,16 +77,16 @@ const EditProfile = ({ close, name, lastName, phoneNumber }) => {
                     className={styles.input}
                     type="tel"
                     ref={phoneNumberInput}
-                    defaultValue={phoneNumber ? phoneNumber : ''}
+                    defaultValue={phoneNumber ? phoneNumber : ""}
                   />
                 </label>
               </div>
             </form>
           </div>
           <div className={styles.button_wrapper}>
-            <Button form="form" className={styles.button} type="submit">
+            {/* <Button form="form" className={styles.button} type="submit">
               Edit
-            </Button>
+            </Button> */}
           </div>
         </div>
       )}

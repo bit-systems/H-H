@@ -45,7 +45,7 @@ const AddressesPage = () => {
           </Button>
           <div className={styles.header_wrapper}>
             <p className={styles.title}>Your addresses</p>
-            <Button
+            {/* <Button
               className={styles.add_button}
               onClick={() => setIsOpen(true)}
             >
@@ -53,7 +53,7 @@ const AddressesPage = () => {
                 <BiPlus />
               </span>
               Add new address
-            </Button>
+            </Button> */}
           </div>
 
           <div className={styles.addresses_container}>

@@ -18,6 +18,8 @@ const Order = ({
   state,
   zipCode,
   totalAmount,
+  phoneNumber,
+  fullName,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -36,12 +38,14 @@ const Order = ({
             state={state}
             zipCode={zipCode}
             totalAmount={totalAmount}
+            phoneNumber={phoneNumber}
+            fullName={fullName}
           />
         )}
       </CenterModal>
       <div className={styles.card} onClick={() => setIsOpen(true)}>
         <h3>Order #{id}</h3>
-        <p className={styles.date}>{formatDate(date)}</p>
+        {date && <p className={styles.date}>{formatDate(date)}</p>}
       </div>
     </>
   );

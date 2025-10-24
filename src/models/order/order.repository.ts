@@ -12,12 +12,19 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { Order, OrderInput, OrderOutput } from "./order.model";
+import {
+  Order,
+  OrderAdminOutput,
+  OrderInput,
+  OrderOutput,
+} from "./order.model";
 import {
   createOrderItems,
   getOrderItemsByOrderId,
   updateOrderItems,
 } from "./order-item.repository";
+import { getUserById } from "../user/user.repository";
+import { User } from "../user/user.model";
 const orderRef = collection(db, "Order") as CollectionReference<Order>;
 
 const addOrder = async (order: Order) => {
@@ -81,14 +88,28 @@ export const updateOrderOnly = async (orderId: string, order: OrderInput) => {
   return order;
 };
 
-export const getAllOrders = async (): Promise<OrderOutput[]> => {
-  const snapshot = await getDocs(orderRef);
+export const getAllAdminOrders = async (
+  queryConstraints: []
+): Promise<OrderAdminOutput[]> => {
+  const fQuery = query(orderRef, ...queryConstraints);
+
+  const snapshot = await getDocs(fQuery);
 
   const orders = await Promise.all(
     snapshot.docs.map(async (doc) => {
       const order = doc.data();
       const v = await getOrderItemsByOrderId(order.id as string);
-      return { ...order, orderItems: v };
+      const user = (await getUserById(order.userId)) as User;
+      return {
+        ...order,
+        orderItems: v,
+        user: {
+          email: user.email,
+          phoneNumber: user.mobileNumber,
+          firstName: user.firstName,
+          lastName: user.lastName,
+        },
+      };
     })
   );
 

@@ -1,8 +1,8 @@
-import { useAuthContext } from '@/hooks/useAuthContext';
+import { useAuthContext } from "@/hooks/useAuthContext";
 
-import { Button } from '@/components/common';
+import { Button } from "@/components/common";
 
-import styles from './index.module.scss';
+import styles from "./index.module.scss";
 
 const AccountAddresses = () => {
   const { addresses } = useAuthContext();
@@ -32,7 +32,7 @@ const AccountAddresses = () => {
                 <ul className={styles.info}>
                   <li>{defaultAddress.address}</li>
                   <li>
-                    {defaultAddress.city}, {defaultAddress.state}{' '}
+                    {defaultAddress.city}, {defaultAddress.state}{" "}
                     {defaultAddress.zipCode}
                   </li>
                 </ul>
@@ -57,9 +57,9 @@ const AccountAddresses = () => {
             </>
           )}
         </div>
-        <Button className={styles.edit_button} to="/account/addresses">
+        {/* <Button className={styles.edit_button} to="/account/addresses">
           Edit addresses
-        </Button>
+        </Button> */}
       </div>
     </div>
   );

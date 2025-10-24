@@ -3,6 +3,7 @@ import { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import crypto from "crypto";
 import { updateOrderPayment } from "../order/helper";
+import { PaymentStatus } from "@/models/order/order.model";
 
 const webhookSecret = process.env.RAZORPAY_WEBHOOK_SECRET || "";
 
@@ -30,10 +31,10 @@ export async function POST(req: NextRequest) {
     // Example: Handle events
     if (body.event === "payment.captured") {
       console.log("✅ Payment captured:", body);
-      await updateOrderPayment(body, "paid");
+      await updateOrderPayment(body, PaymentStatus.PAID);
     } else if (body.event === "payment.failed") {
       console.log("❌ Payment failed:", body);
-      await updateOrderPayment(body, "failed");
+      await updateOrderPayment(body, PaymentStatus.FAILED);
     }
 
     return NextResponse.json({ status: "ok" });

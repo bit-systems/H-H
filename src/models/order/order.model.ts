@@ -1,23 +1,34 @@
 import { Product, ProductModel } from "../products/product.model";
+import { User } from "../user/user.model";
 import { Variant } from "../variants/variant.model";
+
+export enum OrderStatus {
+  PENDING = "pending",
+  CONFIRMED = "confirmed",
+  SHIPPED = "shipped",
+  DELIVERED = "delivered",
+  CANCELLED = "cancelled",
+  RETURNED = "returned",
+}
+
+export enum PaymentStatus {
+  PENDING = "pending",
+  PAID = "paid",
+  FAILED = "failed",
+  REFUNDED = "refunded",
+}
 
 export interface Order {
   id?: string;
   userId: string;
   totalAmount: number;
-  status:
-    | "pending"
-    | "confirmed"
-    | "shipped"
-    | "delivered"
-    | "cancelled"
-    | "returned";
+  status: OrderStatus;
   createdAt: string;
   updatedAt: string;
   paymentGatewayPaymentId: string;
   deliveryPartnerTrackingId: string;
   paymentGatewayResponse?: string;
-  paymentStatus: "pending" | "paid" | "failed" | "refunded";
+  paymentStatus: PaymentStatus;
 }
 
 export interface OrderItem {
@@ -88,3 +99,7 @@ export interface OrderOutput {
   deliveryPartnerTrackingId: string;
   paymentStatus: "pending" | "paid" | "failed" | "refunded";
 }
+
+export type OrderAdminOutput = OrderOutput & {
+  user: Partial<User>;
+};

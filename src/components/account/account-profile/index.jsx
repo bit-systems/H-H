@@ -45,9 +45,9 @@ const AccountProfile = ({ name, email, lastName, phoneNumber }) => {
               {phoneNumber ? phoneNumber : "No phone added yet"}
             </li>
           </ul>
-          <Button className={styles.edit_button} onClick={toggleEditProfile}>
+          {/* <Button className={styles.edit_button} onClick={toggleEditProfile}>
             Edit Info
-          </Button>
+          </Button> */}
         </div>
       </div>
     </>

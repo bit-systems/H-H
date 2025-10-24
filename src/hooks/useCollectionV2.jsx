@@ -36,8 +36,6 @@ export const useCollectionV2 = () => {
         setHasMore(true);
       }
 
-      let productsQuery;
-
       let constraints = [
         orderBy(sortBy.field, sortBy.direction),
         where("status", "==", "active"),

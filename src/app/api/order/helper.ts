@@ -1,11 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Order, OrderInput, OrderItem } from "@/models/order/order.model";
+import {
+  Order,
+  OrderInput,
+  OrderItem,
+  OrderStatus,
+  PaymentStatus,
+} from "@/models/order/order.model";
 import { getVariantsByIds } from "@/models/variants/variant.repository";
 import { OrderInputBody } from "./inputs";
 import {
   createOrder,
   getOrderOnly,
   updateOrder,
+  updateOrderOnly,
 } from "@/models/order/order.repository";
 import { createDelhiveryShipment } from "@/app/utils/delhivery/shipment";
 import { getUserById } from "@/models/user/user.repository";
@@ -107,7 +114,7 @@ export const prepareOrder = async ({
 
 export const updateOrderPayment = async (
   paymentEvent: any,
-  status: "paid" | "failed"
+  status: PaymentStatus
 ) => {
   const order = await getOrderOnly(
     paymentEvent.payload.payment.entity.notes.orderId
@@ -118,12 +125,12 @@ export const updateOrderPayment = async (
   }
 
   order.paymentStatus = status;
-  order.status = "confirmed";
+  order.status = OrderStatus.CONFIRMED;
   order.paymentGatewayPaymentId = paymentEvent.payload.payment.entity.id;
   order.updatedAt = new Date().toISOString();
   order.paymentGatewayResponse = JSON.stringify(paymentEvent);
 
-  if (status === "paid") {
+  if (status === PaymentStatus.PAID) {
     const waybill = await createDelhiveryShipment(
       order.userId,
       order.id as string
@@ -131,5 +138,20 @@ export const updateOrderPayment = async (
     order.deliveryPartnerTrackingId = waybill;
   }
 
-  await updateOrder(order.id as string, order as OrderInput);
+  await updateOrderOnly(order.id as string, order as OrderInput);
+};
+
+export const updateOrderStatus = async (
+  orderId: string,
+  status: OrderStatus
+) => {
+  const order = await getOrderOnly(orderId);
+
+  if (!order) {
+    throw new Error("Order not found");
+  }
+
+  order.status = status;
+  order.updatedAt = new Date().toISOString();
+  await updateOrderOnly(order.id as string, order as OrderInput);
 };

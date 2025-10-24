@@ -1,3 +1,5 @@
+import { OrderStatus } from "@/models/order/order.model";
+
 export interface CartInputBody {
   productId: string;
   variantId: string;
@@ -16,4 +18,9 @@ export interface CartInputBody {
 export interface OrderInputBody {
   cart: CartInputBody[];
   userId: string;
+}
+
+export interface OrderStatusBody {
+  orderId: string;
+  status: OrderStatus;
 }

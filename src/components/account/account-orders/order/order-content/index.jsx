@@ -17,6 +17,8 @@ const OrderContent = ({
   state,
   zipCode,
   totalAmount,
+  phoneNumber,
+  fullName,
 }) => {
   useKeyDown(() => {
     closeModal();
@@ -36,6 +38,18 @@ const OrderContent = ({
             <p className={styles.details_title}>Email Address:</p>
             <p className={styles.details_content}>{email}</p>
           </li>
+          {fullName && (
+            <li>
+              <p className={styles.details_title}>Full Name:</p>
+              <p className={styles.details_content}>{fullName}</p>
+            </li>
+          )}
+          {phoneNumber && (
+            <li>
+              <p className={styles.details_title}>Phone Number:</p>
+              <p className={styles.details_content}>{phoneNumber}</p>
+            </li>
+          )}
           <li>
             <p className={styles.details_title}>Address:</p>
             <p className={styles.details_content}>{address}</p>
@@ -79,11 +93,6 @@ const OrderContent = ({
       </div>
       <div className={styles.footer}>
         <ul>
-          {/* <li>
-            <span>Subtotal</span>
-            <span>$ {formatPrice(subtotal)}</span>
-          </li> */}
-
           <li>
             <span>Total</span>
             <span> {formatPrice(totalAmount)} </span>
