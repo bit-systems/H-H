@@ -19,7 +19,6 @@ import Order from "@/components/account/account-orders/order";
 
 import { orderBy } from "firebase/firestore";
 import { Loader } from "@/components/common";
-import { CenterModal } from "@/components/common";
 
 import { format } from "date-fns";
 
@@ -27,8 +26,9 @@ import { getAllAdminOrders } from "@/models/order/order.repository";
 import { OrderStatus } from "@/models/order/order.model";
 
 import { MoreVerticalIcon } from "lucide-react";
+import withAuth from "@/components/with-auth/with-auth";
 
-export default function Orders() {
+const Orders = () => {
   const constraints = [orderBy("createdAt", "desc")];
   const { sendToast } = useToast();
   const [isOpen, setIsOpen] = useState(false);
@@ -189,4 +189,6 @@ export default function Orders() {
       )}
     </section>
   );
-}
+};
+
+export default withAuth(Orders, true);

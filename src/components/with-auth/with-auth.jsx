@@ -1,7 +1,7 @@
-// components/withAuth.js
+"use client";
+
 import { useRouter } from "next/router";
 import { useAuthContextV2 } from "@/hooks/useAuthContextV2";
-import { useEffect } from "react";
 import { Loader } from "@/components/common";
 
 const withAuth = (WrappedComponent, isAdmin) => {
