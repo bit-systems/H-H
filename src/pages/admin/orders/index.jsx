@@ -12,7 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
+import dynamic from "next/dynamic";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/useToast";
 
@@ -192,4 +192,6 @@ const Orders = () => {
   );
 };
 
-export default withAuth(Orders, true);
+export default dynamic(() => Promise.resolve(withAuth(Orders, true)), {
+  ssr: false, // disables server-side rendering for this component
+});

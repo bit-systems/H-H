@@ -1,5 +1,5 @@
 "use client";
-
+import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
 
 import { AdminProduct, Loader } from "@/components/common";
@@ -45,4 +45,9 @@ const AdminEditProduct = () => {
   );
 };
 
-export default withAuth(AdminEditProduct, true);
+export default dynamic(
+  () => Promise.resolve(withAuth(AdminEditProduct, true)),
+  {
+    ssr: false, // disables server-side rendering for this component
+  }
+);

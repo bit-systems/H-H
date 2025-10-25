@@ -3,9 +3,6 @@
 import { useState, useEffect } from "react";
 
 import { useAuthContextV2 } from "@/hooks/useAuthContextV2";
-import { useOrder } from "@/hooks/useOrder";
-import { useAuth } from "@/hooks/useAuth";
-import { useToast } from "@/hooks/useToast";
 import withAuth from "@/components/with-auth/with-auth";
 import AccountOrders from "@/components/account/account-orders";
 import AccountProfile from "@/components/account/account-profile";
@@ -15,6 +12,7 @@ import { Button, Loader } from "@/components/common";
 
 import styles from "./index.module.scss";
 import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
 
 const AccountPage = () => {
   const { user, setUser } = useAuthContextV2();
@@ -85,4 +83,6 @@ const AccountPage = () => {
   );
 };
 
-export default withAuth(AccountPage, false);
+export default dynamic(() => Promise.resolve(withAuth(AccountPage, false)), {
+  ssr: false, // disables server-side rendering for this component
+});

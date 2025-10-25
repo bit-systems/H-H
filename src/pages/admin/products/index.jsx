@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-
+import dynamic from "next/dynamic";
 import { useCollection } from "@/hooks/useCollection";
 import { useAdmin } from "@/hooks/useAdmin";
 import { getAllProducts } from "@/models/products/product.repository";
@@ -113,4 +113,9 @@ const AdminCollections = () => {
   );
 };
 
-export default withAuth(AdminCollections, true);
+export default dynamic(
+  () => Promise.resolve(withAuth(AdminCollections, true)),
+  {
+    ssr: false, // disables server-side rendering for this component
+  }
+);

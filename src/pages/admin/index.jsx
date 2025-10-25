@@ -8,6 +8,7 @@ import withAuth from "@/components/with-auth/with-auth";
 
 import { ConfirmModal, Loader } from "@/components/common";
 import styles from "./index.module.scss";
+import dynamic from "next/dynamic";
 
 const AdminPage = () => {
   const { uploadProducts, isLoading, error } = useSeed();
@@ -52,4 +53,6 @@ const AdminPage = () => {
   );
 };
 
-export default withAuth(AdminPage, true);
+export default dynamic(() => Promise.resolve(withAuth(AdminPage, true)), {
+  ssr: false, // disables server-side rendering for this component
+});
