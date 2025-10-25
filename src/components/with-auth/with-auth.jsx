@@ -1,13 +1,11 @@
 "use client";
 
-import { useRouter } from "next/router";
 import { useAuthContextV2 } from "@/hooks/useAuthContextV2";
 import { Loader } from "@/components/common";
 
 const withAuth = (WrappedComponent, isAdmin) => {
   return (props) => {
     const { user, authIsReady } = useAuthContextV2();
-    const router = useRouter();
 
     if (!authIsReady) {
       return (
@@ -20,12 +18,12 @@ const withAuth = (WrappedComponent, isAdmin) => {
       );
     }
     if (!user || !user.id) {
-      router.push("/account/login");
+      window.location.href = "/login";
       return null;
     }
 
     if (isAdmin && user.role !== "admin") {
-      router.push("/");
+      window.location.href = "/";
       return null;
     }
 
