@@ -6,6 +6,7 @@ import {
   verifyOtpForUser,
 } from "@/models/user/user.repository";
 import { NextRequest } from "next/server";
+import { sendSms } from "./helper";
 
 export async function GET(request: NextRequest) {
   try {
@@ -17,7 +18,10 @@ export async function GET(request: NextRequest) {
       throw new Error("User not found");
     }
     const otp = process.env.NODE_ENV === "development" ? "5555" : getOtp();
+    const phone_number =
+      process.env.NODE_ENV === "development" ? "919000408310" : `91${myParam}`;
     await sendOtpToUser(user, otp);
+    await sendSms(phone_number);
     return new Response(JSON.stringify({ message: "OTP sent successfully" }), {
       status: 200,
       headers: { "Content-Type": "application/json" },
