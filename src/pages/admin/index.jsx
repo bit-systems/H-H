@@ -53,6 +53,7 @@ const AdminPage = () => {
   );
 };
 
-export default dynamic(() => Promise.resolve(withAuth(AdminPage, true)), {
-  ssr: false, // disables server-side rendering for this component
-});
+// export default dynamic(() => Promise.resolve(withAuth(AdminPage, true)), {
+//   ssr: false, // disables server-side rendering for this component
+// });
+export default AdminPage;

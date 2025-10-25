@@ -83,6 +83,8 @@ const AccountPage = () => {
   );
 };
 
-export default dynamic(() => Promise.resolve(withAuth(AccountPage, false)), {
-  ssr: false, // disables server-side rendering for this component
-});
+// export default dynamic(() => Promise.resolve(withAuth(AccountPage, false)), {
+//   ssr: false, // disables server-side rendering for this component
+// });
+
+export default AccountPage;

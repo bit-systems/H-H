@@ -11,12 +11,9 @@ import OTPInput from "@/components/account/otp-input";
 import styles from "./index.module.scss";
 import { useRouter } from "next/router";
 import { APP_CONFIG } from "@/utils/constants";
-import { get } from "http";
 
 const LoginPage = () => {
-  const { state: routerState } = useRouter();
-
-  const { login, isLoading, error, defaultValue } = useAuth();
+  const { isLoading, error, defaultValue } = useAuth();
   const { sendToast } = useToast();
 
   const [isOtpSent, setIsOtpSent] = useState(false);
@@ -26,8 +23,6 @@ const LoginPage = () => {
     const res = await getApi("/api/otp", {
       phone_number: phoneNumber,
     });
-
-    console.log(res, "otp response");
 
     if (res && res.isSuccess) {
       sendToast({

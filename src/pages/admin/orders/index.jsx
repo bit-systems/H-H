@@ -192,6 +192,8 @@ const Orders = () => {
   );
 };
 
-export default dynamic(() => Promise.resolve(withAuth(Orders, true)), {
-  ssr: false, // disables server-side rendering for this component
-});
+// export default dynamic(() => Promise.resolve(withAuth(Orders, true)), {
+//   ssr: false, // disables server-side rendering for this component
+// });
+
+export default Orders;

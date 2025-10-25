@@ -11,6 +11,8 @@ const AdminAddProduct = () => {
   );
 };
 
-export default dynamic(() => Promise.resolve(withAuth(AdminAddProduct, true)), {
-  ssr: false, // disables server-side rendering for this component
-});
+// export default dynamic(() => Promise.resolve(withAuth(AdminAddProduct, true)), {
+//   ssr: false, // disables server-side rendering for this component
+// });
+
+export default AdminAddProduct;

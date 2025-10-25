@@ -45,9 +45,11 @@ const AdminEditProduct = () => {
   );
 };
 
-export default dynamic(
-  () => Promise.resolve(withAuth(AdminEditProduct, true)),
-  {
-    ssr: false, // disables server-side rendering for this component
-  }
-);
+// export default dynamic(
+//   () => Promise.resolve(withAuth(AdminEditProduct, true)),
+//   {
+//     ssr: false, // disables server-side rendering for this component
+//   }
+// );
+
+export default AdminEditProduct;
