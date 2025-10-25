@@ -1,3 +1,5 @@
+"use client";
+
 import { AdminProduct } from "@/components/common";
 import withAuth from "@/components/with-auth/with-auth";
 
