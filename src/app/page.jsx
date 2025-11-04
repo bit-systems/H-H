@@ -9,6 +9,7 @@ import { Loader } from "@/components/common";
 
 export default function HomePage() {
   const { authIsReady } = useAuthContextV2();
+
   return !authIsReady ? (
     <Loader
       noPortal={false}
