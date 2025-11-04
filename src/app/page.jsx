@@ -6,7 +6,7 @@ import CollectionsSection from "../components/home/collections-section";
 import { useAuthContextV2 } from "@/hooks/useAuthContextV2";
 import { Loader } from "@/components/common";
 
-export const Home = () => {
+export default function HomePage() {
   const { authIsReady } = useAuthContextV2();
   // const { cartIsReady } = useCartContext();
 
@@ -35,6 +35,6 @@ export const Home = () => {
       <HeroSection />
     </>
   );
-};
+}
 
-export default Home;
+// export default Home;

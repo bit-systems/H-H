@@ -3,7 +3,7 @@ import ProductSliderSection from "@/components/home/product-slider-section";
 import SlideshowSection from "@/components/home/slideshow-section";
 import CollectionsSection from "@/components/home/collections-section";
 
-export const HomePage = () => {
+export default function HomePage1() {
   return (
     <>
       <SlideshowSection />
@@ -20,6 +20,4 @@ export const HomePage = () => {
       <HeroSection />
     </>
   );
-};
-
-export default HomePage;
+}
