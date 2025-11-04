@@ -1,3 +1,4 @@
+"use client";
 import { useReducer, useEffect } from 'react';
 
 import { doc, setDoc, getDoc } from 'firebase/firestore';

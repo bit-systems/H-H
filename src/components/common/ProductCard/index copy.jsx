@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect, useRef } from "react";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -12,7 +13,7 @@ import { Button, SliderV2 } from "@/components/common";
 import { formatPrice, formatDiscount } from "@/helpers/format";
 
 import styles from "./index.module.scss";
-import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 
 const ProductCardV2 = ({
   productId,
@@ -29,8 +30,8 @@ const ProductCardV2 = ({
   onCardPick,
   product,
 }) => {
-  const location = useRouter();
-  const isAdmin = location.pathname.split("/")[1] === "admin";
+  const pathname = usePathname();
+  const isAdmin = pathname.split("/")[1] === "admin";
 
   const { addItem, isLoading } = useCartV2();
 

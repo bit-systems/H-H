@@ -1,3 +1,4 @@
+"use client";
 import { useEffect } from "react";
 
 import { CgShoppingBag, CgCheckO } from "react-icons/cg";

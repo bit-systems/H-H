@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect } from "react";
 
 import { v4 as uuid } from "uuid";
@@ -10,7 +11,7 @@ import ProductForm from "./ProductForm";
 import { Button, Loader, CenterModal, ConfirmModal } from "@/components/common";
 
 import styles from "./index.module.scss";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { getCloudfrontUrl } from "@/utils/utils";
 
 const AdminProduct = ({ isEditPage, productId, product }) => {

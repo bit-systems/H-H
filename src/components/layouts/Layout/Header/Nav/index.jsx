@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
@@ -13,7 +14,7 @@ import { Button } from "@/components/common";
 // import LogoNav from '/assets/images/logo-nav.png';
 
 import styles from "./index.module.scss";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const Navbar = ({ toggleSideNav, openCartModal }) => {
   const { pathname } = useRouter();

@@ -1,3 +1,4 @@
+"use client";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -10,7 +11,7 @@ import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 
 import MediaContainer from "../MediaContainer";
 
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const SliderV2 = ({
   slides,

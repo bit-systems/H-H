@@ -1,12 +1,12 @@
+"use client";
+import { motion, AnimatePresence } from "framer-motion";
 
-import { motion, AnimatePresence } from 'framer-motion';
+import { useKeyDown } from "@/hooks/useKeyDown";
 
-import { useKeyDown } from '@/hooks/useKeyDown';
+import Backdrop from "../Backdrop";
 
-import Backdrop from '../Backdrop';
-
-import styles from './index.module.scss';
-import Portal from '../Portal';
+import styles from "./index.module.scss";
+import Portal from "../Portal";
 
 // TODO: use this component
 const Modal = ({
@@ -22,17 +22,15 @@ const Modal = ({
 }) => {
   useKeyDown(() => {
     close();
-  }, ['Escape']);
+  }, ["Escape"]);
 
-  const overlayElement = <p>Fix it</p>
+  const overlayElement = <p>Fix it</p>;
   return (
     <AnimatePresence>
       {children && (
         <>
-        
-
-          <Portal containerId='overlay'>
-  <>
+          <Portal containerId="overlay">
+            <>
               <Backdrop backdropClassName={backdropClassName} />
               <div
                 onClick={close}
@@ -54,7 +52,6 @@ const Modal = ({
                 </div>
               </div>
             </>
-
           </Portal>
         </>
       )}

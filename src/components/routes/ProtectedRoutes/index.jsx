@@ -1,3 +1,4 @@
+"use client";
 import { Outlet } from 'react-router-dom';
 import Link from 'next/link';
 

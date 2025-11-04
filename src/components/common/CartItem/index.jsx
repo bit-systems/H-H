@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 
 import { FaTrash, FaPlus, FaMinus } from "react-icons/fa";
@@ -8,7 +9,7 @@ import { formatPrice } from "@/helpers/format";
 import { addIndividualItemPrice } from "@/helpers/item";
 
 import styles from "./index.module.scss";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const CartItem = ({
   productId,

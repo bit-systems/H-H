@@ -1,3 +1,4 @@
+"use client";
 import { useContext } from "react";
 
 import CartContext from "../context/cartV2/cart-context";

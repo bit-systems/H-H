@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect } from "react";
 
 import { BiChevronLeft } from "react-icons/bi";
@@ -18,7 +19,7 @@ import {
 } from "@/helpers/format";
 
 import styles from "./index.module.scss";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const Payment = () => {
   const navigate = useRouter();

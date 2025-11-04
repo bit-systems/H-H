@@ -1,3 +1,4 @@
+"use client";
 import { useState } from 'react';
 import { collection, doc, writeBatch } from 'firebase/firestore';
 

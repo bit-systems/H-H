@@ -1,3 +1,4 @@
+"use client";
 import { useEffect } from "react";
 
 import { useCartContextV2 } from "@/hooks/useCartContextV2";

@@ -1,9 +1,10 @@
+"use client";
 import React, { useState, useRef, useEffect } from "react";
 import { getApi, postApi } from "@/fetch-api/fetch-api";
 
 import styles from "./index.module.scss";
 import { useAuthContextV2 } from "@/hooks/useAuthContextV2";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const OTPInput = ({ phoneNumber, resend }) => {
   const resetTime = 30;

@@ -1,30 +1,27 @@
-import { useEffect, useState } from 'react';
+"use client";
+import { useEffect, useState } from "react";
 
-
-import Toast from './Toast';
-import Cart from './Cart';
-import Header from './Header';
+import Toast from "./Toast";
+import Cart from "./Cart";
+import Header from "./Header";
 // import Footer from './Footer';
-import dynamic from 'next/dynamic'
+import dynamic from "next/dynamic";
 
-import { useRouter } from 'next/router';
+import { useRouter, usePathname } from "next/navigation";
 
 const Layout = ({ children }) => {
   const location = useRouter();
+  const pathname = usePathname();
   const [isCartModalOpen, setIsCartModalOpen] = useState(false);
   const [isCheckout, setIsCheckout] = useState(false);
 
-const Footer = dynamic(() => import('./Footer'), { ssr: false })
-
+  const Footer = dynamic(() => import("./Footer"), { ssr: false });
 
   useEffect(() => {
-    if(location.isReady) {
-      const pathname = location.pathname.split('/');
-      const isCheckout = pathname.includes('checkout');
-      setIsCheckout(isCheckout);
-    }
-    ;
-  }, [location.isReady]);
+    const pathname1 = pathname.split("/");
+    const isCheckout = pathname1.includes("checkout");
+    setIsCheckout(isCheckout);
+  }, []);
 
   return (
     <>
@@ -37,9 +34,7 @@ const Footer = dynamic(() => import('./Footer'), { ssr: false })
         {!isCheckout && (
           <Header openCartModal={() => setIsCartModalOpen(true)} />
         )}
-        <main>
-         {children}
-        </main>
+        <main>{children}</main>
         {!isCheckout && <Footer />}
       </div>
     </>

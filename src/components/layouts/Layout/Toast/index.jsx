@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useRef } from "react";
 
 import ToastModal from "./ToastModal";
@@ -5,7 +6,7 @@ import ToastContent from "./ToastContent";
 
 import { useToastContext } from "@/hooks/useToastContext";
 import { useToast } from "@/hooks/useToast";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const Toast = () => {
   const { pathname } = useRouter();

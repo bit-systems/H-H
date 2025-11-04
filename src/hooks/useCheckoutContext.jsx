@@ -1,12 +1,13 @@
-import { useContext } from 'react';
+"use client";
+import { useContext } from "react";
 
-import CheckoutContext from '@/context/checkout/checkout-context';
+import CheckoutContext from "@/context/checkout/checkout-context";
 
 export const useCheckoutContext = () => {
   const context = useContext(CheckoutContext);
 
   if (!context) {
-    throw Error('useCheckoutContext hook must be used inside CheckoutProvider');
+    throw Error("useCheckoutContext hook must be used inside CheckoutProvider");
   }
 
   return context;

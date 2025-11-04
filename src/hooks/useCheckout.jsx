@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 
 import { doc, updateDoc, deleteDoc } from "firebase/firestore";

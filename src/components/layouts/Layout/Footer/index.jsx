@@ -12,24 +12,22 @@ import {
 import Newsletter from "./Newsletter";
 
 import styles from "./index.module.scss";
-import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const Footer = () => {
   const [isCollectionPage, setIsCollectionPage] = useState(false);
 
-  const location = useRouter();
+  const location = usePathname();
 
   const isBigScreen = useMediaQuery({
     query: "(min-width: 1024px)",
   });
 
   useEffect(() => {
-    if (location.isReady) {
-      const pathname = location.pathname.split("/");
-      const isCollectionPage = pathname.includes("collections");
-      setIsCollectionPage(isCollectionPage);
-    }
+    const pathname = location.split("/");
+    const isCollectionPage = pathname.includes("collections");
+    setIsCollectionPage(isCollectionPage);
   }, [location.pathname]);
 
   return (

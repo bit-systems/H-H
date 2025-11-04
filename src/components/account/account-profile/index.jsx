@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 
 import { BiUser, BiEnvelope, BiPhone } from "react-icons/bi";

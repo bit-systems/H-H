@@ -1,3 +1,4 @@
+"use client";
 import { DragDropFileInput, TagsInput } from "@/components/common";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";

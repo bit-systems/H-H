@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect } from "react";
 
 import { BiChevronLeft } from "react-icons/bi";
@@ -18,7 +19,7 @@ import { RazorpayGateway } from "@/components/common";
 import { postApi } from "@/fetch-api/fetch-api";
 
 import styles from "./index.module.scss";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const ShippingInfo = () => {
   const { addresses } = useAuthContext();

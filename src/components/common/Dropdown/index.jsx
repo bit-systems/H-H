@@ -1,4 +1,5 @@
-import Select from 'react-select';
+"use client";
+import Select from "react-select";
 
 const Dropdown = ({
   styles,
