@@ -1,3 +1,5 @@
+"use client";
+
 import "@/styles/variables.scss";
 import { Layout } from "@/components/layouts";
 import Provider from "@/context/Provider";
