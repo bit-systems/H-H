@@ -123,6 +123,7 @@ const Navbar = ({ toggleSideNav, openCartModal }) => {
           </Link>
         )}
       </div>
+
       <div className={styles.container_bottom}>
         <Link href="/">
           <img
