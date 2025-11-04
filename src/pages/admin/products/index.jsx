@@ -120,4 +120,4 @@ const AdminCollections = () => {
 //   }
 // );
 
-export default AdminCollections;
+export default withAuth(AdminCollections, true);

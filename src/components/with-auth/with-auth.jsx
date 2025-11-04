@@ -18,7 +18,7 @@ const withAuth = (WrappedComponent, isAdmin) => {
       );
     }
     if (!user || !user.id) {
-      window.location.href = "/login";
+      window.location.href = "/account/login";
       return null;
     }
 

@@ -87,4 +87,4 @@ const AccountPage = () => {
 //   ssr: false, // disables server-side rendering for this component
 // });
 
-export default AccountPage;
+export default withAuth(AccountPage, false);

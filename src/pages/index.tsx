@@ -3,7 +3,6 @@ import ProductSliderSection from "../components/home/product-slider-section";
 import SlideshowSection from "../components/home/slideshow-section";
 import CollectionsSection from "../components/home/collections-section";
 import { useAuthContextV2 } from "@/hooks/useAuthContextV2";
-import { useCartContext } from "@/hooks/useCartContext";
 import { Loader } from "@/components/common";
 
 export const Home = () => {

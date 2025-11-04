@@ -196,4 +196,4 @@ const Orders = () => {
 //   ssr: false, // disables server-side rendering for this component
 // });
 
-export default Orders;
+export default withAuth(Orders, true);

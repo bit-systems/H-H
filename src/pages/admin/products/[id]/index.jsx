@@ -52,4 +52,4 @@ const AdminEditProduct = () => {
 //   }
 // );
 
-export default AdminEditProduct;
+export default withAuth(AdminEditProduct, true);

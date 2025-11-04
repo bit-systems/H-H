@@ -26,7 +26,7 @@ const CheckoutPage = () => {
   const navigate = useRouter();
 
   const { items, cartNeedsCheck } = useCartContext();
-  const { activateCartCheck } = useCart();
+  // const { activateCartCheck } = useCart();
   const { checkInventory, isLoading, error: inventoryError } = useInventory();
   const { sendToast } = useToast();
 
@@ -43,11 +43,11 @@ const CheckoutPage = () => {
   // }
 
   useEffect(() => {
-    if (cartNeedsCheck) {
-      checkInventory(items);
-    } else {
-      activateCartCheck();
-    }
+    // if (cartNeedsCheck) {
+    //   checkInventory(items);
+    // } else {
+    //   activateCartCheck();
+    // }
 
     if (items.length === 1) {
       //TODO make zero

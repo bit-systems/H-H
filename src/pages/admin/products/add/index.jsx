@@ -15,4 +15,4 @@ const AdminAddProduct = () => {
 //   ssr: false, // disables server-side rendering for this component
 // });
 
-export default AdminAddProduct;
+export default withAuth(AdminAddProduct, true);
