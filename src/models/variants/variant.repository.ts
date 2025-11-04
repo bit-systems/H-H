@@ -39,7 +39,7 @@ const updateVariant = async (variant: Variant) => {
   await updateDoc(variantDoc, variantWithoutId);
 };
 
-const deleteVariant = async (id: string): Promise<void> => {
+export const deleteVariant = async (id: string): Promise<void> => {
   const productDoc = doc(variantRef, id);
   await deleteDoc(productDoc);
 };

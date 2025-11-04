@@ -209,7 +209,7 @@ const AdminProduct = ({ isEditPage, productId, product }) => {
             >
               {createButtonContent}
             </Button>
-            {isEditPage && (
+            {/* {isEditPage && (
               <Button
                 onClick={() => setIsConfirmOpen(true)}
                 type="button"
@@ -217,7 +217,7 @@ const AdminProduct = ({ isEditPage, productId, product }) => {
               >
                 Delete Product
               </Button>
-            )}
+            )} */}
           </div>
         </div>
       </section>

@@ -40,12 +40,9 @@ const AdminPage = () => {
             <Link href="/admin/products/add" className={styles.option}>
               <div>Add Product</div>
             </Link>
-            <div
-              onClick={() => setNeedConfirm(true)}
-              className={`${styles.option} ${styles.seed}`}
-            >
-              <div>Seed Data</div>
-            </div>
+            <Link href="/admin/orders" className={styles.option}>
+              <div>orders</div>
+            </Link>
           </div>
         </div>
       </section>

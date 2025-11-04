@@ -277,7 +277,7 @@ const ProductCardV2 = ({
             <Button className={styles.edit} to={`/admin/products/${productId}`}>
               Edit
             </Button>
-            <Button
+            {/* <Button
               onClick={() =>
                 handleDeleteStart({
                   productId,
@@ -288,7 +288,7 @@ const ProductCardV2 = ({
               type="button"
             >
               Delete
-            </Button>
+            </Button> */}
           </div>
         )}
       </div>

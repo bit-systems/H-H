@@ -3,7 +3,7 @@ const accessToken = "";
 
 const payload = {
   messaging_product: "whatsapp",
-  to: "",
+  to: "919000408310",
   type: "template",
   template: {
     name: "hello_world",

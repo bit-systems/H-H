@@ -33,7 +33,7 @@ const AttributesForm = ({ register, control }) => {
         type="button"
         onClick={() => append({ firstName: "bill", lastName: "luo" })}
       >
-        append
+        Add Attributes
       </button>
     </div>
   );

@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
     }
     const otp = process.env.NODE_ENV !== "production" ? "5555" : getOtp();
     const phone_number =
-      process.env.NODE_ENV === "production" ? "919000408310" : `91${myParam}`;
+      process.env.NODE_ENV === "production" ? `91${myParam}` : "919000408310";
     await sendOtpToUser(user, otp);
     await sendSms(phone_number);
     return new Response(JSON.stringify({ message: "OTP sent successfully" }), {

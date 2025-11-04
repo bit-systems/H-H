@@ -10,6 +10,7 @@ import {
   updateProduct,
 } from "@/models/products/product.repository";
 import { mapInputToProduct } from "@/models/mappers/product-input.mapper";
+import { useRouter } from "next/router";
 const ProductForm = ({
   isEditPage,
   images,
@@ -23,6 +24,8 @@ const ProductForm = ({
 
   const [tags, setTags] = useState([]);
   const [tagValue, setTagValue] = useState();
+
+  const router = useRouter();
 
   const handleTagsInput = (e) => {
     if (e.key === ",") {
@@ -61,14 +64,17 @@ const ProductForm = ({
       setValue("attributes", productInput.attributes || []);
 
       const variants = productInput.variants.map((v) => {
-        const sizes = {};
+        const sizes = [];
         v.sizeVariants.forEach((size) => {
-          sizes[size.size] = size.quantity;
+          sizes.push({
+            [size.size]: size.quantity,
+          });
         });
 
         return {
           ...v,
           sizes,
+          variantId: v.id,
         };
       });
 
@@ -77,17 +83,15 @@ const ProductForm = ({
     }
   }, []);
 
-  const onSubmit = (data) => {
-    console.log(data);
-    console.log(mapInputToProduct(data), "data xxx form");
+  const onSubmit = async (data) => {
     data.images = images;
     data.tags = tags;
-    console.log(data, "data in product form");
     if (isEditPage) {
-      updateProduct(productId, mapInputToProduct(data));
+      await updateProduct(productId, mapInputToProduct(data));
     } else {
-      createProduct(mapInputToProduct(data));
+      await createProduct(mapInputToProduct(data));
     }
+    router.push("/admin/products");
   };
   return (
     <>

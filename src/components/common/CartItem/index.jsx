@@ -64,7 +64,7 @@ const CartItem = ({
   return (
     <div className={styles.card}>
       <Link
-        href={`/products/${slug}`}
+        href={`/products/${productId}`}
         state={slugCheck ? true : null}
         onClick={closeCartModal}
       >

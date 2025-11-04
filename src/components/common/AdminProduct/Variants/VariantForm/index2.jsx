@@ -13,6 +13,7 @@ import {
 
 import styles from "./index.module.scss";
 import { useForm } from "react-hook-form";
+import { deleteVariant } from "@/models/variants/variant.repository";
 
 const VariantFormV2 = ({
   productInput,
@@ -52,6 +53,9 @@ const VariantFormV2 = ({
   };
 
   const handleDeleteOnConfirm = () => {
+    if (variant?.variantId) {
+      deleteVariant(variant.variantId);
+    }
     handleDeleteVariant(variantIndex);
   };
 

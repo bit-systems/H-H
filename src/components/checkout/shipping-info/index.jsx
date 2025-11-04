@@ -15,7 +15,7 @@ import AddressForm from "../address-form";
 
 import { Button, Loader, ConfirmModal } from "@/components/common";
 import { RazorpayGateway } from "@/components/common";
-import { postApi } from "@/fetch-api/fetch-api";
+import { postApi, getApi } from "@/fetch-api/fetch-api";
 
 import styles from "./index.module.scss";
 import { useRouter } from "next/router";
@@ -93,7 +93,6 @@ const ShippingInfo = () => {
         amount: "550000",
         order_id: orderId, // This is a sample Order ID. Pass the `id` obtained in the response of Step 1
         handler: function (response) {
-          console.log(response);
           setPaymentStatus("success");
           setIsLoading(false);
         },
@@ -123,10 +122,36 @@ const ShippingInfo = () => {
       console.log(error, "error in razorpay");
     }
   };
+
+  const handleIsDeliverable = async () => {
+    if (userInput.zipCode.length === 0) {
+      return false;
+    }
+    const res = await getApi("/api/pin-codes", { pin_code: userInput.zipCode });
+
+    if (!res.data.isDeliverable) {
+      sendToast({
+        error: true,
+        content: {
+          message: "This item cannot be delivered to the provided pincode.",
+        },
+      });
+    }
+
+    return res.data.isDeliverable;
+  };
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
+
       setIsLoading(true);
+
+      const isDeliverable = await handleIsDeliverable();
+
+      if (!isDeliverable) {
+        setIsLoading(false);
+        return;
+      }
 
       const user = await createOrUpdateUser(userInputMapper(userInput));
 
@@ -233,7 +258,7 @@ const ShippingInfo = () => {
                 defaultOption={defaultOption}
                 isDisabled={isDisabled}
                 handleInput={handleInput}
-                disableButton={(value) => setIsSubmitDisabled(value)}
+                // disableButton={(value) => setIsSubmitDisabled(value)}
               />
             </div>
             <div className={styles.form_controls}>

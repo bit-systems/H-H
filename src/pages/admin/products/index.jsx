@@ -17,7 +17,6 @@ import styles from "./index.module.scss";
 import withAuth from "@/components/with-auth/with-auth";
 
 const AdminCollections = () => {
-  const { getCollection } = useCollection();
   const { deleteVariant, isLoading } = useAdmin();
 
   const [products, setProducts] = useState(null);
