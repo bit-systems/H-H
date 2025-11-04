@@ -17,9 +17,9 @@ export async function GET(request: NextRequest) {
     if (!user) {
       throw new Error("User not found");
     }
-    const otp = process.env.NODE_ENV === "development" ? "5555" : getOtp();
+    const otp = process.env.NODE_ENV !== "production" ? "5555" : getOtp();
     const phone_number =
-      process.env.NODE_ENV === "development" ? "919000408310" : `91${myParam}`;
+      process.env.NODE_ENV === "production" ? "919000408310" : `91${myParam}`;
     await sendOtpToUser(user, otp);
     await sendSms(phone_number);
     return new Response(JSON.stringify({ message: "OTP sent successfully" }), {
