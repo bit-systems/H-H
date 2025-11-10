@@ -1,9 +1,9 @@
-import { Button, MediaContainer } from '@/components/common';
+import { Button, MediaContainer } from "@/components/common";
 
-import styles from './index.module.scss';
+import styles from "./index.module.scss";
 
 const CollectionCard = ({ id, image, title, text, url }) => {
-  const isAlt = title === 'hoodies';
+  const isAlt = id === 2;
 
   return (
     <div className={styles.card}>

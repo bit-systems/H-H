@@ -7,30 +7,30 @@ import { Button, Slider } from "@/components/common";
 
 export const bigScreenSlides = [
   {
-    src: "/assets/images/slide-1-b.jpg",
+    src: "/assets/images/slide-1-c.jpg",
     id: 1,
   },
   {
-    src: "/assets/images/slide-2-b.jpg",
+    src: "/assets/images/slide-2-c.jpg",
     id: 2,
   },
   {
-    src: "/assets/images/slide-3-b.jpg",
+    src: "/assets/images/slide-3-c.jpg",
     id: 3,
   },
 ];
 
 export const smallScreenSlides = [
   {
-    src: "/assets/images/productos-hoodie-de-gira-blanco-2.jpg",
+    src: "/assets/images/slide-1-c.jpg",
     id: 1,
   },
   {
-    src: "/assets/images/productos-remera-ojos-negra-2.jpg",
+    src: "/assets/images/slide-2-c.jpg",
     id: 2,
   },
   {
-    src: "/assets/images/productos-remera-de-gira-blanca-2.jpg",
+    src: "/assets/images/slide-3-c.jpg",
     id: 3,
   },
 ];
@@ -65,10 +65,10 @@ const SlideshowSection = () => {
         <div className={styles.content_container}>
           {showContent && (
             <div className={styles.content_wrapper}>
-              <p className={styles.content_title}>Drop #01</p>
-              <p className={styles.content_title}>De gira</p>
+              <p className={styles.content_title}>New Drops</p>
+              {/* <p className={styles.content_title}>De gira</p> */}
               <p className={styles.content_subtitle}>
-                T-shirts, hoodies & more
+                All kinds of shirts & many more
               </p>
               <Button className={styles.button} to="/collections/products">
                 Shop now

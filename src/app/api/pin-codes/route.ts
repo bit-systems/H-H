@@ -1,4 +1,6 @@
 import { delhiveryGet } from "@/app/utils/delhivery/client";
+// import { UserRole, UserStatus } from "@/models/user/user.model";
+// import { createOrUpdateUser, createUser } from "@/models/user/user.repository";
 import { NextRequest } from "next/server";
 
 export async function GET(request: NextRequest) {
@@ -7,7 +9,6 @@ export async function GET(request: NextRequest) {
   const endpoint = `/c/api/pin-codes/json/?filter_codes=${myParam}`;
   const res = await delhiveryGet(endpoint);
 
-  // await createDelhiveryShipment("dGHOvehLMf04cQHXMeqT", "3WZFAmLNPUtNo603Qg3z");
   return new Response(
     JSON.stringify({ isDeliverable: res.delivery_codes.length > 0 }),
     {

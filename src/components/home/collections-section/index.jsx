@@ -5,23 +5,23 @@ import styles from "./index.module.scss";
 const collections = [
   {
     id: 1,
-    image: "/assets/images/collection-remeras-top.jpg",
-    title: "t-shirts",
-    text: "T-shirts & tank tops",
+    image: "/assets/images/checks-shirts.jpg",
+    title: "Checks Shirts",
+    text: "Checks, Small Lines and Many More",
     url: "/collections/t-shirts",
   },
   {
     id: 2,
-    image: "/assets/images/collection-buzos-top.jpg",
-    title: "hoodies",
-    text: "Hoodies & sweatshirts",
+    image: "/assets/images/formals-shirts.jpg",
+    title: "Formal Shirts",
+    text: "Formals & Utility",
     url: "/collections/hoodies-sweatshirts",
   },
   {
     id: 3,
-    image: "/assets/images/collection-accesorios-bottom.jpg",
-    title: "accessories",
-    text: "Dad hats, bucket hats & more",
+    image: "/assets/images/printed-shirts.jpg",
+    title: "Printed Shirts",
+    text: "Print, Designs & more",
     url: "/collections/accessories",
   },
 ];
@@ -32,7 +32,7 @@ const CollectionsSection = () => {
       <div className={`${styles.container} main-container`}>
         <h2 className={styles.title}>Collections</h2>
         <div className={styles.grid_container}>
-          {collections.map((collection) => (
+          {collections.map((collection, i) => (
             <CollectionCard
               key={collection.id}
               id={collection.id}
