@@ -1,16 +1,20 @@
-const url = "https://graph.facebook.com/v22.0/790379564168295/messages";
+const url =
+  "https://graph.facebook.com/v22.0/1165058968455646/message_templates";
 const accessToken = "";
 
 const payload = {
-  messaging_product: "whatsapp",
-  to: "919000408310",
-  type: "template",
-  template: {
-    name: "hello_world",
-    language: {
-      code: "en_US",
+  name: "otp_verification_code",
+  language: "en_US",
+  category: "AUTHENTICATION",
+  components: [
+    {
+      type: "BODY",
+      text: "Hey {{1}}, {{2}} is your verification code.",
+      example: {
+        body_text: [["John", "432156"]],
+      },
     },
-  },
+  ],
 };
 
 try {
