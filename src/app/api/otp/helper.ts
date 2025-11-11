@@ -3,7 +3,6 @@ import { invokeWhatsapp } from "@/app/utils/whatsapp/invoker";
 export const sendSms = async (phoneNumber: string, code: string) => {
   const payload = {
     messaging_product: "whatsapp",
-    to: `91${phoneNumber}`,
     type: "template",
     template: {
       name: "authentication_code_copy_code_button",
@@ -22,5 +21,5 @@ export const sendSms = async (phoneNumber: string, code: string) => {
       ],
     },
   };
-  await invokeWhatsapp(payload);
+  await invokeWhatsapp(phoneNumber, payload);
 };

@@ -1,7 +1,11 @@
 const url = process.env.META_WHATSAPP_API_URL || "";
 const accessToken = process.env.META_WHATSAPP_API_TOKEN;
 
-export const invokeWhatsapp = async (payload: Record<string, unknown>) => {
+export const invokeWhatsapp = async (
+  phone: string,
+  payload: Record<string, unknown>
+) => {
+  payload["to"] = `91${phone}`;
   try {
     const res = await fetch(url, {
       method: "POST",

@@ -38,15 +38,13 @@ export const createDelhiveryShipment = async (
 
   const payload = prepareShipmentPayload(user, orderId);
   const res = await delhiveryPost(endpoint, payload);
-  console.log(JSON.stringify(res), "delhivery shipment response");
   if (!res.success) {
     console.error("Delhivery shipment creation failed", JSON.stringify(res));
     return null;
   }
 
-  await invokeWhatsapp({
+  await invokeWhatsapp(user.mobileNumber, {
     messaging_product: "whatsapp",
-    to: `91${user.mobileNumber}`,
     type: "template",
     template: {
       name: "order_created_with_tracking_final ",

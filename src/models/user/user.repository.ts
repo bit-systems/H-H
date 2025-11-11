@@ -2,7 +2,6 @@ import { db } from "@/db/config";
 import {
   collection,
   CollectionReference,
-  deleteDoc,
   doc,
   DocumentReference,
   getDoc,
@@ -14,7 +13,7 @@ import {
 } from "firebase/firestore";
 import { User } from "./user.model";
 import { CustomError } from "@/helpers/error/customError";
-import { getOtp, setOtpExpiry } from "./helpers";
+import { setOtpExpiry } from "./helpers";
 
 const userRef = collection(db, "User") as CollectionReference<User>;
 
@@ -84,7 +83,6 @@ export const createUser = async (user: User, uniqueCheck = true) => {
   const newProductRef: DocumentReference<User> = doc(userRef);
 
   const userWithId = { ...user, id: newProductRef.id };
-  console.log(userWithId, "userWithId");
   if (uniqueCheck) {
     await isUserExistsWithUniqueFields(user.email, user.mobileNumber);
   }
@@ -121,7 +119,6 @@ export const updateUser = async (user: User, uniqueCheck = true) => {
 };
 
 export const getUser = async (id: string): Promise<User | null> => {
-  console.log(id, "id in repo");
   const snapshot = await getDoc(doc(userRef, id));
 
   return snapshot.exists() ? snapshot.data() : null;
@@ -140,7 +137,6 @@ export const getUserByMobileNumber = async (
   const q = query(userRef, where("mobileNumber", "==", mobileNumber));
   const snapshots = await getDocs(q);
   const snapshot = snapshots.docs[0];
-  console.log(snapshots, "snapshot in repo");
   return snapshot?.exists() ? snapshot.data() : null;
 };
 
