@@ -1,30 +1,26 @@
-const url = process.env.META_WHATSAPP_API_URL || "";
-const accessToken = process.env.META_WHATSAPP_API_TOKEN;
+import { invokeWhatsapp } from "@/app/utils/whatsapp/invoker";
 
-export const sendSms = async (phoneNumber: string) => {
+export const sendSms = async (phoneNumber: string, code: string) => {
   const payload = {
     messaging_product: "whatsapp",
-    to: phoneNumber,
+    to: `91${phoneNumber}`,
     type: "template",
     template: {
-      name: "hello_world",
-      language: {
-        code: "en_US",
-      },
+      name: "authentication_code_copy_code_button",
+      language: { code: "en_US" },
+      components: [
+        {
+          type: "body",
+          parameters: [{ type: "text", text: code }],
+        },
+        {
+          type: "button",
+          sub_type: "URL",
+          index: "0",
+          parameters: [{ type: "text", text: code }],
+        },
+      ],
     },
   };
-
-  try {
-    const res = await fetch(url, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    });
-    return await res.json();
-  } catch (error) {
-    console.error("❌ Error sending WhatsApp message:", error);
-  }
+  await invokeWhatsapp(payload);
 };

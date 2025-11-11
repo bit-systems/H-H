@@ -3,15 +3,21 @@ const url =
 const accessToken = "";
 
 const payload = {
-  name: "otp_verification_code",
-  language: "en_US",
+  name: "otp_confirmation",
+  language: "en",
   category: "AUTHENTICATION",
+  parameter_format: "NAMED",
   components: [
     {
       type: "BODY",
-      text: "Hey {{1}}, {{2}} is your verification code.",
+      text: "Your OTP is {{otp_number}}.",
       example: {
-        body_text: [["John", "432156"]],
+        body_text_named_params: [
+          {
+            param_name: "otp_number",
+            example: "860198",
+          },
+        ],
       },
     },
   ],

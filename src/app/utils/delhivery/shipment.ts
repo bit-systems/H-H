@@ -1,6 +1,7 @@
 import { getUserById } from "@/models/user/user.repository";
 import { delhiveryPost } from "./client";
 import { User } from "@/models/user/user.model";
+import { invokeWhatsapp } from "../whatsapp/invoker";
 
 const warehouseId = process.env.DELHIVERY_PICKUP_WAREHOUSE_ID || "";
 const prepareShipmentPayload = (user: User, orderId: string) => {
@@ -42,5 +43,28 @@ export const createDelhiveryShipment = async (
     console.error("Delhivery shipment creation failed", JSON.stringify(res));
     return null;
   }
+
+  await invokeWhatsapp({
+    messaging_product: "whatsapp",
+    to: `91${user.mobileNumber}`,
+    type: "template",
+    template: {
+      name: "order_created_with_tracking_final ",
+      language: { code: "en" },
+      components: [
+        {
+          type: "body",
+          parameters: [{ type: "text", text: orderId }],
+        },
+        {
+          type: "button",
+          sub_type: "URL",
+          index: "0",
+          parameters: [{ type: "text", text: orderId }],
+        },
+      ],
+    },
+  });
+
   return res.packages[0].waybill;
 };

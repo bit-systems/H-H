@@ -3,21 +3,21 @@ const accessToken = "";
 
 const payload = {
   messaging_product: "whatsapp",
-  to: "9110",
+  to: "",
   type: "template",
   template: {
-    name: "authentication_code_copy_code_button",
-    language: { code: "en_US" },
+    name: "order_created_with_tracking_final ",
+    language: { code: "en" },
     components: [
       {
         type: "body",
-        parameters: [{ type: "text", text: "123456" }],
+        parameters: [{ type: "text", text: "1" }],
       },
       {
         type: "button",
         sub_type: "URL",
         index: "0",
-        parameters: [{ type: "text", text: "123456" }],
+        parameters: [{ type: "text", text: "1" }],
       },
     ],
   },

@@ -1,6 +1,4 @@
 import { delhiveryGet } from "@/app/utils/delhivery/client";
-// import { UserRole, UserStatus } from "@/models/user/user.model";
-// import { createOrUpdateUser, createUser } from "@/models/user/user.repository";
 import { NextRequest } from "next/server";
 
 export async function GET(request: NextRequest) {
