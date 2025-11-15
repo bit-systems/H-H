@@ -22,6 +22,7 @@ import { formatPrice } from "@/helpers/format";
 
 import styles from "./index.module.scss";
 import { useRouter } from "next/router";
+import { ShowMore } from "@re-dev/react-truncate";
 
 const ProductPage = () => {
   const { addItem, isLoading, error } = useCartV2();
@@ -205,15 +206,15 @@ const ProductPage = () => {
                         <div className={styles.name_wrapper}>
                           <h1 className={styles.name}>{product.title}</h1>
                         </div>
-                        <p className={styles.description}>
+                        {/* <p className={styles.description}>
                           {product.description}
-                        </p>
+                        </p> */}
                         {/* {selectedVariant && (
                           <p className={styles.color}>
                             {selectedVariant.color}
                           </p>
                         )} */}
-                        {product.attributes && (
+                        {/* {product.attributes && (
                           <ProductAttributes attributes={product.attributes} />
                         )}
 
@@ -225,9 +226,12 @@ const ProductPage = () => {
                             selectedVariant ? selectedVariant.price : null
                           }
                           tags={product.tags}
-                        />
+                        /> */}
                       </div>
-                      <div className={styles.price_wrapper}>
+                      <div
+                        className={styles.price_wrapper}
+                        style={{ fontSize: "large" }}
+                      >
                         {selectedVariant &&
                           (selectedVariant.salePrice < selectedVariant.price ? (
                             <>
@@ -344,6 +348,40 @@ const ProductPage = () => {
                         </Button>
                       )}
                     </div>
+                    <div className={styles.details_wrapper}>
+                      <div className={styles.details}>
+                        <div className="border-b-2 p-4 mb-9"></div>
+                        <p className={styles.description}>
+                          <ShowMore
+                            anchorClass="bg-sky-100"
+                            lines={3}
+                            more={"Read more"}
+                            less={"Read less"}
+                          >
+                            {" "}
+                            {product.description}
+                          </ShowMore>
+                        </p>
+                        {/* {selectedVariant && (
+                          <p className={styles.color}>
+                            {selectedVariant.color}
+                          </p>
+                        )} */}
+                        {product.attributes && (
+                          <ProductAttributes attributes={product.attributes} />
+                        )}
+
+                        <ProductTags
+                          currentPrice={
+                            selectedVariant ? selectedVariant.salePrice : null
+                          }
+                          actualPrice={
+                            selectedVariant ? selectedVariant.price : null
+                          }
+                          tags={product.tags}
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </section>
@@ -356,9 +394,19 @@ const ProductPage = () => {
                 <div className={styles.container_b}>
                   <div className={styles.details_wrapper}>
                     <div className={styles.details}>
-                      <h1 className={styles.name}>{product.title}</h1>
+                      <h1 className={styles.name}>
+                        {product.title} {formatPrice(selectedVariant.salePrice)}
+                      </h1>
                       <p className={styles.description}>
-                        {product.description}
+                        <ShowMore
+                          anchorClass="bg-sky-100"
+                          lines={3}
+                          more={"Read more"}
+                          less={"Read less"}
+                        >
+                          {" "}
+                          {product.description}
+                        </ShowMore>
                       </p>
                       {/* {selectedVariant && (
                         <p className={styles.color}>{selectedVariant.color}</p>

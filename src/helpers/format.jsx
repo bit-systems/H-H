@@ -2,7 +2,7 @@ import moment from "moment";
 
 export const formatPrice = (number) => {
   // return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-  return "₹ " + number + ".00";
+  return "₹" + number + ".00";
 };
 
 export const formatDiscount = ({ currentPrice, actualPrice }) => {

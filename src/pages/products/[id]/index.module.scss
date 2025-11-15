@@ -437,6 +437,7 @@
   opacity: 0;
 }
 
+
 .button_loader {
   width: 20px;
   height: 20px;
@@ -447,6 +448,8 @@
   animation: rotation 1s linear infinite;
   position: absolute;
 }
+
+
 
 @keyframes rotation {
   0% {
