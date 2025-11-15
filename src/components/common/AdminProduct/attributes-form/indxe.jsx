@@ -10,19 +10,31 @@ const AttributesForm = ({ register, control }) => {
 
   return (
     <div>
+      <h3>Attributes</h3>
       <ul>
         {fields.map((item, index) => (
-          <li key={item.id}>
+          <li key={item.id} style={{ padding: "4px" }}>
             <label className={styles.label}>
               <span>Label:</span>
-              <input type="text" {...register(`attributes.${index}.label`)} />
+              <input
+                style={{ border: "1px solid black" }}
+                type="text"
+                {...register(`attributes.${index}.label`)}
+              />
             </label>
 
-            <Controller
-              render={({ field }) => <input {...field} />}
-              name={`attributes.${index}.value`}
-              control={control}
-            />
+            <label className={styles.label}>
+              <span>Value:</span>
+
+              <Controller
+                render={({ field }) => (
+                  <input style={{ border: "1px solid black" }} {...field} />
+                )}
+                name={`attributes.${index}.value`}
+                control={control}
+              />
+            </label>
+
             <button type="button" onClick={() => remove(index)}>
               Delete
             </button>

@@ -112,7 +112,7 @@ export const getAllProducts = async (
     })
   );
 
-  return products;
+  return products.filter((p) => p.variants.length > 0);
 };
 
 export const getProduct = async (id: string): Promise<ProductOutput | null> => {

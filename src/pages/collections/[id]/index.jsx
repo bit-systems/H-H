@@ -96,11 +96,14 @@ const CollectionPage = () => {
 
       observer.current = new IntersectionObserver(async (entries) => {
         if (entries[0].isIntersecting) {
-          const moreProductVariants = await getCollection({
-            collectionName: slugId,
-            isNewQuery: false,
-            sortBy,
-          });
+          const moreProductVariants =
+            (await getCollection({
+              collectionName: slugId,
+              isNewQuery: false,
+              sortBy,
+            })) ?? [];
+
+          console.log(moreProductVariants, "getCollection");
 
           setProductVariants((prevState) => {
             if (!prevState) {

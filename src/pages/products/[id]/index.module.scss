@@ -221,7 +221,20 @@
     }
   }
 }
+  .discounted_price {
+    font-family: $font-f-secondary !important;
+    font-weight: $font-w-900 !important;
+    letter-spacing: $ls-secondary !important;
+    color: $c-discount;
+  }
 
+  .crossed_price {
+    font-family: $font-f-secondary !important;
+    font-weight: $font-w-700 !important;
+    letter-spacing: $ls-secondary !important;
+    text-decoration: line-through;
+    margin-left: 0.5rem;
+  }
 // from 1024px width
 .container_b {
   width: 100%;

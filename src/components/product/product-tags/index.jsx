@@ -3,6 +3,8 @@ import { formatDiscount } from "@/helpers/format";
 import styles from "./index.module.scss";
 
 const ProductTags = ({ currentPrice, actualPrice, tags = [] }) => {
+  console.log(currentPrice, actualPrice, "sss");
+
   return (
     <div className={styles.tags_wrapper}>
       {currentPrice && actualPrice && currentPrice < actualPrice && (

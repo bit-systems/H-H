@@ -1,6 +1,6 @@
 export const APP_CONFIG = {
   APP_FULL_NAME: "Hawk and Hounds",
-  CLOUDFRONT_URL: "https://dljjyu8ogmku4.cloudfront.net/",
+  CLOUDFRONT_URL: process.env.NEXT_PUBLIC_HAH_AWS_CLOUDFRONT_URL,
   CONTACT_EMAIL: "contact@hawkandhounds.com",
   CONTACT_PHONE: "+1 (555) 123-4567",
   ADDRESS: "123 Main St, Anytown, USA",

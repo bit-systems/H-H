@@ -8,6 +8,7 @@ import { getProduct } from "@/models/products/product.repository";
 import ProductColors from "@/components/product/product-colors";
 import ProductSize from "@/components/product/product-size";
 import ProductTags from "@/components/product/product-tags";
+import ProductAttributes from "@/components/product/product-attributes";
 
 import {
   Button,
@@ -62,6 +63,12 @@ const ProductPage = () => {
     setSelectedVariant(variant);
     setSelectedSize(null);
   };
+
+  useEffect(() => {
+    if (product && product.variants.length === 1) {
+      selectVariant(product.variants[0]);
+    }
+  }, [product]);
 
   useEffect(() => {
     if (notify) {
@@ -201,10 +208,13 @@ const ProductPage = () => {
                         <p className={styles.description}>
                           {product.description}
                         </p>
-                        {selectedVariant && (
+                        {/* {selectedVariant && (
                           <p className={styles.color}>
                             {selectedVariant.color}
                           </p>
+                        )} */}
+                        {product.attributes && (
+                          <ProductAttributes attributes={product.attributes} />
                         )}
 
                         <ProductTags
@@ -223,14 +233,24 @@ const ProductPage = () => {
                             <>
                               <span className={styles.discounted_price}>
                                 {" "}
-                                {formatPrice(selectedVariant.salePrice)}
+                                {formatPrice(
+                                  selectedVariant.salePrice
+                                ).replaceAll(" ", "")}
                               </span>
                               <span className={styles.crossed_price}>
-                                {formatPrice(selectedVariant.price)}
+                                {formatPrice(selectedVariant.price).replaceAll(
+                                  " ",
+                                  ""
+                                )}
                               </span>
                             </>
                           ) : (
-                            <span>{formatPrice(selectedVariant.price)}</span>
+                            <span>
+                              {formatPrice(selectedVariant.price).replaceAll(
+                                " ",
+                                ""
+                              )}
+                            </span>
                           ))}
                       </div>
                     </div>
@@ -243,6 +263,24 @@ const ProductPage = () => {
                           {selectedVariant && (
                             <span>| {selectedVariant.color}</span>
                           )}
+                          <span className={styles.price_wrapper}>
+                            {selectedVariant &&
+                              (selectedVariant.salePrice <
+                              selectedVariant.price ? (
+                                <>
+                                  <span className={styles.discounted_price}>
+                                    | {formatPrice(selectedVariant.salePrice)}
+                                  </span>
+                                  <span className={styles.crossed_price}>
+                                    | {formatPrice(selectedVariant.price)}
+                                  </span>
+                                </>
+                              ) : (
+                                <span>
+                                  {formatPrice(selectedVariant.price)}
+                                </span>
+                              ))}
+                          </span>
                         </p>
                         <div className={styles.variants_wrapper}>
                           {product.variants.map((variant) => (
@@ -322,9 +360,13 @@ const ProductPage = () => {
                       <p className={styles.description}>
                         {product.description}
                       </p>
-                      {selectedVariant && (
+                      {/* {selectedVariant && (
                         <p className={styles.color}>{selectedVariant.color}</p>
+                      )} */}
+                      {product.attributes && (
+                        <ProductAttributes attributes={product.attributes} />
                       )}
+
                       <ProductTags
                         currentPrice={
                           selectedVariant ? selectedVariant.salePrice : null
@@ -372,7 +414,23 @@ const ProductPage = () => {
                         {product.variants.length > 1 ? "Colors" : "Color"}{" "}
                         {selectedVariant && (
                           <span>| {selectedVariant.color}</span>
-                        )}
+                        )}{" "}
+                        <span className={styles.price_wrapper}>
+                          {selectedVariant &&
+                            (selectedVariant.salePrice <
+                            selectedVariant.price ? (
+                              <>
+                                <span className={styles.discounted_price}>
+                                  | {formatPrice(selectedVariant.salePrice)}
+                                </span>
+                                <span className={styles.crossed_price}>
+                                  | {formatPrice(selectedVariant.price)}
+                                </span>
+                              </>
+                            ) : (
+                              <span>{formatPrice(selectedVariant.price)}</span>
+                            ))}
+                        </span>
                       </p>
                       <div className={styles.variants_wrapper}>
                         {product.variants.map((variant) => (

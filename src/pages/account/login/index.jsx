@@ -13,17 +13,19 @@ import { useRouter } from "next/router";
 import { APP_CONFIG } from "@/utils/constants";
 
 const LoginPage = () => {
-  const { isLoading, error, defaultValue } = useAuth();
+  const { error, defaultValue } = useAuth();
   const { sendToast } = useToast();
 
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async () => {
+    setIsLoading(true);
     const res = await getApi("/api/otp", {
       phone_number: phoneNumber,
     });
-
+    setIsLoading(false);
     if (res && res.isSuccess) {
       sendToast({
         error: false,

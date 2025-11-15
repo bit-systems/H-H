@@ -11,6 +11,8 @@ import {
 } from "@/models/products/product.repository";
 import { mapInputToProduct } from "@/models/mappers/product-input.mapper";
 import { useRouter } from "next/router";
+import { useToast } from "@/hooks/useToast";
+
 const ProductForm = ({
   isEditPage,
   images,
@@ -24,6 +26,7 @@ const ProductForm = ({
 
   const [tags, setTags] = useState([]);
   const [tagValue, setTagValue] = useState();
+  const { sendToast } = useToast();
 
   const router = useRouter();
 
@@ -86,6 +89,16 @@ const ProductForm = ({
   const onSubmit = async (data) => {
     data.images = images;
     data.tags = tags;
+
+    const productInput = mapInputToProduct(data);
+
+    if (!productInput.variants.length) {
+      return sendToast({
+        error: true,
+        content: { message: "At least one variant is required" },
+      });
+    }
+
     if (isEditPage) {
       await updateProduct(productId, mapInputToProduct(data));
     } else {
